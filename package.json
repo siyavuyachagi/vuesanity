@@ -1,0 +1,26 @@
+{
+  "name": "vuesanity",
+  "version": "1.0.0",
+  "description": "A simple model validation for vuejs applications.",
+  "keywords": [
+    "model",
+    "validations",
+    "vuejs",
+    "utils",
+    "library"
+  ],
+  "license": "ISC",
+  "author": "Chagi Siyavuya (CeeJay)",
+  "type": "commonjs",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup src --dts --format esm,cjs --out-dir dist"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.5.13",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "vue": "^3.5.13"
+  }
+}

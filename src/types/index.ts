@@ -6,14 +6,47 @@
 export interface ValidationRule {
   (value: any): string | null;
 }
+
+
+
+
+
+
+
+
+
+
 /**
- * FieldConfig is an object of fields i.e. ```value```, ```validations```, ```errors```.
+ * FieldConfig is an object containing fields such as `value`, `validations`, and `errors`.
  */
 export interface FieldConfig {
+  type?:
+    | String
+    | String[]
+    | Number
+    | Number[]
+    | Boolean
+    | Object
+    | File
+    | FileList;
   validations?: ValidationRule[];
   value?: any;
   errors?: string[];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * ModelConfig is a dictionary of field configurations.
  * @implements

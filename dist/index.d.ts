@@ -22,4 +22,4 @@ declare class VueSanity {
     private _deconstructor;
 }
 
-export { VueSanity as default };
+export { ModelConfig, VueSanity as default };

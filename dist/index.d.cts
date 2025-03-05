@@ -1,43 +1,25 @@
-import * as vue from 'vue';
-export { ModelConfig } from './types/index.cjs';
+import { Reactive } from 'vue';
+import { ModelConfig } from './types/index.cjs';
+export { email, length, maxLength, minLength, required } from './validators/string.cjs';
+export { extensions, maxSize, size } from './validators/file.cjs';
 
 /**
- * VueSanity is a utility class for handling Vue model validation and real-time updates.
- * It simplifies data handling in Vue applications by providing reactive validation support.
- *
- * @class VueSanity
+ * VueSanity class for handling complex form models with validation and normalization.
+ * @param modelConfig - The configuration object for the form model.
+ * @param cleanModel - Whether to clean the model before performing validation. Default is true.
  */
 declare class VueSanity {
     private _model;
-    private _isLive;
-    isValid: vue.Ref<boolean, boolean>;
-    formData: FormData | undefined;
-    normalizedModel: Record<string, any>;
+    private _cleanModel;
     errors: Record<string, string[]>;
-    /**
-     * Creates an instance of VueSanity.
-     *
-     * @param {object} model - The Vue model object to be validated.
-     * @param {boolean} [live=false] - Optional flag to enable live validation.
-     */
-    constructor(model: object, live?: boolean);
-    /**
-     * Initializes the VueSanity instance by processing the model.
-     * This method is used to set up initial values and normalize data.
-     *
-     * @private
-     */
-    private _initialize;
-    /**
-     *
-     * @private
-     */
-    private _defaultState;
-    /**
-     *
-     * @private
-     */
+    isValid: boolean;
+    normalizedModel: Reactive<Object>;
+    formData: FormData;
+    constructor(modelConfig: ModelConfig, cleanModel?: boolean);
     private _validate;
+    private _clearModelErrors;
+    private _clearModelValues;
+    private _deconstructor;
 }
 
 export { VueSanity as default };

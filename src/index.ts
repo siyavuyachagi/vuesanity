@@ -1,6 +1,7 @@
 import { reactive, ref, type Reactive } from "vue";
 import type { ModelConfig, ValidationRule } from "./types";
 
+export { ModelConfig };
 export {
   email,
   minLength,

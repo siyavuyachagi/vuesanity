@@ -3,7 +3,19 @@
 import { reactive, ref } from "vue";
 import { ValidationRule } from "./types";
 export { ModelConfig } from "./types";
-export * from "./validators";
+
+/**
+ * Validators
+ */
+export { email } from "./validators/email";
+export { extension } from "./validators/extension";
+export { maxlength } from "./validators/maxlength";
+export { minlength } from "./validators/minlength";
+export { size } from "./validators/size";
+export { required } from "./validators/required";
+
+
+
 
 /**
  * VueSanity is a utility class for handling Vue model validation and real-time updates.

@@ -7,15 +7,6 @@ export interface ValidationRule {
   (value: any): string | null;
 }
 
-
-
-
-
-
-
-
-
-
 /**
  * FieldConfig is an object containing fields such as `value`, `validations`, and `errors`.
  */
@@ -26,26 +17,14 @@ export interface FieldConfig {
     | Number
     | Number[]
     | Boolean
-    | Object
+    | Date
+    | Date[]
     | File
-    | FileList;
+    | File[];
   validations?: ValidationRule[];
   value?: any;
   errors?: string[];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * ModelConfig is a dictionary of field configurations.
@@ -65,7 +44,7 @@ export interface FieldConfig {
  */
 export interface ModelConfig {
   /**
-   *Some description
+   *Model field/property name
    */
   [key: string]: FieldConfig;
 }

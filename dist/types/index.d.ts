@@ -8,9 +8,9 @@ interface ValidationRule {
  * FieldConfig is an object containing fields such as `value`, `validations`, and `errors`.
  */
 interface FieldConfig {
-    type?: String | String[] | Number | Number[] | Boolean | Object | File | FileList;
+    type?: any | any[];
     validations?: ValidationRule[];
-    value?: any;
+    value?: any | any[];
     errors?: string[];
 }
 /**
@@ -31,7 +31,7 @@ interface FieldConfig {
  */
 interface ModelConfig {
     /**
-     *Some description
+     *Model field/property name
      */
     [key: string]: FieldConfig;
 }

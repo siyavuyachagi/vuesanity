@@ -1,5 +1,5 @@
 {
-  "name": "@chagisiyavuya/vuesanity",
+  "name": "@siyavuyachagi/vuesanity",
   "version": "1.0.0",
   "description": "A lightweight and flexible Vue 3 validation utility designed to simplify model validation in Vue applications. Built with TypeScript for type safety and performance.",
   "repository": {

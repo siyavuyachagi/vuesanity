@@ -11,18 +11,9 @@ export interface ValidationRule {
  * FieldConfig is an object containing fields such as `value`, `validations`, and `errors`.
  */
 export interface FieldConfig {
-  type?:
-    | String
-    | String[]
-    | Number
-    | Number[]
-    | Boolean
-    | Date
-    | Date[]
-    | File
-    | File[];
+  type?: any | any[];
   validations?: ValidationRule[];
-  value?: any;
+  value?: any | any[];
   errors?: string[];
 }
 

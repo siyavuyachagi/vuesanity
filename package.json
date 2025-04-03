@@ -1,13 +1,14 @@
 {
   "name": "vuesanity",
-  "version": "1.0.1",
-  "description": "A simple model validation for vuejs applications.",
+  "version": "1.0.0",
+  "description": "A lightweight and flexible Vue 3 validation utility designed to simplify model validation in Vue applications. Built with TypeScript for type safety and performance.",
   "keywords": [
     "model",
     "validations",
     "vuejs",
     "utils",
-    "library"
+    "library",
+    "typescript"
   ],
   "license": "ISC",
   "author": "Chagi Siyavuya (CeeJay)",

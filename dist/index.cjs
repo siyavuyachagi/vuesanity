@@ -122,16 +122,16 @@ var size = (length2, message) => {
 var VueSanity = class {
   // private fields
   _model;
-  _cleanModel;
+  _cleanAfter;
   // Public fields
   errors = {};
   isValid = false;
   normalizedModel = (0, import_vue.ref)({});
   formData = new FormData();
   // Constructor
-  constructor(modelConfig, cleanModel = true) {
+  constructor(modelConfig, cleanAfter = true) {
     this._model = (0, import_vue.reactive)(modelConfig);
-    this._cleanModel = cleanModel;
+    this._cleanAfter = cleanAfter;
     this._validate();
   }
   _validate() {
@@ -208,9 +208,61 @@ var VueSanity = class {
   };
   _deconstructor = () => {
     if (!this._model) return;
-    if (this._cleanModel && this.isValid) this._clearModelValues();
+    if (this._cleanAfter && this.isValid) this._clearModelValues();
     this._clearModelErrors();
   };
+  /**
+   * Converts a JavaScript object into FormData, handling various data types.
+   *
+   * Features:
+   * - Supports primitive values (string, number, boolean).
+   * - Handles nested objects and arrays with properly formatted keys.
+   * - Supports File, Blob, and Date objects.
+   * - Automatically unwraps reactive values (e.g., Vue's ref() objects).
+   *
+   * @param {Record<string, any>} object - The object to convert into FormData.
+   * @returns {FormData} - A FormData instance containing the object's data.
+   */
+  static getFormData(object) {
+    const formData = new FormData();
+    function processValue(value) {
+      if (value && typeof value === "object" && "value" in value) {
+        return value.value;
+      }
+      return value;
+    }
+    function appendToFormData(obj, prefix = "") {
+      if (obj === null || obj === void 0) {
+        return;
+      }
+      obj = processValue(obj);
+      if (obj instanceof File) {
+        formData.append(prefix, obj);
+      } else if (Array.isArray(obj)) {
+        if (obj.length > 0 && obj[0] instanceof File) {
+          obj.forEach((file) => {
+            formData.append(`${prefix}`, file);
+          });
+        } else {
+          obj.forEach((item, index) => {
+            appendToFormData(item, `${prefix}[${index}]`);
+          });
+        }
+      } else if (typeof obj === "object" && !(obj instanceof File) && !(obj instanceof Blob) && !(obj instanceof Date)) {
+        Object.keys(obj).forEach((key) => {
+          const value = obj[key];
+          const newPrefix = prefix ? `${prefix}[${key}]` : key;
+          appendToFormData(value, newPrefix);
+        });
+      } else if (obj instanceof Date) {
+        formData.append(prefix, obj.toISOString());
+      } else if (obj !== void 0) {
+        formData.append(prefix, String(obj));
+      }
+    }
+    appendToFormData(object);
+    return formData;
+  }
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -8,6 +8,7 @@ export {
   maxLength,
   required,
   length,
+  sameAs
 } from "./validators/string";
 export { maxSize, extensions, size } from "./validators/file";
 

@@ -14,7 +14,7 @@
     "library",
     "typescript"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "author": "Chagi Siyavuya (CeeJay)",
   "type": "module",
   "main": "./dist/index.js",

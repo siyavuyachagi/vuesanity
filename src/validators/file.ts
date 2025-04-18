@@ -79,7 +79,13 @@ export const size = (
 ): ((value: any) => string | null) => {
   return (value: any): string | null => {
     if (!value) return null; // value is null
-
+    
+    if (!(value instanceof File)) return null;
+    
+    const sizeInMB = value.size / (1024 * 1024); // Convert bytes to MB
+    if (sizeInMB !== length) {
+      return message || `File must be exactly ${length} MB in size.`;
+    }
     return null;
   };
 };

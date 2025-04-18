@@ -16,13 +16,13 @@ A lightweight and flexible Vue 3 validation utility designed to simplify form va
 ## Installation
 
 ```bash
-npm install vuesanity
+npm install @siyavuyachagi/vuesanity
 ```
 
 or
 
 ```bash
-yarn add vuesanity
+yarn add @siyavuyachagi/vuesanity
 ```
 
 ## Basic Usage

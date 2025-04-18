@@ -4,13 +4,15 @@ import {
   maxLength,
   minLength,
   phone,
-  required
-} from "../chunk-ZHURLIZA.js";
+  required,
+  sameAs
+} from "../chunk-C3IHFQN4.js";
 export {
   email,
   length,
   maxLength,
   minLength,
   phone,
-  required
+  required,
+  sameAs
 };

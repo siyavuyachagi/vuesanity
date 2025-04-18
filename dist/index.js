@@ -2,14 +2,15 @@ import {
   extensions,
   maxSize,
   size
-} from "./chunk-WK7HI5TO.js";
+} from "./chunk-56CRCE5B.js";
 import {
   email,
   length,
   maxLength,
   minLength,
-  required
-} from "./chunk-ZHURLIZA.js";
+  required,
+  sameAs
+} from "./chunk-C3IHFQN4.js";
 
 // src/index.ts
 import { reactive, ref } from "vue";
@@ -167,5 +168,6 @@ export {
   maxSize,
   minLength,
   required,
+  sameAs,
   size
 };

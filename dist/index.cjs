@@ -28,6 +28,7 @@ __export(index_exports, {
   maxSize: () => maxSize,
   minLength: () => minLength,
   required: () => required,
+  sameAs: () => sameAs,
   size: () => size
 });
 module.exports = __toCommonJS(index_exports);
@@ -86,6 +87,16 @@ var required = (message = "This field is required!") => {
     return null;
   };
 };
+var sameAs = (compareValue, message) => {
+  return (value) => {
+    if (!value) return null;
+    const valueToCompare = typeof compareValue === "function" ? compareValue() : compareValue;
+    if (value !== valueToCompare) {
+      return message || "Values don't match";
+    }
+    return null;
+  };
+};
 
 // src/validators/file.ts
 var extensions = (extensions2, message) => {
@@ -114,6 +125,11 @@ var maxSize = (size2, message) => {
 var size = (length2, message) => {
   return (value) => {
     if (!value) return null;
+    if (!(value instanceof File)) return null;
+    const sizeInMB = value.size / (1024 * 1024);
+    if (sizeInMB !== length2) {
+      return message || `File must be exactly ${length2} MB in size.`;
+    }
     return null;
   };
 };
@@ -273,5 +289,6 @@ var VueSanity = class {
   maxSize,
   minLength,
   required,
+  sameAs,
   size
 });

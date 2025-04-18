@@ -1,6 +1,6 @@
 import { Reactive } from 'vue';
 import { ModelConfig } from './types/index.js';
-export { email, length, maxLength, minLength, required } from './validators/string.js';
+export { email, length, maxLength, minLength, required, sameAs } from './validators/string.js';
 export { extensions, maxSize, size } from './validators/file.js';
 
 /**

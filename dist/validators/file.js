@@ -2,7 +2,7 @@ import {
   extensions,
   maxSize,
   size
-} from "../chunk-WK7HI5TO.js";
+} from "../chunk-56CRCE5B.js";
 export {
   extensions,
   maxSize,

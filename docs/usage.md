@@ -4,15 +4,15 @@ Complete guide to using VueSanity for form validation in Vue 3 applications.
 
 ## Table of Contents
 
-1. [Basic Setup](#basic-setup)
-2. [Creating Form Models](#creating-form-models)
-3. [Accessing Validation State](#accessing-validation-state)
-4. [Using Validators](#using-validators)
-5. [Form Submission](#form-submission)
-6. [Error Handling](#error-handling)
-7. [Working with FormData](#working-with-formdata)
-8. [Import Usage Examples](#import-usage-examples)
-9. [Advanced Usage](#advanced-usage)
+1. [Basic Setup](#1-basic-setup)
+2. [Creating Form Models](#2-creating-form-models)
+3. [Accessing Validation State](#3-accessing-validation-state)
+4. [Using Validators](#4-using-validators)
+5. [Form Submission](#5-form-submission)
+6. [Error Handling](#6-error-handling)
+7. [Working with FormData](#7-working-with-formdata)
+8. [Import Usage Examples](#8-import-usage-examples)
+9. [Advanced Usage](#9-advanced-usage)
 
 
 ## 1. Basic Setup

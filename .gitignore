@@ -2,12 +2,10 @@
 node_modules/
 temp/
 
-# Ignore dist directory
-/dist
-
 # Ignore .env files
 .env
 
 # Ignore all Markdown files except README.md
 *.md
 !README.md
+!docs/**/*.md 

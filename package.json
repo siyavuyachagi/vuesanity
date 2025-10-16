@@ -40,10 +40,13 @@
   ],
   "scripts": {
     "build": "tsup src --dts --format esm,cjs --out-dir dist",
+    "metrics": "node scripts/metrics.js",
+    "export:structure": "node scripts/export-structure.js",
     "prepare": "npm run build"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.5.13",
+    "chalk": "^5.6.2",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3"
   },

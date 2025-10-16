@@ -4,12 +4,12 @@
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * email([ "domain.com","domain.co.za" ],"Invalid email format");
- * //Or
- * email("domain.com","Invalid email format");
+ * email(["domain.com", "domain.co.za"], "Invalid email format");
+ * // Or
+ * email("domain.com", "Invalid email format");
  * ```
- * return
+ * @returns Validation function that returns error message or empty string
  */
-declare const email: (domains?: string[], message?: string) => ((value: any) => string | null);
+declare const email: (domains?: string[], message?: string) => ((value: any) => string);
 
 export { email };

@@ -23,15 +23,15 @@ __export(max_size_exports, {
   maxSize: () => maxSize
 });
 module.exports = __toCommonJS(max_size_exports);
-var maxSize = (size, message) => {
+var maxSize = (sizeMB, message) => {
   return (value) => {
-    if (!value) return null;
-    if (!(value instanceof File)) return null;
+    if (!value) return "";
+    if (!(value instanceof File)) return "";
     const sizeInMB = value.size / (1024 * 1024);
-    if (sizeInMB > size) {
-      return message || `Maximum file size of ${size} MB exceeded.`;
+    if (sizeInMB > sizeMB) {
+      return message || `Maximum file size of ${sizeMB} MB exceeded.`;
     }
-    return null;
+    return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

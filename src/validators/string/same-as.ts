@@ -1,10 +1,10 @@
+// src/validators/string/same-as.ts
 /**
  * SameAs - Compares two values for equality
- * @param {any} compareValue The value to compare against
+ * @param {any | (() => any)} compareValue The value to compare against or getter function
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * // In your model configuration:
  * confirmPassword: {
  *   value: '',
  *   validations: [
@@ -14,21 +14,21 @@
  *   errors: []
  * }
  * ```
- * @returns Validation function that returns error message or null
+ * @returns Validation function that returns error message or empty string
  */
 export const sameAs = (
     compareValue: (() => any) | any,
     message?: string
-): ((value: any) => string | null) => {
-    return (value: any): string | null => {
-        if (!value) return null; // value is null
+): ((value: any) => string) => {
+    return (value: any): string => {
+        if (!value) return "";
 
-        // Handle both direct values and getter functions
-        const valueToCompare = typeof compareValue === 'function' ? compareValue() : compareValue;
+        const valueToCompare =
+            typeof compareValue === "function" ? compareValue() : compareValue;
 
         if (value !== valueToCompare) {
             return message || "Values don't match";
         }
-        return null;
+        return "";
     };
 };

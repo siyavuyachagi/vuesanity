@@ -23,15 +23,15 @@ __export(size_exports, {
   size: () => size
 });
 module.exports = __toCommonJS(size_exports);
-var size = (length, message) => {
+var size = (sizeMB, message) => {
   return (value) => {
-    if (!value) return null;
-    if (!(value instanceof File)) return null;
+    if (!value) return "";
+    if (!(value instanceof File)) return "";
     const sizeInMB = value.size / (1024 * 1024);
-    if (sizeInMB !== length) {
-      return message || `File must be exactly ${length} MB in size.`;
+    if (sizeInMB !== sizeMB) {
+      return message || `File must be exactly ${sizeMB} MB in size.`;
     }
-    return null;
+    return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

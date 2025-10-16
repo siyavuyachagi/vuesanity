@@ -31,7 +31,7 @@ var required = (message = "This field is required!") => {
     if (typeof value === "string" && value.trim() === "") {
       return message;
     }
-    return null;
+    return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

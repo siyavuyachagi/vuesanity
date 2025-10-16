@@ -25,11 +25,11 @@ __export(min_chars_exports, {
 module.exports = __toCommonJS(min_chars_exports);
 var minChars = (length, message) => {
   return (value) => {
-    if (!value) return null;
+    if (!value) return "";
     if (value.length < length) {
       return message || `Minimum length of ${length} characters required`;
     }
-    return null;
+    return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

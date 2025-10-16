@@ -25,7 +25,7 @@ __export(phone_exports, {
 module.exports = __toCommonJS(phone_exports);
 var phone = (locale, message) => {
   return (value) => {
-    if (!value) return null;
+    if (!value) return "";
     if (typeof value !== "string" && typeof value !== "number") {
       return message || "Invalid phone number!";
     }
@@ -34,7 +34,7 @@ var phone = (locale, message) => {
     if (!phonePattern.test(phoneNumber)) {
       return message || "Invalid phone number!";
     }
-    return null;
+    return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

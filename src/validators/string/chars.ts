@@ -1,19 +1,20 @@
+// src/validators/string/chars.ts
 /**
- * Characters required.
- * @param {string[]} length Length of characters required.
+ * Exact character length validation.
+ * @param {number} length Exact length of characters required.
  * @param {string} message Custom error message (Optional).
- * @return
+ * @returns Validation function that returns error message or empty string
  */
 export const chars = (
     length: number,
     message?: string
-): ((value: any) => string | null) => {
-    return (value: any): string | null => {
-        if (!value) return null; // value is null
+): ((value: any) => string) => {
+    return (value: any): string => {
+        if (!value) return "";
 
         if (value.length !== length) {
             return message || `Number of characters required is ${length}!`;
         }
-        return null;
+        return "";
     };
 };

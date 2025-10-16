@@ -1,27 +1,27 @@
+// src/validators/file/size.ts
 /**
- * File size validation
- * @param {number} length File size in ```megabytes```
+ * Exact file size validation
+ * @param {number} sizeMB File size in megabytes (exact match)
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * size(5, "File size exceeds the limit!")
+ * size(2, "File must be exactly 2 MB!")
  * ```
- * @returns Validation function that returns error message or null
+ * @returns Validation function that returns error message or empty string
  */
-
 export const size = (
-    length: number,
+    sizeMB: number,
     message?: string
-): ((value: any) => string | null) => {
-    return (value: any): string | null => {
-        if (!value) return null; // value is null
+): ((value: any) => string) => {
+    return (value: any): string => {
+        if (!value) return "";
 
-        if (!(value instanceof File)) return null;
+        if (!(value instanceof File)) return "";
 
-        const sizeInMB = value.size / (1024 * 1024); // Convert bytes to MB
-        if (sizeInMB !== length) {
-            return message || `File must be exactly ${length} MB in size.`;
+        const sizeInMB = value.size / (1024 * 1024);
+        if (sizeInMB !== sizeMB) {
+            return message || `File must be exactly ${sizeMB} MB in size.`;
         }
-        return null;
+        return "";
     };
 };

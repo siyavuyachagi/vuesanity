@@ -1,27 +1,24 @@
+// src/validators/string/phone.ts
 /**
- * Phone
- * @param {string} locale Locale for phone number validation (Optional)
+ * Phone number validation using E.164 format
+ * @param {string} locale Locale for phone number validation (Optional, currently unused)
  * @param {string} message Error message (Optional)
- * @returns {string | null} Error message if validation fails, otherwise null
+ * @returns Validation function that returns error message or empty string
  */
 export const phone = (locale?: string, message?: string) => {
-    return (value: any): string | null => {
-        if (!value) return null;
+    return (value: any): string => {
+        if (!value) return "";
 
-        // Check if the value is a string or a number
         if (typeof value !== "string" && typeof value !== "number") {
             return message || "Invalid phone number!";
         }
 
-        // Convert the value to a string if it's a number
         const phoneNumber = typeof value === "number" ? value.toString() : value;
-
-        // Define a regex pattern for phone number validation
         const phonePattern = /^\+?[1-9]\d{1,14}$/;
 
         if (!phonePattern.test(phoneNumber)) {
             return message || "Invalid phone number!";
         }
-        return null;
+        return "";
     };
 };

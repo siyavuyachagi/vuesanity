@@ -25,12 +25,12 @@ __export(same_as_exports, {
 module.exports = __toCommonJS(same_as_exports);
 var sameAs = (compareValue, message) => {
   return (value) => {
-    if (!value) return null;
+    if (!value) return "";
     const valueToCompare = typeof compareValue === "function" ? compareValue() : compareValue;
     if (value !== valueToCompare) {
       return message || "Values don't match";
     }
-    return null;
+    return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

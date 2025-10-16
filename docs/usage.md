@@ -15,7 +15,7 @@ Complete guide to using VueSanity for form validation in Vue 3 applications.
 9. [Advanced Usage](#advanced-usage)
 
 
-## Basic Setup
+## 1. Basic Setup
 
 ### Installation
 
@@ -55,7 +55,7 @@ console.log(form.isValid); // Check if form is valid
 console.log(form.errors); // Access errors by field name
 ```
 
-## Creating Form Models
+## 2. Creating Form Models
 
 ### Model Structure
 
@@ -132,7 +132,7 @@ const registrationForm: ModelConfig = reactive({
 const form = new VueSanity(registrationForm);
 ```
 
-## Accessing Validation State
+## 3. Accessing Validation State
 
 ### Check if Form is Valid
 
@@ -178,7 +178,7 @@ console.log(emailErrors); // ["Invalid email format"]
 const isEmailValid = myForm.email.errors.length === 0;
 ```
 
-## Using Validators
+## 4. Using Validators
 
 ### String Validators
 
@@ -289,7 +289,7 @@ dateRange(
 );
 ```
 
-## Form Submission
+## 5. Form Submission
 
 ### Basic Submission
 
@@ -339,7 +339,7 @@ const submitForm = async () => {
 };
 ```
 
-## Error Handling
+## 6. Error Handling
 
 ### Display Field Errors in Template
 
@@ -414,7 +414,7 @@ button:disabled {
 </style>
 ```
 
-## Working with FormData
+## 7. Working with FormData
 
 ### Automatic FormData Generation
 
@@ -470,7 +470,7 @@ const response = await fetch('/api/submit', {
 });
 ```
 
-## Advanced Usage
+## 8. Advanced Usage
 
 ### Custom Validators
 
@@ -666,7 +666,7 @@ const resetForm = () => {
 ```
 
 
-## 🚀 Import Usage Examples
+## 9. Import Usage Examples
 
 ### Example 1: Simple Project
 ```typescript
@@ -699,7 +699,7 @@ const stringValidators = {
 ```
 
 
-## Tips & Best Practices
+## 10. Tips & Best Practices
 
 1. **Always initialize `errors` as empty array** - Required for the library to work properly
 2. **Use TypeScript** - Define your form model with `ModelConfig` type for better IDE support

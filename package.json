@@ -1,21 +1,27 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "@siyavuyachagi/vuesanity",
   "version": "1.0.1",
   "description": "A lightweight and flexible Vue 3 validation utility designed to simplify model validation in Vue applications. Built with TypeScript for type safety and performance.",
+  "license": "MIT",
+  "author": "Chagi Siyavuya (CeeJay)",
   "repository": {
     "type": "git",
     "url": "https://github.com/siyavuyachagi/vuesanity.git"
   },
+  "homepage": "https://github.com/siyavuyachagi/vuesanity#readme",
   "keywords": [
-    "model",
-    "validations",
+    "nuxtjs",
     "vuejs",
+    "model-validations",
+    "form-validation",
+    "typescript",
+    "javascript",
+    "utility",
     "utils",
     "library",
-    "typescript"
+    "lib"
   ],
-  "license": "MIT",
-  "author": "Chagi Siyavuya (CeeJay)",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -27,15 +33,19 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup src --dts --format esm,cjs --out-dir dist",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.5.13",
     "tsup": "^8.3.6",
-    "typescript": "^5.7.3",
-    "vue": "^3.5.13"
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "vue": "^3.0.0"

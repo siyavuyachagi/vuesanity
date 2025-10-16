@@ -2,20 +2,30 @@ import { reactive, ref, type Reactive } from "vue";
 import type { ModelConfig, ValidationRule } from "./types";
 
 export { ModelConfig };
-export {
-  email,
-  minLength,
-  maxLength,
-  required,
-  length,
-  sameAs
-} from "./validators/string";
-export { maxSize, extensions, size } from "./validators/file";
+export { * } from "./validators/date/*";
+export { extensions } from "./validators/file/extensions";
+export { } from "./validators/string";
 
 /**
- * VueSanity class for handling complex form models with validation and normalization.
- * @param modelConfig - The configuration object for the form model.
- * @param cleanAfter - Whether to clean the model successful validations. Default is true.
+ * VueSanity - A form validation and normalization utility for Vue 3.
+ * 
+ * Handles complex form models with built-in validation, error tracking, and data normalization.
+ * Automatically generates clean payloads and FormData objects from validated field values.
+ * 
+ * @class VueSanity
+ * @param {ModelConfig} modelConfig - Configuration object defining form fields with validation rules, initial values, and error tracking
+ * @param {boolean} [cleanAfter=true] - Whether to automatically clear field values after successful validation
+ * 
+ * @example
+ * const form = new VueSanity({
+ *   email: { value: '', validations: [required, isEmail], errors: [] },
+ *   password: { value: '', validations: [required, minLength(8)], errors: [] }
+ * });
+ * 
+ * console.log(form.isValid); // boolean
+ * console.log(form.normalizedModel); // validated data object
+ * console.log(form.formData); // FormData instance for submission
+ * console.log(form.errors); // validation errors by field
  */
 export default class VueSanity {
   // private fields
@@ -106,7 +116,7 @@ export default class VueSanity {
         }
       });
 
-      this._deconstructor(); // ✅ Clean up
+      this._deconstructor(); // Clean up
     }
   }
 
@@ -116,6 +126,7 @@ export default class VueSanity {
       field.errors = [];
     });
   };
+
 
   private _clearModelValues = () => {
     // Loop through each field in the model
@@ -133,6 +144,11 @@ export default class VueSanity {
     });
   };
 
+
+  /**
+   * Deconstructor
+   * @returns 
+   */
   private _deconstructor = () => {
     if (!this._model) return;
     if (this._cleanAfter && this.isValid) this._clearModelValues();
@@ -141,7 +157,7 @@ export default class VueSanity {
   };
 
   /**
-   * Converts a JavaScript object into FormData, handling various data types.
+   * Converts a `TypeScript` | `JavaScript` object into FormData, handling various data types.
    *
    * Features:
    * - Supports primitive values (string, number, boolean).
@@ -150,9 +166,8 @@ export default class VueSanity {
    * - Automatically unwraps reactive values (e.g., Vue's ref() objects).
    *
    * @param {Record<string, any>} object - The object to convert into FormData.
-   * @returns {FormData} - A FormData instance containing the object's data.
+   * @returns {FormData} A FormData instance containing the object's data.
    */
-
   static getFormData(object: Record<string, any>) {
     const formData = new FormData();
 

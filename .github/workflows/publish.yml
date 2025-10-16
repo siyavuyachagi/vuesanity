@@ -1,25 +1,30 @@
+# .github/workflows/publish.yml
 name: Publish to npm
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
-      
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
       - name: Install dependencies
-        run: npm install
-      
-      - name: Publish to npm
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Publish package
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

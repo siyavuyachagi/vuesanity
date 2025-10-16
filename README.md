@@ -1,7 +1,7 @@
 # VueSanity
 
-[![npm version](https://img.shields.io/npm/v/@siyavuyachagi/vuesanity.svg)](https://www.npmjs.com/package/@siyavuyachagi/vuesanity)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/@siyavuyachagi/vuesanity.svg)](https://www.npmjs.com/package/@siyavuyachagi/vuesanity)
 
 A lightweight and flexible Vue 3 validation utility designed to simplify form validation and state management in Vue applications. Built with TypeScript for enhanced type safety and optimal performance.
 
@@ -120,4 +120,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Author
 
-Chagi Siyavuya
+Chagi Siyavuya (CeeJay)

@@ -1,5 +1,6 @@
-# Ignore node_modules directory
+# Ignore the following irectories
 node_modules/
+temp/
 
 # Ignore dist directory
 /dist

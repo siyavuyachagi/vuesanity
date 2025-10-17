@@ -11,9 +11,9 @@ Complete guide to using VueSanity for form validation in Vue 3 applications.
 5. [Form Submission](#5-form-submission)
 6. [Error Handling](#6-error-handling)
 7. [Working with FormData](#7-working-with-formdata)
-8. [Import Usage Examples](#8-import-usage-examples)
-9. [Advanced Usage](#9-advanced-usage)
-
+8. [Advanced Usage](#8-advanced-usage)
+9. [Import Usage Examples](#9-import-usage-examples)
+10. [Tips & Best Practices](#10-tips--best-practices)
 
 ## 1. Basic Setup
 

@@ -9,9 +9,9 @@
 | File Validators | 5 |
 | Number Validators | 3 |
 | Date Validators | 3 |
-| Lines of Code | 13 197 |
-| Number of Files | 249 |
-| Bundle Size (est.) | 725.51 KB |
+| Lines of Code | 11 959 |
+| Number of Files | 182 |
+| Bundle Size (est.) | 657.30 KB |
 | Dependencies | 0 (Vue 3 peer only) |
 
 ---

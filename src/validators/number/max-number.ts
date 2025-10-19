@@ -1,22 +1,21 @@
-// src/validators/number/range.ts
+// src/validators/number/max-number.ts
 /**
- * Number range validation
- * @param {number} min Minimum allowed value
+ * Maximum number value validation
  * @param {number} max Maximum allowed value
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * range(1, 100, "Value must be between 1 and 100")
+ * maxNumber(100, "Value cannot exceed 100")
  * ```
  * @returns Validation function that returns error message or empty string
  */
-export const range = (min: number, max: number, message?: string) => {
+export const maxNumber = (max: number, message?: string) => {
     return (value: any): string => {
         if (value === null || value === undefined || value === "") return "";
 
         const numValue = Number(value);
-        if (isNaN(numValue) || numValue < min || numValue > max) {
-            return message || `Value must be between ${min} and ${max}`;
+        if (isNaN(numValue) || numValue > max) {
+            return message || `Value cannot exceed ${max}`;
         }
         return "";
     };

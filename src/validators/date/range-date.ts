@@ -6,11 +6,11 @@
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * dateRange(new Date("2024-01-01"), new Date("2024-12-31"))
+ * rangeDate(new Date("2024-01-01"), new Date("2024-12-31"))
  * ```
  * @returns Validation function that returns error message or empty string
  */
-export const dateRange = (
+export const rangeDate = (
     minDate: Date | string,
     maxDate: Date | string,
     message?: string

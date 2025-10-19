@@ -1,17 +1,17 @@
-// src/validators/file/extensions.ts
+// src/validators/file/file-extension.ts
 /**
  * Allowed file extension validation
  * @param {string | string[]} extensions List of allowed extensions
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * extensions(["pdf", "docx", "png"], "File not supported!")
+ * fileExtension("pdf", "File not supported")
  * // Or
- * extensions("pdf", "File not supported")
+ * fileExtension(["pdf", "docx", "png"], "File not supported!")
  * ```
  * @returns Validation function that returns error message or empty string
  */
-export const extensions = (
+export const fileExtension = (
   extensions: string | string[],
   message?: string
 ): ((value: any) => string) => {

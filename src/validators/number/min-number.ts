@@ -1,21 +1,21 @@
-// src/validators/number/max.ts
+// src/validators/number/min-number.ts
 /**
- * Maximum number value validation
- * @param {number} max Maximum allowed value
+ * Minimum number value validation
+ * @param {number} min Minimum allowed value
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * max(100, "Value cannot exceed 100")
+ * minNumber(0, "Value must be at least 0")
  * ```
  * @returns Validation function that returns error message or empty string
  */
-export const max = (max: number, message?: string) => {
+export const minNumber = (min: number, message?: string) => {
     return (value: any): string => {
         if (value === null || value === undefined || value === "") return "";
 
         const numValue = Number(value);
-        if (isNaN(numValue) || numValue > max) {
-            return message || `Value cannot exceed ${max}`;
+        if (isNaN(numValue) || numValue < min) {
+            return message || `Value must be at least ${min}`;
         }
         return "";
     };

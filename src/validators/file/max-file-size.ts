@@ -1,15 +1,15 @@
-// src/validators/file/max-size.ts
+// src/validators/file/max-file-size.ts
 /**
  * Maximum file size validation
  * @param {number} sizeMB Maximum file size in megabytes.
  * @param {string} message Error message (Optional)
  * @example
  * ```ts
- * maxSize(5, "File is too large!")
+ * maxFileSize(5, "File is too large!")
  * ```
  * @returns Validation function that returns error message or empty string
  */
-export const maxSize = (sizeMB: number, message?: string) => {
+export const maxFileSize = (sizeMB: number, message?: string) => {
   return (value: any): string => {
     if (!value) return "";
 

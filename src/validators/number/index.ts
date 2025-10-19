@@ -1,4 +1,4 @@
 // src/validators/number/index.ts
-export { min } from './min';
-export { max } from './max';
-export { range } from './range';
+export { minNumber } from './min-number';
+export { maxNumber } from './max-number';
+export { rangeNumber } from './range-number';

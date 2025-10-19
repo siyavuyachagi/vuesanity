@@ -8,7 +8,11 @@ src/
 │   ├── index.ts                    (Barrel: exports VueSanity + getFormData)
 │   ├── vuesanity.ts                (Main validation class)
 │   └── form-data.helper.ts         (FormData conversion utility)
-│
+|
+├── helpers/
+│   ├── country-codes.ts             (List of countries, ISO codes, dialing codes)
+│   └── form-data.ts                 (Utility for converting objects to FormData)
+|
 ├── validators/
 │   ├── index.ts                    (Master barrel: re-exports all validators)
 │   │

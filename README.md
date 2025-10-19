@@ -87,19 +87,19 @@ console.log(form.formData); // FormData instance for file uploads
 
 | Validator | Description | Example |
 |-----------|-------------|---------|
-| `extensions(exts, message?)` | Validates file extensions | `extensions(['pdf', 'docx'])` |
-| `maxSize(sizeMB, message?)` | Validates maximum file size | `maxSize(5, 'Max 5MB')` |
-| `minSize(sizeMB, message?)` | Validates minimum file size | `minSize(0.1)` |
-| `size(sizeMB, message?)` | Validates exact file size | `size(2)` |
+| `fileExtension(exts, message?)` | Validates file extensions | `fileExtensio(['pdf', 'docx'])` |
+| `maxFileSize(sizeMB, message?)` | Validates maximum file size | `maxFileSize(5, 'Max 5MB')` |
+| `minFileSize(sizeMB, message?)` | Validates minimum file size | `minFileSize(0.1)` |
+| `fileSize(sizeMB, message?)` | Validates exact file size | `fileSize(2)` |
 | `image(message?)` | Validates image file format | `image('Invalid image')` |
 
 ### Number Validators
 
 | Validator | Description | Example |
 |-----------|-------------|---------|
-| `min(value, message?)` | Minimum number value | `min(0, 'Must be positive')` |
-| `max(value, message?)` | Maximum number value | `max(100)` |
-| `range(min, max, message?)` | Number range validation | `range(1, 100)` |
+| `minNumber(value, message?)` | Minimum number value | `minNumber(0, 'Must be positive')` |
+| `maxNumber(value, message?)` | Maximum number value | `maxNumber(100)` |
+| `rangeNumber(min, max, message?)` | Number range validation | `rangeNumber(1, 100)` |
 
 ### Date Validators
 
@@ -107,7 +107,7 @@ console.log(form.formData); // FormData instance for file uploads
 |-----------|-------------|---------|
 | `minDate(date, message?)` | Minimum date validation | `minDate(new Date('2024-01-01'))` |
 | `maxDate(date, message?)` | Maximum date validation | `maxDate(new Date())` |
-| `dateRange(minDate, maxDate, message?)` | Date range validation | `dateRange(min, max)` |
+| `rangeDate(minDate, maxDate, message?)` | Date range validation | `rangeDate(min, max)` |
 
 ## Documentation
 

@@ -1,6 +1,6 @@
 // src/index.ts (Main entry point)
 export { default as VueSanity } from './core/vuesanity';
-export { getFormData } from './helpers/form-data.helper';
+export { getFormData } from './helpers/form-data';
 
 // Date Validators
 export {

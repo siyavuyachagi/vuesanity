@@ -1,6 +1,13 @@
 // src/index.ts (Main entry point)
 export { default as VueSanity } from './core/vuesanity';
-export { getFormData } from './core/form-data.helper';
+export { getFormData } from './helpers/form-data.helper';
+
+// Date Validators
+export {
+    minDate,
+    maxDate,
+    rangeDate,
+} from './validators/date/index';
 
 // String Validators
 export {
@@ -20,26 +27,20 @@ export {
 
 // File Validators
 export {
-    extensions,
-    maxSize,
-    minSize,
-    size,
-    image,
+    fileExtension,
+    fileSize,
+    fileType,
+    maxFileSize,
+    minFileSize,
 } from './validators/file/index';
 
 // Number Validators
 export {
-    min,
-    max,
-    range,
+    maxNumber,
+    minNumber,
+    rangeNumber,
 } from './validators/number/index';
 
-// Date Validators
-export {
-    minDate,
-    maxDate,
-    dateRange,
-} from './validators/date/index';
 
 // Types
 export * from './types/index';

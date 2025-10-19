@@ -1,7 +1,7 @@
 import {
   VueSanity
-} from "../chunk-TDMGJQAE.js";
-import "../chunk-4OCXCQHH.js";
+} from "../chunk-7KHSDXQZ.js";
+import "../chunk-O5JMOZWE.js";
 export {
   VueSanity as default
 };

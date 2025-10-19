@@ -20,50 +20,50 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/validators/number/index.ts
 var number_exports = {};
 __export(number_exports, {
-  max: () => max,
-  min: () => min,
-  range: () => range
+  maxNumber: () => maxNumber,
+  minNumber: () => minNumber,
+  rangeNumber: () => rangeNumber
 });
 module.exports = __toCommonJS(number_exports);
 
-// src/validators/number/min.ts
-var min = (min2, message) => {
+// src/validators/number/min-number.ts
+var minNumber = (min, message) => {
   return (value) => {
     if (value === null || value === void 0 || value === "") return "";
     const numValue = Number(value);
-    if (isNaN(numValue) || numValue < min2) {
-      return message || `Value must be at least ${min2}`;
+    if (isNaN(numValue) || numValue < min) {
+      return message || `Value must be at least ${min}`;
     }
     return "";
   };
 };
 
-// src/validators/number/max.ts
-var max = (max2, message) => {
+// src/validators/number/max-number.ts
+var maxNumber = (max, message) => {
   return (value) => {
     if (value === null || value === void 0 || value === "") return "";
     const numValue = Number(value);
-    if (isNaN(numValue) || numValue > max2) {
-      return message || `Value cannot exceed ${max2}`;
+    if (isNaN(numValue) || numValue > max) {
+      return message || `Value cannot exceed ${max}`;
     }
     return "";
   };
 };
 
-// src/validators/number/range.ts
-var range = (min2, max2, message) => {
+// src/validators/number/range-number.ts
+var rangeNumber = (min, max, message) => {
   return (value) => {
     if (value === null || value === void 0 || value === "") return "";
     const numValue = Number(value);
-    if (isNaN(numValue) || numValue < min2 || numValue > max2) {
-      return message || `Value must be between ${min2} and ${max2}`;
+    if (isNaN(numValue) || numValue < min || numValue > max) {
+      return message || `Value must be between ${min} and ${max}`;
     }
     return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  max,
-  min,
-  range
+  maxNumber,
+  minNumber,
+  rangeNumber
 });

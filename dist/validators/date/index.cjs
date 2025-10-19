@@ -20,13 +20,13 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/validators/date/index.ts
 var date_exports = {};
 __export(date_exports, {
-  dateRange: () => dateRange,
   maxDate: () => maxDate,
-  minDate: () => minDate
+  minDate: () => minDate,
+  rangeDate: () => rangeDate
 });
 module.exports = __toCommonJS(date_exports);
 
-// src/validators/date/min.ts
+// src/validators/date/min-date.ts
 var minDate = (minDate2, message) => {
   return (value) => {
     if (!value) return "";
@@ -42,7 +42,7 @@ var minDate = (minDate2, message) => {
   };
 };
 
-// src/validators/date/max.ts
+// src/validators/date/max-date.ts
 var maxDate = (maxDate2, message) => {
   return (value) => {
     if (!value) return "";
@@ -58,8 +58,8 @@ var maxDate = (maxDate2, message) => {
   };
 };
 
-// src/validators/date/range.ts
-var dateRange = (minDate2, maxDate2, message) => {
+// src/validators/date/range-date.ts
+var rangeDate = (minDate2, maxDate2, message) => {
   return (value) => {
     if (!value) return "";
     const date = new Date(value);
@@ -76,7 +76,7 @@ var dateRange = (minDate2, maxDate2, message) => {
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  dateRange,
   maxDate,
-  minDate
+  minDate,
+  rangeDate
 });

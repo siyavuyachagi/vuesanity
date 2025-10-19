@@ -40,14 +40,21 @@ export const phone = (locale?: string, message?: string) => {
 
             // Extract only digits
             const digitsOnly = phoneNumber.replace(/\D/g, '');
+            const countryCodeDigits = countryData.countryCode.replace(/\D/g, '');
 
-            // Check if it starts with country code (optional)
+            // Determine national number based on format
             let nationalNumber = digitsOnly;
-            if (digitsOnly.startsWith(countryData.countryCode.replace('+', ''))) {
-                nationalNumber = digitsOnly.substring(countryData.countryCode.replace('+', '').length);
+
+            // If number starts with country code, remove it
+            if (digitsOnly.startsWith(countryCodeDigits)) {
+                nationalNumber = digitsOnly.substring(countryCodeDigits.length);
+            }
+            // If number starts with 0 (national format with leading zero), remove it if country has leading zero
+            else if (phoneNumber.startsWith('0') && countryData.hasLeadingZero) {
+                nationalNumber = digitsOnly.substring(1);
             }
 
-            // Validate length
+            // Validate length of national number
             if (nationalNumber.length < countryData.minLength) {
                 return message || `Phone number too short for ${countryData.country}. Minimum: ${countryData.minLength} digits`;
             }

@@ -4,14 +4,7 @@
  * @param {string} message Custom error message (Optional)
  * @example
  * ```ts
- * confirmPassword: {
- *   value: '',
- *   validations: [
- *     required(),
- *     sameAs(() => model.password.value, "Passwords don't match!")
- *   ],
- *   errors: []
- * }
+ *  sameAs(() => model.password.value, "Passwords don't match!")
  * ```
  * @returns Validation function that returns error message or empty string
  */

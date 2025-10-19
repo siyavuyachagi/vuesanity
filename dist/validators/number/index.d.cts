@@ -1,3 +1,3 @@
-export { min } from './min.cjs';
-export { max } from './max.cjs';
-export { range } from './range.cjs';
+export { minNumber } from './min-number.cjs';
+export { maxNumber } from './max-number.cjs';
+export { rangeNumber } from './range-number.cjs';

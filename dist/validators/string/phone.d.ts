@@ -1,8 +1,21 @@
 /**
- * Phone number validation using E.164 format
- * @param {string} locale Locale for phone number validation (Optional, currently unused)
- * @param {string} message Error message (Optional)
+ * Phone number validation with optional country-specific validation
+ *
+ * @param {string} locale ISO country code (e.g., 'ZA', 'US', 'GB') for country-specific validation
+ * @param {string} message Custom error message (Optional)
  * @returns Validation function that returns error message or empty string
+ *
+ * @example
+ * ```ts
+ * // Generic E.164 validation
+ * phone()
+ *
+ * // South Africa specific (9-digit national number)
+ * phone('ZA', 'Invalid South African phone number')
+ *
+ * // US specific (10-digit)
+ * phone('US')
+ * ```
  */
 declare const phone: (locale?: string, message?: string) => (value: any) => string;
 

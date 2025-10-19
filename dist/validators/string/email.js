@@ -1,6 +1,6 @@
 import {
   email
-} from "../../chunk-DTY2Q3PM.js";
+} from "../../chunk-GY26NANT.js";
 export {
   email
 };

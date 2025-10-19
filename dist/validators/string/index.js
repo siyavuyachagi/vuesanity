@@ -1,5 +1,8 @@
 import "../../chunk-MD4DFCOP.js";
 import {
+  phone
+} from "../../chunk-UC4GEO7D.js";
+import {
   regex
 } from "../../chunk-4Y62OQKR.js";
 import {
@@ -12,6 +15,9 @@ import {
   url
 } from "../../chunk-ZHRR652B.js";
 import {
+  alpha
+} from "../../chunk-363BI5VP.js";
+import {
   alphanumeric
 } from "../../chunk-RBXB3DSE.js";
 import {
@@ -19,7 +25,7 @@ import {
 } from "../../chunk-Q5B3MF76.js";
 import {
   email
-} from "../../chunk-DTY2Q3PM.js";
+} from "../../chunk-GY26NANT.js";
 import {
   maxChars
 } from "../../chunk-OULXO5JD.js";
@@ -28,13 +34,8 @@ import {
 } from "../../chunk-FNT5SFUY.js";
 import {
   numeric
-} from "../../chunk-HKIQNZQ4.js";
-import {
-  phone
-} from "../../chunk-5R7AJHRQ.js";
-import {
-  alpha
-} from "../../chunk-363BI5VP.js";
+} from "../../chunk-BF45BO6L.js";
+import "../../chunk-7WD7TX66.js";
 export {
   alpha,
   alphanumeric,

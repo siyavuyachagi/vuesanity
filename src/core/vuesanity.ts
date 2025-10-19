@@ -2,7 +2,7 @@
 
 import { reactive, Reactive, ref } from "vue";
 import { ModelConfig, ValidationRule } from "../types";
-import { getFormData } from "./form-data.helper";
+import { getFormData } from "../helpers/form-data.helper";
 
 /**
  * VueSanity - A form validation and normalization utility for Vue 3.

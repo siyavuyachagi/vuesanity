@@ -1,3 +1,3 @@
-export { minDate } from './min.cjs';
-export { maxDate } from './max.cjs';
-export { dateRange } from './range.cjs';
+export { minDate } from './min-date.cjs';
+export { maxDate } from './max-date.cjs';
+export { rangeDate } from './range-date.cjs';

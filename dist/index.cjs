@@ -24,26 +24,26 @@ __export(index_exports, {
   alpha: () => alpha,
   alphanumeric: () => alphanumeric,
   chars: () => chars,
-  dateRange: () => dateRange,
   email: () => email,
-  extensions: () => extensions,
+  fileExtension: () => fileExtension,
+  fileSize: () => fileSize,
+  fileType: () => fileType,
   getFormData: () => getFormData,
-  image: () => image,
-  max: () => max,
   maxChars: () => maxChars,
   maxDate: () => maxDate,
-  maxSize: () => maxSize,
-  min: () => min,
+  maxFileSize: () => maxFileSize,
+  maxNumber: () => maxNumber,
   minChars: () => minChars,
   minDate: () => minDate,
-  minSize: () => minSize,
+  minFileSize: () => minFileSize,
+  minNumber: () => minNumber,
   numeric: () => numeric,
   phone: () => phone,
-  range: () => range,
+  rangeDate: () => rangeDate,
+  rangeNumber: () => rangeNumber,
   regex: () => regex,
   required: () => required,
   sameAs: () => sameAs,
-  size: () => size,
   url: () => url
 });
 module.exports = __toCommonJS(index_exports);
@@ -51,7 +51,7 @@ module.exports = __toCommonJS(index_exports);
 // src/core/vuesanity.ts
 var import_vue = require("vue");
 
-// src/core/form-data.helper.ts
+// src/helpers/form-data.helper.ts
 function getFormData(object) {
   const formData = new FormData();
   function processValue(value) {
@@ -194,52 +194,74 @@ var VueSanity = class {
   };
 };
 
-// src/validators/string/required.ts
-var required = (message = "This field is required!") => {
+// src/validators/date/min-date.ts
+var minDate = (minDate2, message) => {
   return (value) => {
-    if (value === null || value === void 0 || value === "") {
-      return message;
+    if (!value) return "";
+    const date = new Date(value);
+    const min = new Date(minDate2);
+    if (isNaN(date.getTime()) || isNaN(min.getTime())) {
+      return message || "Invalid date format";
     }
-    if (typeof value === "string" && value.trim() === "") {
-      return message;
+    if (date < min) {
+      return message || `Date must be after ${min.toDateString()}`;
     }
     return "";
   };
 };
 
-// src/validators/string/email.ts
-var email = (domains = [], message) => {
+// src/validators/date/max-date.ts
+var maxDate = (maxDate2, message) => {
   return (value) => {
     if (!value) return "";
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(value)) {
-      return message || "Invalid email format";
+    const date = new Date(value);
+    const max = new Date(maxDate2);
+    if (isNaN(date.getTime()) || isNaN(max.getTime())) {
+      return message || "Invalid date format";
     }
-    const domain = value.split("@")[1];
-    if (domains.length > 0 && !domains.includes(domain)) {
-      return message || "Email domain is not allowed";
-    }
-    return "";
-  };
-};
-
-// src/validators/string/min-chars.ts
-var minChars = (length, message) => {
-  return (value) => {
-    if (!value) return "";
-    if (value.length < length) {
-      return message || `Minimum length of ${length} characters required`;
+    if (date > max) {
+      return message || `Date must be before ${max.toDateString()}`;
     }
     return "";
   };
 };
 
-// src/validators/string/max-chars.ts
-var maxChars = (length, message) => {
+// src/validators/date/range-date.ts
+var rangeDate = (minDate2, maxDate2, message) => {
   return (value) => {
     if (!value) return "";
-    if (value.length > length) {
-      return message || `Maximum length of ${length} characters required`;
+    const date = new Date(value);
+    const min = new Date(minDate2);
+    const max = new Date(maxDate2);
+    if (isNaN(date.getTime()) || isNaN(min.getTime()) || isNaN(max.getTime())) {
+      return message || "Invalid date format";
+    }
+    if (date < min || date > max) {
+      return message || `Date must be between ${min.toDateString()} and ${max.toDateString()}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/string/alpha.ts
+var alpha = (allowSpaces = true, message) => {
+  return (value) => {
+    if (!value) return "";
+    const pattern = allowSpaces ? /^[a-zA-Z\s]*$/ : /^[a-zA-Z]*$/;
+    if (!pattern.test(value)) {
+      return message || "Only alphabetic characters are allowed";
+    }
+    return "";
+  };
+};
+
+// src/validators/string/alphanumeric.ts
+var alphanumeric = (allowSpaces = false, message) => {
+  return (value) => {
+    if (!value) return "";
+    const pattern = allowSpaces ? /^[a-zA-Z0-9\s]*$/ : /^[a-zA-Z0-9]*$/;
+    if (!pattern.test(value)) {
+      return message || "Only alphanumeric characters are allowed";
     }
     return "";
   };
@@ -256,6 +278,307 @@ var chars = (length, message) => {
   };
 };
 
+// src/validators/string/email.ts
+var email = (allowedDomains, message) => {
+  const domains = Array.isArray(allowedDomains) ? allowedDomains : allowedDomains ? [allowedDomains] : [];
+  return (value) => {
+    if (!value) return "";
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(value)) {
+      return message || "Invalid email format";
+    }
+    const domain = value.split("@")[1].toLowerCase();
+    if (domains.length > 0 && !domains.map((d) => d.toLowerCase()).includes(domain)) {
+      return message || `Email domain must be one of: ${domains.join(", ")}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/string/max-chars.ts
+var maxChars = (length, message) => {
+  return (value) => {
+    if (!value) return "";
+    if (value.length > length) {
+      return message || `Maximum length of ${length} characters required`;
+    }
+    return "";
+  };
+};
+
+// src/validators/string/min-chars.ts
+var minChars = (length, message) => {
+  return (value) => {
+    if (!value) return "";
+    if (value.length < length) {
+      return message || `Minimum length of ${length} characters required`;
+    }
+    return "";
+  };
+};
+
+// src/validators/string/numeric.ts
+var numeric = (allowDecimals = false, allowNegative = false, message) => {
+  return (value) => {
+    if (!value) return "";
+    let pattern;
+    if (allowDecimals) {
+      pattern = allowNegative ? /^-?\d+(\.\d+)?$/ : /^\d+(\.\d+)?$/;
+    } else {
+      pattern = allowNegative ? /^-?\d+$/ : /^\d+$/;
+    }
+    if (!pattern.test(String(value))) {
+      return message || "Only numeric values are allowed";
+    }
+    return "";
+  };
+};
+
+// src/helpers/country-codes.ts
+var countryPhoneData = [
+  { iso: "AF", countryCode: "+93", country: "Afghanistan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "AL", countryCode: "+355", country: "Albania", minLength: 8, maxLength: 9, hasLeadingZero: true },
+  { iso: "DZ", countryCode: "+213", country: "Algeria", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "AS", countryCode: "+1", country: "American Samoa", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "AD", countryCode: "+376", country: "Andorra", minLength: 6, maxLength: 6, hasLeadingZero: false },
+  { iso: "AO", countryCode: "+244", country: "Angola", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "AI", countryCode: "+1", country: "Anguilla", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "AG", countryCode: "+1", country: "Antigua and Barbuda", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "AR", countryCode: "+54", country: "Argentina", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "AM", countryCode: "+374", country: "Armenia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "AW", countryCode: "+297", country: "Aruba", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "AU", countryCode: "+61", country: "Australia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "AT", countryCode: "+43", country: "Austria", minLength: 10, maxLength: 11, hasLeadingZero: true },
+  { iso: "AZ", countryCode: "+994", country: "Azerbaijan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "BS", countryCode: "+1", country: "Bahamas", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "BH", countryCode: "+973", country: "Bahrain", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "BD", countryCode: "+880", country: "Bangladesh", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "BB", countryCode: "+1", country: "Barbados", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "BY", countryCode: "+375", country: "Belarus", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "BE", countryCode: "+32", country: "Belgium", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "BZ", countryCode: "+501", country: "Belize", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "BJ", countryCode: "+229", country: "Benin", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "BM", countryCode: "+1", country: "Bermuda", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "BT", countryCode: "+975", country: "Bhutan", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "BO", countryCode: "+591", country: "Bolivia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "BA", countryCode: "+387", country: "Bosnia and Herzegovina", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "BW", countryCode: "+267", country: "Botswana", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "BR", countryCode: "+55", country: "Brazil", minLength: 10, maxLength: 11, hasLeadingZero: true },
+  { iso: "IO", countryCode: "+246", country: "British Indian Ocean Territory", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "VG", countryCode: "+1", country: "British Virgin Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "BN", countryCode: "+673", country: "Brunei", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "BG", countryCode: "+359", country: "Bulgaria", minLength: 8, maxLength: 9, hasLeadingZero: true },
+  { iso: "BF", countryCode: "+226", country: "Burkina Faso", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "MM", countryCode: "+95", country: "Myanmar", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "BI", countryCode: "+257", country: "Burundi", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "KH", countryCode: "+855", country: "Cambodia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "CM", countryCode: "+237", country: "Cameroon", minLength: 8, maxLength: 9, hasLeadingZero: false },
+  { iso: "CA", countryCode: "+1", country: "Canada", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "CV", countryCode: "+238", country: "Cape Verde", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "KY", countryCode: "+1", country: "Cayman Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "CF", countryCode: "+236", country: "Central African Republic", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "TD", countryCode: "+235", country: "Chad", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "CL", countryCode: "+56", country: "Chile", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "CN", countryCode: "+86", country: "China", minLength: 11, maxLength: 13, hasLeadingZero: false },
+  { iso: "CX", countryCode: "+61", country: "Christmas Island", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "CC", countryCode: "+61", country: "Cocos Islands", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "CO", countryCode: "+57", country: "Colombia", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "KM", countryCode: "+269", country: "Comoros", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "CG", countryCode: "+242", country: "Republic of Congo", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "CD", countryCode: "+243", country: "Democratic Republic of Congo", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "CK", countryCode: "+682", country: "Cook Islands", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "CR", countryCode: "+506", country: "Costa Rica", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "CI", countryCode: "+225", country: "Ivory Coast", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "HR", countryCode: "+385", country: "Croatia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "CU", countryCode: "+53", country: "Cuba", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "CY", countryCode: "+357", country: "Cyprus", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "CZ", countryCode: "+420", country: "Czech Republic", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "DK", countryCode: "+45", country: "Denmark", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "DJ", countryCode: "+253", country: "Djibouti", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "DM", countryCode: "+1", country: "Dominica", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "DO", countryCode: "+1", country: "Dominican Republic", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "EC", countryCode: "+593", country: "Ecuador", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "EG", countryCode: "+20", country: "Egypt", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "SV", countryCode: "+503", country: "El Salvador", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "GQ", countryCode: "+240", country: "Equatorial Guinea", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "ER", countryCode: "+291", country: "Eritrea", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "EE", countryCode: "+372", country: "Estonia", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "ET", countryCode: "+251", country: "Ethiopia", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "FK", countryCode: "+500", country: "Falkland Islands", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "FO", countryCode: "+298", country: "Faroe Islands", minLength: 6, maxLength: 6, hasLeadingZero: false },
+  { iso: "FJ", countryCode: "+679", country: "Fiji", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "FI", countryCode: "+358", country: "Finland", minLength: 7, maxLength: 7, hasLeadingZero: true },
+  { iso: "FR", countryCode: "+33", country: "France", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "GF", countryCode: "+594", country: "French Guiana", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "PF", countryCode: "+689", country: "French Polynesia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "TF", countryCode: "+262", country: "French Southern Territories", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "GA", countryCode: "+241", country: "Gabon", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "GM", countryCode: "+220", country: "Gambia", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "GE", countryCode: "+995", country: "Georgia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "DE", countryCode: "+49", country: "Germany", minLength: 10, maxLength: 11, hasLeadingZero: true },
+  { iso: "GH", countryCode: "+233", country: "Ghana", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "GI", countryCode: "+350", country: "Gibraltar", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "GR", countryCode: "+30", country: "Greece", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "GL", countryCode: "+299", country: "Greenland", minLength: 6, maxLength: 6, hasLeadingZero: false },
+  { iso: "GD", countryCode: "+1", country: "Grenada", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "GP", countryCode: "+590", country: "Guadeloupe", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "GU", countryCode: "+1", country: "Guam", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "GT", countryCode: "+502", country: "Guatemala", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "GG", countryCode: "+44", country: "Guernsey", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "GN", countryCode: "+224", country: "Guinea", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "GW", countryCode: "+245", country: "Guinea-Bissau", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "GY", countryCode: "+592", country: "Guyana", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "HT", countryCode: "+509", country: "Haiti", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "HN", countryCode: "+504", country: "Honduras", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "HK", countryCode: "+852", country: "Hong Kong", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "HU", countryCode: "+36", country: "Hungary", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "IS", countryCode: "+354", country: "Iceland", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "IN", countryCode: "+91", country: "India", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "ID", countryCode: "+62", country: "Indonesia", minLength: 9, maxLength: 11, hasLeadingZero: true },
+  { iso: "IR", countryCode: "+98", country: "Iran", minLength: 10, maxLength: 11, hasLeadingZero: true },
+  { iso: "IQ", countryCode: "+964", country: "Iraq", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "IE", countryCode: "+353", country: "Ireland", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "IM", countryCode: "+44", country: "Isle of Man", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "IL", countryCode: "+972", country: "Israel", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "IT", countryCode: "+39", country: "Italy", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "JM", countryCode: "+1", country: "Jamaica", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "JP", countryCode: "+81", country: "Japan", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "JE", countryCode: "+44", country: "Jersey", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "JO", countryCode: "+962", country: "Jordan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "KZ", countryCode: "+7", country: "Kazakhstan", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "KE", countryCode: "+254", country: "Kenya", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "KI", countryCode: "+686", country: "Kiribati", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "KP", countryCode: "+850", country: "North Korea", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "KR", countryCode: "+82", country: "South Korea", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "KW", countryCode: "+965", country: "Kuwait", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "KG", countryCode: "+996", country: "Kyrgyzstan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "LA", countryCode: "+856", country: "Laos", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "LV", countryCode: "+371", country: "Latvia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "LB", countryCode: "+961", country: "Lebanon", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "LS", countryCode: "+266", country: "Lesotho", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "LR", countryCode: "+231", country: "Liberia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "LY", countryCode: "+218", country: "Libya", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "LI", countryCode: "+423", country: "Liechtenstein", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "LT", countryCode: "+370", country: "Lithuania", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "LU", countryCode: "+352", country: "Luxembourg", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "MO", countryCode: "+853", country: "Macau", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "MK", countryCode: "+389", country: "Macedonia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "MG", countryCode: "+261", country: "Madagascar", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "MW", countryCode: "+265", country: "Malawi", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "MY", countryCode: "+60", country: "Malaysia", minLength: 9, maxLength: 10, hasLeadingZero: true },
+  { iso: "MV", countryCode: "+960", country: "Maldives", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "ML", countryCode: "+223", country: "Mali", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "MT", countryCode: "+356", country: "Malta", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "MH", countryCode: "+692", country: "Marshall Islands", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "MQ", countryCode: "+596", country: "Martinique", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "MR", countryCode: "+222", country: "Mauritania", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "MU", countryCode: "+230", country: "Mauritius", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "YT", countryCode: "+262", country: "Mayotte", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "MX", countryCode: "+52", country: "Mexico", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "FM", countryCode: "+691", country: "Micronesia", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "MD", countryCode: "+373", country: "Moldova", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "MC", countryCode: "+377", country: "Monaco", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "MN", countryCode: "+976", country: "Mongolia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "ME", countryCode: "+382", country: "Montenegro", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "MA", countryCode: "+212", country: "Morocco", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "MZ", countryCode: "+258", country: "Mozambique", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "NA", countryCode: "+264", country: "Namibia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+  { iso: "NR", countryCode: "+674", country: "Nauru", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "NP", countryCode: "+977", country: "Nepal", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "NL", countryCode: "+31", country: "Netherlands", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "AN", countryCode: "+599", country: "Netherlands Antilles", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "NC", countryCode: "+687", country: "New Caledonia", minLength: 6, maxLength: 6, hasLeadingZero: false },
+  { iso: "NZ", countryCode: "+64", country: "New Zealand", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "NI", countryCode: "+505", country: "Nicaragua", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "NE", countryCode: "+227", country: "Niger", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "NG", countryCode: "+234", country: "Nigeria", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "NU", countryCode: "+683", country: "Niue", minLength: 4, maxLength: 4, hasLeadingZero: false },
+  { iso: "NF", countryCode: "+672", country: "Norfolk Island", minLength: 6, maxLength: 6, hasLeadingZero: false },
+  { iso: "MP", countryCode: "+1", country: "Northern Mariana Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "NO", countryCode: "+47", country: "Norway", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "OM", countryCode: "+968", country: "Oman", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "PK", countryCode: "+92", country: "Pakistan", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "PW", countryCode: "+680", country: "Palau", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "PA", countryCode: "+507", country: "Panama", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "PG", countryCode: "+675", country: "Papua New Guinea", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "PY", countryCode: "+595", country: "Paraguay", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "PE", countryCode: "+51", country: "Peru", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "PH", countryCode: "+63", country: "Philippines", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "PN", countryCode: "+64", country: "Pitcairn Islands", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "PL", countryCode: "+48", country: "Poland", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "PT", countryCode: "+351", country: "Portugal", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "PR", countryCode: "+1", country: "Puerto Rico", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "QA", countryCode: "+974", country: "Qatar", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "RE", countryCode: "+262", country: "Reunion", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "RO", countryCode: "+40", country: "Romania", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "RU", countryCode: "+7", country: "Russia", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "RW", countryCode: "+250", country: "Rwanda", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "BL", countryCode: "+590", country: "Saint Barth\xE9lemy", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "KN", countryCode: "+1", country: "Saint Kitts and Nevis", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "LC", countryCode: "+1", country: "Saint Lucia", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "MF", countryCode: "+590", country: "Saint Martin", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "VC", countryCode: "+1", country: "Saint Vincent and the Grenadines", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "WS", countryCode: "+685", country: "Samoa", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "SM", countryCode: "+378", country: "San Marino", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "ST", countryCode: "+239", country: "S\xE3o Tom\xE9 and Pr\xEDncipe", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "SA", countryCode: "+966", country: "Saudi Arabia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "SN", countryCode: "+221", country: "Senegal", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "RS", countryCode: "+381", country: "Serbia", minLength: 9, maxLength: 10, hasLeadingZero: true },
+  { iso: "SC", countryCode: "+248", country: "Seychelles", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "SL", countryCode: "+232", country: "Sierra Leone", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "SG", countryCode: "+65", country: "Singapore", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "SK", countryCode: "+421", country: "Slovakia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "SI", countryCode: "+386", country: "Slovenia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "SB", countryCode: "+677", country: "Solomon Islands", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "SO", countryCode: "+252", country: "Somalia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "ZA", countryCode: "+27", country: "South Africa", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "SS", countryCode: "+211", country: "South Sudan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "ES", countryCode: "+34", country: "Spain", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "LK", countryCode: "+94", country: "Sri Lanka", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "PM", countryCode: "+508", country: "Saint Pierre and Miquelon", minLength: 6, maxLength: 6, hasLeadingZero: false },
+  { iso: "SD", countryCode: "+249", country: "Sudan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "SR", countryCode: "+597", country: "Suriname", minLength: 7, maxLength: 7, hasLeadingZero: false },
+  { iso: "SE", countryCode: "+46", country: "Sweden", minLength: 8, maxLength: 9, hasLeadingZero: true },
+  { iso: "CH", countryCode: "+41", country: "Switzerland", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "SY", countryCode: "+963", country: "Syria", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "TW", countryCode: "+886", country: "Taiwan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "TJ", countryCode: "+992", country: "Tajikistan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "TZ", countryCode: "+255", country: "Tanzania", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "TH", countryCode: "+66", country: "Thailand", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "TL", countryCode: "+670", country: "Timor-Leste", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "TG", countryCode: "+228", country: "Togo", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "TK", countryCode: "+690", country: "Tokelau", minLength: 4, maxLength: 4, hasLeadingZero: false },
+  { iso: "TO", countryCode: "+676", country: "Tonga", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "TT", countryCode: "+1", country: "Trinidad and Tobago", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "TN", countryCode: "+216", country: "Tunisia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "TR", countryCode: "+90", country: "Turkey", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "TM", countryCode: "+993", country: "Turkmenistan", minLength: 8, maxLength: 8, hasLeadingZero: false },
+  { iso: "TV", countryCode: "+688", country: "Tuvalu", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "UG", countryCode: "+256", country: "Uganda", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "UA", countryCode: "+380", country: "Ukraine", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "AE", countryCode: "+971", country: "United Arab Emirates", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "GB", countryCode: "+44", country: "United Kingdom", minLength: 10, maxLength: 11, hasLeadingZero: true },
+  { iso: "US", countryCode: "+1", country: "United States", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "UY", countryCode: "+598", country: "Uruguay", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "UZ", countryCode: "+998", country: "Uzbekistan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+  { iso: "VU", countryCode: "+678", country: "Vanuatu", minLength: 5, maxLength: 5, hasLeadingZero: false },
+  { iso: "VA", countryCode: "+39", country: "Vatican City", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "VE", countryCode: "+58", country: "Venezuela", minLength: 10, maxLength: 10, hasLeadingZero: true },
+  { iso: "VN", countryCode: "+84", country: "Vietnam", minLength: 9, maxLength: 10, hasLeadingZero: true },
+  { iso: "VI", countryCode: "+1", country: "US Virgin Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+  { iso: "WF", countryCode: "+681", country: "Wallis and Futuna", minLength: 6, maxLength: 6, hasLeadingZero: false },
+  { iso: "EH", countryCode: "+212", country: "Western Sahara", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "YE", countryCode: "+967", country: "Yemen", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "ZM", countryCode: "+260", country: "Zambia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+  { iso: "ZW", countryCode: "+263", country: "Zimbabwe", minLength: 9, maxLength: 9, hasLeadingZero: true }
+];
+var getCountryByISO = (iso) => {
+  return countryPhoneData.find((c) => c.iso.toUpperCase() === iso.toUpperCase());
+};
+var getAllCountryCodes = () => {
+  return countryPhoneData.map((c) => c.countryCode);
+};
+
 // src/validators/string/phone.ts
 var phone = (locale, message) => {
   return (value) => {
@@ -264,9 +587,65 @@ var phone = (locale, message) => {
       return message || "Invalid phone number!";
     }
     const phoneNumber = typeof value === "number" ? value.toString() : value;
-    const phonePattern = /^\+?[1-9]\d{1,14}$/;
-    if (!phonePattern.test(phoneNumber)) {
-      return message || "Invalid phone number!";
+    if (locale) {
+      const countryData = getCountryByISO(locale);
+      if (!countryData) {
+        return "Invalid country code";
+      }
+      const digitsOnly = phoneNumber.replace(/\D/g, "");
+      const countryCodeDigits = countryData.countryCode.replace(/\D/g, "");
+      let nationalNumber = digitsOnly;
+      if (digitsOnly.startsWith(countryCodeDigits)) {
+        nationalNumber = digitsOnly.substring(countryCodeDigits.length);
+      } else if (phoneNumber.startsWith("0") && countryData.hasLeadingZero) {
+        nationalNumber = digitsOnly.substring(1);
+      }
+      if (nationalNumber.length < countryData.minLength) {
+        return message || `Phone number too short for ${countryData.country}. Minimum: ${countryData.minLength} digits`;
+      }
+      if (nationalNumber.length > countryData.maxLength) {
+        return message || `Phone number too long for ${countryData.country}. Maximum: ${countryData.maxLength} digits`;
+      }
+      return "";
+    }
+    const validCountryCodes = getAllCountryCodes();
+    let isValidCountry = false;
+    for (const code of validCountryCodes) {
+      if (phoneNumber.startsWith(code)) {
+        isValidCountry = true;
+        break;
+      }
+    }
+    const e164Pattern = /^\+?[1-9]\d{1,14}$/;
+    if (!e164Pattern.test(phoneNumber)) {
+      return message || "Invalid phone number format. Use E.164 format: +[country code][number]";
+    }
+    if (!isValidCountry && phoneNumber.startsWith("+")) {
+      return message || "Invalid country code";
+    }
+    return "";
+  };
+};
+
+// src/validators/string/regex.ts
+var regex = (pattern, message) => {
+  return (value) => {
+    if (!value) return "";
+    if (!pattern.test(value)) {
+      return message || "Value does not match the required pattern";
+    }
+    return "";
+  };
+};
+
+// src/validators/string/required.ts
+var required = (message = "This field is required!") => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") {
+      return message;
+    }
+    if (typeof value === "string" && value.trim() === "") {
+      return message;
     }
     return "";
   };
@@ -297,59 +676,9 @@ var url = (message) => {
   };
 };
 
-// src/validators/string/regex.ts
-var regex = (pattern, message) => {
-  return (value) => {
-    if (!value) return "";
-    if (!pattern.test(value)) {
-      return message || "Value does not match the required pattern";
-    }
-    return "";
-  };
-};
-
-// src/validators/string/alpha.ts
-var alpha = (allowSpaces = true, message) => {
-  return (value) => {
-    if (!value) return "";
-    const pattern = allowSpaces ? /^[a-zA-Z\s]*$/ : /^[a-zA-Z]*$/;
-    if (!pattern.test(value)) {
-      return message || "Only alphabetic characters are allowed";
-    }
-    return "";
-  };
-};
-
-// src/validators/string/alphanumeric.ts
-var alphanumeric = (allowSpaces = false, message) => {
-  return (value) => {
-    if (!value) return "";
-    const pattern = allowSpaces ? /^[a-zA-Z0-9\s]*$/ : /^[a-zA-Z0-9]*$/;
-    if (!pattern.test(value)) {
-      return message || "Only alphanumeric characters are allowed";
-    }
-    return "";
-  };
-};
-
-// src/validators/string/numeric.ts
-var numeric = (allowDecimals = false, allowNegative = false, message) => {
-  return (value) => {
-    if (!value) return "";
-    let pattern = allowNegative ? /^-?\d+/ : /^\d+/;
-    if (allowDecimals) {
-      pattern = allowNegative ? /^-?\d+\.?\d*$/ : /^\d+\.?\d*$/;
-    }
-    if (!pattern.test(String(value))) {
-      return message || "Only numeric values are allowed";
-    }
-    return "";
-  };
-};
-
-// src/validators/file/extensions.ts
-var extensions = (extensions2, message) => {
-  const normalizedExtensions = (Array.isArray(extensions2) ? extensions2 : [extensions2]).map((ext) => ext.toLowerCase().replace(/^\./, ""));
+// src/validators/file/file-extension.ts
+var fileExtension = (extensions, message) => {
+  const normalizedExtensions = (Array.isArray(extensions) ? extensions : [extensions]).map((ext) => ext.toLowerCase().replace(/^\./, ""));
   return (value) => {
     if (!value) return "";
     if (!(value instanceof File)) return "";
@@ -361,8 +690,8 @@ var extensions = (extensions2, message) => {
   };
 };
 
-// src/validators/file/max-size.ts
-var maxSize = (sizeMB, message) => {
+// src/validators/file/max-file-size.ts
+var maxFileSize = (sizeMB, message) => {
   return (value) => {
     if (!value) return "";
     if (!(value instanceof File)) return "";
@@ -374,8 +703,8 @@ var maxSize = (sizeMB, message) => {
   };
 };
 
-// src/validators/file/min-size.ts
-var minSize = (sizeMB, message) => {
+// src/validators/file/min-file-size.ts
+var minFileSize = (sizeMB, message) => {
   return (value) => {
     if (!value) return "";
     if (!(value instanceof File)) return "";
@@ -387,8 +716,8 @@ var minSize = (sizeMB, message) => {
   };
 };
 
-// src/validators/file/size.ts
-var size = (sizeMB, message) => {
+// src/validators/file/file-size.ts
+var fileSize = (sizeMB, message) => {
   return (value) => {
     if (!value) return "";
     if (!(value instanceof File)) return "";
@@ -400,108 +729,49 @@ var size = (sizeMB, message) => {
   };
 };
 
-// src/validators/file/image.ts
-var image = (message) => {
+// src/validators/file/file-type.ts
+var fileType = (allowedTypes, message) => {
   return (value) => {
     if (!value) return "";
     if (!(value instanceof File)) return "";
-    const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg"];
-    const imageMimes = [
-      "image/jpeg",
-      "image/png",
-      "image/gif",
-      "image/webp",
-      "image/bmp",
-      "image/svg+xml"
-    ];
-    const extension = value.name.substring(value.name.lastIndexOf(".") + 1).toLowerCase();
-    if (!imageExtensions.includes(extension) || !imageMimes.includes(value.type)) {
-      return message || "File must be a valid image";
+    if (!allowedTypes.includes(value.type)) {
+      return message || `Invalid file type. Allowed types: ${allowedTypes.join(", ")}`;
     }
     return "";
   };
 };
 
-// src/validators/number/min.ts
-var min = (min2, message) => {
+// src/validators/number/min-number.ts
+var minNumber = (min, message) => {
   return (value) => {
     if (value === null || value === void 0 || value === "") return "";
     const numValue = Number(value);
-    if (isNaN(numValue) || numValue < min2) {
-      return message || `Value must be at least ${min2}`;
+    if (isNaN(numValue) || numValue < min) {
+      return message || `Value must be at least ${min}`;
     }
     return "";
   };
 };
 
-// src/validators/number/max.ts
-var max = (max2, message) => {
+// src/validators/number/max-number.ts
+var maxNumber = (max, message) => {
   return (value) => {
     if (value === null || value === void 0 || value === "") return "";
     const numValue = Number(value);
-    if (isNaN(numValue) || numValue > max2) {
-      return message || `Value cannot exceed ${max2}`;
+    if (isNaN(numValue) || numValue > max) {
+      return message || `Value cannot exceed ${max}`;
     }
     return "";
   };
 };
 
-// src/validators/number/range.ts
-var range = (min2, max2, message) => {
+// src/validators/number/range-number.ts
+var rangeNumber = (min, max, message) => {
   return (value) => {
     if (value === null || value === void 0 || value === "") return "";
     const numValue = Number(value);
-    if (isNaN(numValue) || numValue < min2 || numValue > max2) {
-      return message || `Value must be between ${min2} and ${max2}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/date/min.ts
-var minDate = (minDate2, message) => {
-  return (value) => {
-    if (!value) return "";
-    const date = new Date(value);
-    const min2 = new Date(minDate2);
-    if (isNaN(date.getTime()) || isNaN(min2.getTime())) {
-      return message || "Invalid date format";
-    }
-    if (date < min2) {
-      return message || `Date must be after ${min2.toDateString()}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/date/max.ts
-var maxDate = (maxDate2, message) => {
-  return (value) => {
-    if (!value) return "";
-    const date = new Date(value);
-    const max2 = new Date(maxDate2);
-    if (isNaN(date.getTime()) || isNaN(max2.getTime())) {
-      return message || "Invalid date format";
-    }
-    if (date > max2) {
-      return message || `Date must be before ${max2.toDateString()}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/date/range.ts
-var dateRange = (minDate2, maxDate2, message) => {
-  return (value) => {
-    if (!value) return "";
-    const date = new Date(value);
-    const min2 = new Date(minDate2);
-    const max2 = new Date(maxDate2);
-    if (isNaN(date.getTime()) || isNaN(min2.getTime()) || isNaN(max2.getTime())) {
-      return message || "Invalid date format";
-    }
-    if (date < min2 || date > max2) {
-      return message || `Date must be between ${min2.toDateString()} and ${max2.toDateString()}`;
+    if (isNaN(numValue) || numValue < min || numValue > max) {
+      return message || `Value must be between ${min} and ${max}`;
     }
     return "";
   };
@@ -512,25 +782,25 @@ var dateRange = (minDate2, maxDate2, message) => {
   alpha,
   alphanumeric,
   chars,
-  dateRange,
   email,
-  extensions,
+  fileExtension,
+  fileSize,
+  fileType,
   getFormData,
-  image,
-  max,
   maxChars,
   maxDate,
-  maxSize,
-  min,
+  maxFileSize,
+  maxNumber,
   minChars,
   minDate,
-  minSize,
+  minFileSize,
+  minNumber,
   numeric,
   phone,
-  range,
+  rangeDate,
+  rangeNumber,
   regex,
   required,
   sameAs,
-  size,
   url
 });

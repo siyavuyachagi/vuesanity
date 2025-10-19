@@ -1,3 +1,3 @@
-export { min } from './min.js';
-export { max } from './max.js';
-export { range } from './range.js';
+export { minNumber } from './min-number.js';
+export { maxNumber } from './max-number.js';
+export { rangeNumber } from './range-number.js';

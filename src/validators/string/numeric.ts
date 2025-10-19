@@ -14,16 +14,22 @@ export const numeric = (
     return (value: any): string => {
         if (!value) return "";
 
-        let pattern = allowNegative ? /^-?\d+/ : /^\d+/;
+        let pattern: RegExp;
+
         if (allowDecimals) {
             pattern = allowNegative
-                ? /^-?\d+\.?\d*$/
-                : /^\d+\.?\d*$/;
+                ? /^-?\d+(\.\d+)?$/   // allows negative decimals
+                : /^\d+(\.\d+)?$/;    // positive decimals only
+        } else {
+            pattern = allowNegative
+                ? /^-?\d+$/            // negative integers allowed
+                : /^\d+$/;             // positive integers only
         }
 
         if (!pattern.test(String(value))) {
             return message || "Only numeric values are allowed";
         }
+
         return "";
     };
 };

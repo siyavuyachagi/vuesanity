@@ -1,21 +1,5 @@
 # VueSanity - Quick Reference Guide
 
-## 📊 Project Stats
-
-| Metric | Count |
-|--------|-------|
-| Total Validators | 23 |
-| String Validators | 12 |
-| File Validators | 5 |
-| Number Validators | 3 |
-| Date Validators | 3 |
-| Lines of Code | ~3 666 |
-| Number of Files | ~ 177 |
-| Bundle Size (est.) | ~137.84 KB |
-| Dependencies | 0 (Vue 3 peer only) |
-
----
-
 ## 🎯 All Validators at a Glance
 
 ### String Validators

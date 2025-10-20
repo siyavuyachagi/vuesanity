@@ -114,16 +114,16 @@ const registrationForm: ModelConfig = reactive({
     value: null,
     validations: [
       required('Age is required'),
-      min(18, 'You must be at least 18 years old'),
-      max(120, 'Please enter a valid age')
+      minNumber(18, 'You must be at least 18 years old'),
+      maxNumber(120, 'Please enter a valid age')
     ],
     errors: []
   },
   profilePicture: {
     value: null,
     validations: [
-      image('Profile picture must be an image'),
-      maxSize(2, 'Image must be less than 2MB')
+      fileType(["image/png", "image/jpeg"],'Profile picture must be an image'),
+      maxFileSize(2, 'Image must be less than 2MB')
     ],
     errors: []
   }
@@ -235,39 +235,39 @@ numeric(true, true); // allowDecimals=true, allowNegative=true
 
 ```typescript
 import {
-  extensions,
-  maxSize,
-  minSize,
-  size,
-  image
+  fileExtensions,
+  maxFileSize,
+  minFileSize,
+  fileSize,
+  fileType
 } from '@siyavuyachagi/vuesanity';
 
 // File type validation
-extensions(['pdf', 'docx', 'xlsx'], 'Only PDF and Office files allowed');
-extensions('pdf', 'Only PDF files');
+fileExtensions(['pdf', 'docx', 'xlsx'], 'Only PDF and Office files allowed');
+fileExtensions('pdf', 'Only PDF files');
 
 // File size validation (in MB)
-maxSize(5, 'File must be less than 5MB');
-minSize(0.1, 'File must be at least 0.1MB');
-size(2, 'File must be exactly 2MB');
+maxFileSize(5, 'File must be less than 5MB');
+minFileSize(0.1, 'File must be at least 0.1MB');
+fileSize(2, 'File must be exactly 2MB');
 
 // Image validation
-image('Please upload a valid image');
+fileType(["image/png", "image/jpeg"],'Please upload a valid image');
 ```
 
 ### Number Validators
 
 ```typescript
-import { min, max, range } from '@siyavuyachagi/vuesanity';
+import { minNumber, maxNumber, rangeNumber } from '@siyavuyachagi/vuesanity';
 
 // Minimum value
-min(0, 'Value must be at least 0');
+minNumber(0, 'Value must be at least 0');
 
 // Maximum value
-max(100, 'Value cannot exceed 100');
+maxNumber(100, 'Value cannot exceed 100');
 
 // Range validation
-range(1, 100, 'Value must be between 1 and 100');
+rangeNumber(1, 100, 'Value must be between 1 and 100');
 ```
 
 ### Date Validators
@@ -282,7 +282,7 @@ minDate(new Date('2024-01-01'), 'Date must be after 2024-01-01');
 maxDate(new Date(), 'Date cannot be in the future');
 
 // Date range
-dateRange(
+rangeDate(
   new Date('2024-01-01'),
   new Date('2024-12-31'),
   'Date must be in 2024'
@@ -429,8 +429,8 @@ const uploadForm: ModelConfig = reactive({
     value: null,
     validations: [
       required('File is required'),
-      extensions(['pdf', 'docx']),
-      maxSize(5)
+      fileExtension(['pdf', 'docx']),
+      maxFileSize(5)
     ],
     errors: []
   }
@@ -527,8 +527,8 @@ const applicantForm: ModelConfig = reactive({
 if (applicantForm.hasExperience.value) {
   applicantForm.yearsOfExperience.validations = [
     required('Years of experience is required'),
-    min(1, 'Must have at least 1 year'),
-    max(60, 'Please enter a valid number')
+    minNumber(1, 'Must have at least 1 year'),
+    maxNumber(60, 'Please enter a valid number')
   ];
 }
 
@@ -620,8 +620,8 @@ const documentUploadForm: ModelConfig = reactive({
     value: null,
     validations: [
       required('ID document required'),
-      extensions(['pdf', 'jpg', 'png']),
-      maxSize(5)
+      fileExtension(['pdf', 'jpg', 'png']),
+      maxFileSize(5)
     ],
     errors: []
   },
@@ -629,8 +629,8 @@ const documentUploadForm: ModelConfig = reactive({
     value: null,
     validations: [
       required('Proof of address required'),
-      extensions(['pdf', 'jpg', 'png']),
-      maxSize(5)
+      fileExtension(['pdf', 'jpg', 'png']),
+      maxFileSize(5)
     ],
     errors: []
   }
@@ -682,7 +682,7 @@ const form = new VueSanity(myModel);
 // Import by category for better tree-shaking
 import VueSanity from '@siyavuyachagi/vuesanity';
 import { required, email, minChars, maxChars, alpha } from '@siyavuyachagi/vuesanity/validators/string';
-import { maxSize, extensions, image } from '@siyavuyachagi/vuesanity/validators/file';
+import { maxFileSize, fileExtension, fileType } from '@siyavuyachagi/vuesanity/validators/file';
 import type { ModelConfig } from '@siyavuyachagi/vuesanity';
 ```
 

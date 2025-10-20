@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://img.shields.io/npm/v/@siyavuyachagi/vuesanity.svg)](https://www.npmjs.com/package/@siyavuyachagi/vuesanity)
+[![Sponsor](https://img.shields.io/badge/Sponsor-💖-ff69b4)](https://github.com/sponsors/siyavuyachagi)
+
 
 A lightweight and flexible Vue 3 validation utility designed to simplify form validation and state management in Vue applications. Built with TypeScript for enhanced type safety and optimal performance.
 
@@ -91,7 +93,7 @@ console.log(form.formData); // FormData instance for file uploads
 | `maxFileSize(sizeMB, message?)` | Validates maximum file size | `maxFileSize(5, 'Max 5MB')` |
 | `minFileSize(sizeMB, message?)` | Validates minimum file size | `minFileSize(0.1)` |
 | `fileSize(sizeMB, message?)` | Validates exact file size | `fileSize(2)` |
-| `image(message?)` | Validates image file format | `image('Invalid image')` |
+| `fileType(allowedTypes, message?)` | Validates file MIME types | `fileType(["image/png", "image/jpeg"],'Invalid image')` |
 
 ### Number Validators
 

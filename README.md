@@ -122,3 +122,34 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Author
 
 Chagi Siyavuya (CeeJay) - [@siyavuyachagi](https://github.com/siyavuyachagi)
+
+## 💖 Sponsor VueSanity
+
+VueSanity is an open-source form validation and utility library for Vue — built and maintained by [@siyavuyachagi](https://github.com/siyavuyachagi).
+
+Your sponsorship helps me dedicate more time to improving the library, adding new validators, maintaining documentation, and providing ongoing support.
+
+### ☕ Ways to Support
+
+If VueSanity has saved you time or made your project better, consider sponsoring the work behind it:
+
+- 💖 **GitHub Sponsors:** [Sponsor @siyavuyachagi](https://github.com/sponsors/siyavuyachagi)
+- ☕ **Buy Me a Coffee:** [buymeacoffee.com/siyavuyachagi](https://buymeacoffee.com/siyavuyachagi)
+- 💸 **PayPal:** [paypal.me/siyavuyachagi](https://paypal.me/siyavuyachagi)
+- 🎯 **Patreon:** [patreon.com/siyavuyachagi](https://patreon.com/siyavuyachagi)
+
+Your support directly helps:
+- Ongoing maintenance and bug fixes
+- Building new validators and utilities
+- Writing documentation and tutorials
+- Supporting other open-source contributors
+
+---
+
+### 🧠 Why Sponsor?
+
+VueSanity is designed for **clean, reusable, and declarative validation in Vue**.  
+If you or your team depend on it, your contribution ensures it continues to evolve sustainably.
+
+Every sponsor, no matter the amount, makes a difference.  
+Thank you for supporting open source 💚

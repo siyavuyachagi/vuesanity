@@ -61,6 +61,36 @@ Use [Conventional Commits](https://www.conventionalcommits.org):
 * `src/` contains TypeScript only.
 * No external imports in `dist/`.
 * Always export from `src/index.ts`.
+* Tests should import and test from `src/`, never from `dist/`.
+* `/docs` folder contains documentation and guides.
+
+---
+
+## Versioning Strategy
+
+### Release Management
+
+* **Never override or mutate a released version.** Each release is immutable.
+* Always create a **new version number** for any change, even bug fixes.
+* Use **Semantic Versioning** (MAJOR.MINOR.PATCH):
+  * `PATCH` (e.g., `1.0.1`) – bug fixes and improvements to existing functionality
+  * `MINOR` (e.g., `1.1.0`) – new features (backward compatible)
+  * `MAJOR` (e.g., `2.0.0`) – breaking changes
+
+### Branching Strategy
+
+* Keep one main development branch (`main`).
+* Tag releases using git tags (e.g., `v1.0.0`, `v1.0.1`, `v1.1.0`).
+* For hotfixes on old versions, create a temporary branch from the release tag, fix, and release as a new patch version.
+
+### Example Workflow
+
+1. Release `v1.0.0` to production
+2. Continue development on `main`
+3. Bug discovered in `v1.0.0`
+4. Create hotfix branch from `v1.0.0` tag
+5. Fix bug and release as `v1.0.1`
+6. Merge hotfix back into `main`
 
 ---
 

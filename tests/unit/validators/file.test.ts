@@ -6,7 +6,7 @@ import {
     fileType,
     maxFileSize,
     minFileSize,
-} from '../../../dist/validators/file';
+} from '../../../src/validators/file';
 
 describe('File Validators', () => {
     describe('fileExtension()', () => {
@@ -185,6 +185,15 @@ describe('File Validators', () => {
 
     describe('fileType()', () => {
         const allowedTypes = ['image/png', 'image/jpeg', 'application/pdf'];
+
+        it('should accept single allowed MIME type as string', () => {
+            const validator = fileType(allowedTypes[0]);
+            const file = new File([''], 'photo.png', { type: 'image/png' });
+            expect(validator(file)).toBe(''); // Valid
+
+            const invalidFile = new File([''], 'file.pdf', { type: 'application/pdf' });
+            expect(validator(invalidFile)).toBe(`Invalid file type. Allowed types: ${allowedTypes[0]}`); // Invalid
+        });
 
         it('should accept allowed MIME types', () => {
             const validator = fileType(allowedTypes);

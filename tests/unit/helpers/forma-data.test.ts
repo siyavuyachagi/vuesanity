@@ -1,6 +1,6 @@
 // tests/unit/helpers/form-data.test.ts
 import { describe, it, expect } from 'vitest';
-import { getFormData } from '../../../src/helpers/form-data.helper';
+import { getFormData } from '../../../src/helpers/form-data';
 import { ref } from 'vue';
 
 describe('FormData Helper', () => {

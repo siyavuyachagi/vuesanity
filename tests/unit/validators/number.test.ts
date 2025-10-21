@@ -1,6 +1,6 @@
 // tests/unit/validators/number.test.ts
 import { describe, it, expect } from 'vitest';
-import { minNumber, maxNumber, rangeNumber } from '../../../dist/validators/number';
+import { minNumber, maxNumber, rangeNumber } from '../../../src/validators/number';
 
 describe('Number Validators', () => {
   describe('minNumber()', () => {

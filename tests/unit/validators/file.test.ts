@@ -11,9 +11,14 @@ import {
 describe('File Validators', () => {
     describe('fileExtension()', () => {
         it('should accept single extension as string', () => {
-            const validator = fileExtension('pdf');
             const file = new File([''], 'document.pdf');
+            const invalidFile = new File([''], 'document.pdf');
+
+            const validator = fileExtension('pdf');
             expect(validator(file)).toBe('');
+
+            const invalidValidator = fileExtension('doc');
+            expect(invalidValidator(invalidFile)).toContain('not supported');
         });
 
         it('should accept multiple extensions as array', () => {

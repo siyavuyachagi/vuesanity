@@ -15,6 +15,7 @@ export const fileExtension = (
   extensions: string | string[],
   message?: string
 ): ((value: any) => string) => {
+
   const normalizedExtensions = (
     Array.isArray(extensions) ? extensions : [extensions]
   ).map((ext) => ext.toLowerCase().replace(/^\./, ""));

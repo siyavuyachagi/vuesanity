@@ -53,6 +53,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org):
 * `feat:` add new feature
 * `fix:` bug fix or improvement
 * `chore:` maintenance
+* `docs:` update documents
 
 ---
 

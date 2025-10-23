@@ -5,7 +5,7 @@
 [![Sponsor](https://img.shields.io/badge/Sponsor-💖-ff69b4)](https://github.com/sponsors/siyavuyachagi)
 
 
-A lightweight and flexible Vue 3 validation utility designed to simplify form validation and state management in Vue applications. Built with TypeScript for enhanced type safety and optimal performance.
+A lightweight and flexible Vue3/Nuxtjs validation utility designed to simplify form validation and state management in Vue applications. Built with TypeScript for enhanced type safety and optimal performance.
 
 ## Why VueSanity?
 
@@ -135,7 +135,7 @@ Chagi Siyavuya (CeeJay) - [@siyavuyachagi](https://github.com/siyavuyachagi)
 
 ## 💖 Sponsor VueSanity
 
-VueSanity is an open-source form validation and utility library for Vue — built and maintained by [@siyavuyachagi](https://github.com/siyavuyachagi).
+VueSanity is an open-source form validation and utility library for Vue/Nuxt — built and maintained by [@siyavuyachagi](https://github.com/siyavuyachagi).
 
 Your sponsorship helps me dedicate more time to improving the library, adding new validators, maintaining documentation, and providing ongoing support.
 

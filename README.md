@@ -143,7 +143,7 @@ Your sponsorship helps me dedicate more time to improving the library, adding ne
 
 If VueSanity has saved you time or made your project better, consider sponsoring the work behind it:
 
-- 💖 **GitHub Sponsors:** [Sponsor @siyavuyachagi](https://github.com/sponsors/siyavuyachagi)
+- 💖 **GitHub Sponsors:** [Sponsor@siyavuyachagi](https://github.com/sponsors/siyavuyachagi)
 - ☕ **Buy Me a Coffee:** [buymeacoffee.com/siyavuyachagi](https://buymeacoffee.com/siyavuyachagi)
 - 💸 **PayPal:** [paypal.me/siyavuyachagi](https://paypal.me/siyavuyachagi)
 - 🎯 **Patreon:** [patreon.com/siyavuyachagi](https://patreon.com/siyavuyachagi)

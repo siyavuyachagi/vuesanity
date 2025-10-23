@@ -66,6 +66,15 @@ console.log(form.normalizedModel); // Clean data object ready for submission
 console.log(form.formData); // FormData instance for file uploads
 ```
 
+## Why VueSanity?
+
+Unlike Vuelidate, VueSanity lets you wrap your model with both props and validations in one place — no separate rules objects, no boilerplate, no headaches.
+✅ All-in-one reactive model + validation
+✅ Clean, type-safe, and ready for FormData
+✅ Immediate validation feedback
+
+It’s faster to set up, easier to read, and simpler to maintain, so you can focus on building features, not wiring forms.
+
 ## Available Validators
 
 ### String Validators

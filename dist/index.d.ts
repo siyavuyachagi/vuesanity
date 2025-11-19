@@ -1,4 +1,4 @@
-export { default as VueSanity } from './core/vuesanity.js';
+export { default } from './core/vuesanity.js';
 export { getFormData } from './helpers/form-data.js';
 export { minDate } from './validators/date/min-date.js';
 export { maxDate } from './validators/date/max-date.js';
@@ -24,6 +24,6 @@ export { minNumber } from './validators/number/min-number.js';
 export { maxNumber } from './validators/number/max-number.js';
 export { rangeNumber } from './validators/number/range-number.js';
 export { FieldConfig } from './types/field.js';
-export { ModelConfig } from './types/model.js';
 export { ValidationRule } from './types/rule.js';
 import 'vue';
+import './types/model.js';

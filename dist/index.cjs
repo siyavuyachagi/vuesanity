@@ -20,10 +20,10 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var index_exports = {};
 __export(index_exports, {
-  VueSanity: () => VueSanity,
   alpha: () => alpha,
   alphanumeric: () => alphanumeric,
   chars: () => chars,
+  default: () => VueSanity,
   email: () => email,
   fileExtension: () => fileExtension,
   fileSize: () => fileSize,
@@ -779,7 +779,6 @@ var rangeNumber = (min, max, message) => {
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  VueSanity,
   alpha,
   alphanumeric,
   chars,

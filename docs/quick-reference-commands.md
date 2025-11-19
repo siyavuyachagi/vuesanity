@@ -4,41 +4,41 @@
 
 ### String Validators
 ```typescript
-required()                                    // Not empty
-email()                                       // Valid email
-minChars(8)                                  // Min length
-maxChars(50)                                 // Max length
-chars(10)                                    // Exact length
-phone()                                      // E.164 format
-sameAs(() => pwd.value)                     // Compare values
-url()                                        // Valid URL
-regex(/^[A-Z]{3}\d{3}$/)                   // Custom pattern
-alpha(true)                                  // Letters only
-alphanumeric(false)                         // Letters + numbers
-numeric(true, false)                        // Numbers only
+alpha(true)                           // Letters only
+alphanumeric(false)                   // Letters + numbers
+chars(10)                             // Exact length
+email()                               // Valid email
+maxChars(50)                          // Max length
+minChars(8)                           // Min length
+numeric(true, false)                  // Numbers only, allow (decimals, negative)
+phone()                               // E.164 format
+regex(/^[A-Z]{3}\d{3}$/)              // Custom pattern
+required()                            // Not empty
+sameAs(() => pwd.value)               // Compare values
+url()                                 // Valid URL
 ```
 
 ### File Validators
 ```typescript
-extensions(['pdf', 'doc'])                  // File type
-maxSize(5)                                  // Max 5MB
-minSize(0.1)                                // Min 0.1MB
-size(2)                                     // Exactly 2MB
-image()                                     // Image file
+fileExtensions(['pdf', 'doc'])                  // File type
+fileSize(2)                                     // Exactly 2MB
+fileType("image/png", "Invalid file type")      // Image file
+maxFileSize(5)                                  // Max 5MB
+minFileSize(0.1)                                // Min 0.1MB
 ```
 
 ### Number Validators
 ```typescript
-min(0)                                      // >= 0
-max(100)                                    // <= 100
-range(1, 100)                               // Between 1-100
+maxNumber(100)                        // <= 100
+minNumber(0)                          // >= 0
+rangeNumber(1, 100)                   // Between 1-100
 ```
 
 ### Date Validators
 ```typescript
-minDate(new Date('2024-01-01'))            // After date
 maxDate(new Date())                         // Before date
-dateRange(min, max)                         // Between dates
+minDate(new Date('2024-01-01'))             // After date
+rangeDate(min, max)                         // Between dates
 ```
 
 ---
@@ -54,8 +54,9 @@ npm install @siyavuyachagi/vuesanity
 ```typescript
 import { reactive } from 'vue';
 import VueSanity, { required, email, minChars } from '@siyavuyachagi/vuesanity';
+import type ModelConfig from '@siyavuyachagi/vuesanity/types'
 
-const form = reactive({
+const form: ModelConfig = reactive({
   email: { value: '', validations: [required(), email()], errors: [] },
   password: { value: '', validations: [required(), minChars(8)], errors: [] }
 });
@@ -76,8 +77,8 @@ console.log(validator.formData);          // FormData object
 ```typescript
 import VueSanity, {
   required, email, minChars,
-  maxSize, extensions,
-  min, max, range,
+  maxFileSize, fileExtensions,
+  minNumber, maxNumber, rangeNumber,
   minDate, maxDate
 } from '@siyavuyachagi/vuesanity';
 ```
@@ -217,7 +218,7 @@ cat dist/index.d.ts
 ### Issue: TypeScript errors
 ```typescript
 // Ensure types are imported
-import type { ModelConfig } from '@siyavuyachagi/vuesanity';
+import type ModelConfig from '@siyavuyachagi/vuesanity/types';
 
 // Use proper typing
 const form: ModelConfig = reactive({...});
@@ -254,7 +255,7 @@ const validator = new VueSanity(myForm);
 
 ### Login Form
 ```typescript
-const loginForm = reactive({
+const loginForm: ModelConfig = reactive({
   email: { value: '', validations: [required(), email()], errors: [] },
   password: { value: '', validations: [required(), minChars(8)], errors: [] }
 });
@@ -262,7 +263,7 @@ const loginForm = reactive({
 
 ### Registration Form
 ```typescript
-const regForm = reactive({
+const regForm: ModelConfig = reactive({
   firstName: { value: '', validations: [required(), alpha(true)], errors: [] },
   email: { value: '', validations: [required(), email()], errors: [] },
   age: { value: null, validations: [required(), min(18), max(120)], errors: [] },
@@ -273,7 +274,7 @@ const regForm = reactive({
 
 ### File Upload
 ```typescript
-const uploadForm = reactive({
+const uploadForm: ModelConfig = reactive({
   title: { value: '', validations: [required()], errors: [] },
   file: { value: null, validations: [required(), extensions(['pdf']), maxSize(5)], errors: [] }
 });
@@ -281,7 +282,7 @@ const uploadForm = reactive({
 
 ### Survey Form
 ```typescript
-const surveyForm = reactive({
+const surveyForm: ModelConfig = reactive({
   birthDate: { value: null, validations: [required(), maxDate(new Date())], errors: [] },
   rating: { value: null, validations: [required(), range(1, 5)], errors: [] },
   website: { value: '', validations: [url()], errors: [] }

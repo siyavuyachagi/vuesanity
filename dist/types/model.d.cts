@@ -24,4 +24,4 @@ interface ModelConfig {
     [key: string]: FieldConfig;
 }
 
-export type { ModelConfig };
+export type { ModelConfig as default };

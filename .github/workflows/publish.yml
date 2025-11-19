@@ -1,13 +1,31 @@
+
 # # .github/workflows/publish.yml
-# name: Publish to npm
+# name: Manual Release & Publish
 
 # on:
 #   release:
-#     types: [published]
+#     types: [published]   # ONLY runs when YOU publish a GitHub Release
 
 # jobs:
+#   generate-changelog:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout source
+#         uses: actions/checkout@v4
+
+#       - name: Run Release Please (for changelog only)
+#         uses: google-github-actions/release-please-action@v4
+#         with:
+#           release-type: node
+#           package-name: vuesanity
+#           command: manifest            # Prevents version bumps / tags
+#           monorepo-tags: false
+#           token: ${{ secrets.GITHUB_TOKEN }}
+
 #   publish:
 #     runs-on: ubuntu-latest
+#     needs: generate-changelog
+
 #     steps:
 #       - name: Checkout source
 #         uses: actions/checkout@v4
@@ -30,37 +48,38 @@
 #           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
-
-
 # .github/workflows/publish.yml
-name: Manual Release & Publish
+name: Manual Release & Auto Changelog
 
 on:
   release:
-    types: [published]   # ONLY runs when YOU publish a GitHub Release
+    types: [published]   # only triggers when you create a release manually
 
 jobs:
-  generate-changelog:
+  changelog:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Release Please (for changelog only)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate CHANGELOG & release notes
         uses: google-github-actions/release-please-action@v4
         with:
           release-type: node
           package-name: vuesanity
-          command: manifest            # Prevents version bumps / tags
-          monorepo-tags: false
+          command: github-release    # only generates release notes for the release
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
+    needs: changelog
     runs-on: ubuntu-latest
-    needs: generate-changelog
-
     steps:
-      - name: Checkout source
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node

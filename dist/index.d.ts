@@ -1,5 +1,5 @@
 export { default as VueSanity } from './core/vuesanity.js';
-export { getFormData } from './helpers/form-data.helper.js';
+export { getFormData } from './helpers/form-data.js';
 export { minDate } from './validators/date/min-date.js';
 export { maxDate } from './validators/date/max-date.js';
 export { rangeDate } from './validators/date/range-date.js';

@@ -13,7 +13,7 @@ import {
   alpha,
   alphanumeric,
   numeric
-} from '../../../src/validators/string';
+} from '../../../src';
 
 describe('String Validators', () => {
   describe('required()', () => {

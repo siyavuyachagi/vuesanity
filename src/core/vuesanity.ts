@@ -1,7 +1,7 @@
-// ./src/core/vuesanity.class.ts
+// ./src/core/vuesanity.ts
 
 import { reactive, Reactive, ref } from "vue";
-import { ModelConfig, ValidationRule } from "../types";
+import ModelConfig, { ValidationRule } from "../types";
 import { getFormData } from "../helpers/form-data";
 
 /**

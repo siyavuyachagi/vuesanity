@@ -17,12 +17,12 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/helpers/form-data.helper.ts
-var form_data_helper_exports = {};
-__export(form_data_helper_exports, {
+// src/helpers/form-data.ts
+var form_data_exports = {};
+__export(form_data_exports, {
   getFormData: () => getFormData
 });
-module.exports = __toCommonJS(form_data_helper_exports);
+module.exports = __toCommonJS(form_data_exports);
 function getFormData(object) {
   const formData = new FormData();
   function processValue(value) {

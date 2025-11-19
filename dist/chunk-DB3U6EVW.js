@@ -1,6 +1,6 @@
 import {
   getFormData
-} from "./chunk-O5JMOZWE.js";
+} from "./chunk-L6NAN44R.js";
 
 // src/core/vuesanity.ts
 import { reactive, ref } from "vue";

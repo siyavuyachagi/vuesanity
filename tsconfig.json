@@ -8,7 +8,11 @@
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",           // <--- root of the project
+    "paths": {
+      "~/*": ["./*"]           // <--- '~/' points to project root
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

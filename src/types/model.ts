@@ -16,7 +16,7 @@ import { FieldConfig } from "./field";
     });
 ```
  */
-export interface ModelConfig {
+export default interface ModelConfig {
   /**
    *Model field/property name
    */

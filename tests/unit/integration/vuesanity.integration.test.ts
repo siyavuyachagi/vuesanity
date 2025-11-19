@@ -1,8 +1,8 @@
 // tests/integration/vuesanity.integration.test.ts
 import { describe, it, expect } from 'vitest';
-import { reactive, ref } from 'vue';
-import { alphanumeric, email, fileExtension, maxFileSize, minChars, ModelConfig, required, sameAs, VueSanity } from '../../../dist';
-
+import { reactive } from 'vue';
+import VueSanity, { alphanumeric, email, fileExtension, maxFileSize, minChars, required, sameAs } from '../../../src';
+import type ModelConfig from '../../../src/types';
 
 describe('VueSanity Integration Tests', () => {
     describe('Real-world Form Scenarios', () => {

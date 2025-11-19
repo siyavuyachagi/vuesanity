@@ -1,4 +1,4 @@
-// src/helpers/form-data.helper.ts
+// src/helpers/form-data.ts
 function getFormData(object) {
   const formData = new FormData();
   function processValue(value) {

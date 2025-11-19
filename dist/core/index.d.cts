@@ -1,5 +1,5 @@
 export { default as VueSanity } from './vuesanity.cjs';
-export { getFormData } from '../helpers/form-data.helper.cjs';
+export { getFormData } from '../helpers/form-data.cjs';
 import 'vue';
 import '../types/model.cjs';
 import '../types/field.cjs';

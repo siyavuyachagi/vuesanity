@@ -1,9 +1,28 @@
 # Changelog
 
-All notable changes to VueSanity will be documented in this file.
+All notable changes to VueSanity are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+
+
+## [1.0.3] - 2025-12-11
+
+### 🛠 Fixes & Updates
+
+* **Fixed `ModelConfig` type export issues** across source, distribution, and test files.
+* **Updated project scripts** and statistics handling.
+* **Published rules** now correctly include commits.
+* Minor maintenance updates (`tsconfig.json` and build configuration).
+
+### 📝 Notes
+
+* No functional changes to validators.
+* Fully backward compatible.
+* Version bump reflects internal improvements and fixes.
+
+
 
 ## [1.0.2] - 2025-11-19
 

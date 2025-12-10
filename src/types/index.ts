@@ -1,5 +1,5 @@
 // ./types/index.ts
 
 export * from "./field";
-export { default } from "./model";
+export type { default as ModelConfig } from "./model-config";
 export * from "./rule";

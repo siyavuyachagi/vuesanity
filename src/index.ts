@@ -41,6 +41,7 @@ export {
     rangeNumber,
 } from './validators/number/index';
 
-
-// Types
-export * from './types/index';
+// Types - Export as types only
+export type { default as ModelConfig } from './types/model-config';
+export type { FieldConfig } from './types/field';
+export type { ValidationRule } from './types/rule';

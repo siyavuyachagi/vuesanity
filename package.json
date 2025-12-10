@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@siyavuyachagi/vuesanity",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lightweight and flexible Vue 3 validation utility designed to simplify model validation in Vue applications. Built with TypeScript for type safety and performance.",
   "license": "MIT",
   "author": "Chagi Siyavuya (CeeJay)",
@@ -40,12 +40,12 @@
   ],
   "scripts": {
     "build": "tsup src --dts --format esm,cjs --out-dir dist --clean",
-    "metrics": "node scripts/metrics.js",
     "export:structure": "node scripts/export-structure.js",
+    "metrics": "node scripts/metrics.js",
+    "prepare": "npm run build",
     "test": "vitest",
-    "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "prepare": "npm run build"
+    "test:ui": "vitest --ui"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",

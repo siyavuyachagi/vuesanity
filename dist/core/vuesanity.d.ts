@@ -1,6 +1,6 @@
 import { Reactive } from 'vue';
-import ModelConfig from '../types/model.js';
 import { getFormData } from '../helpers/form-data.js';
+import ModelConfig from '../types/model-config.js';
 import '../types/field.js';
 import '../types/rule.js';
 

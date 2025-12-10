@@ -1,3 +1,3 @@
 export { FieldConfig } from './field.js';
-export { default } from './model.js';
+export { default as ModelConfig } from './model-config.js';
 export { ValidationRule } from './rule.js';

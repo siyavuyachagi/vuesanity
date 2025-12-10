@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import { reactive } from 'vue';
 import VueSanity, { alphanumeric, email, fileExtension, maxFileSize, minChars, required, sameAs } from '../../../src';
-import type ModelConfig from '../../../src/types';
+import type { ModelConfig } from '../../../src/types';
 
 describe('VueSanity Integration Tests', () => {
     describe('Real-world Form Scenarios', () => {

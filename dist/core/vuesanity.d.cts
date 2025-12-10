@@ -1,6 +1,6 @@
 import { Reactive } from 'vue';
-import ModelConfig from '../types/model.cjs';
 import { getFormData } from '../helpers/form-data.cjs';
+import ModelConfig from '../types/model-config.cjs';
 import '../types/field.cjs';
 import '../types/rule.cjs';
 

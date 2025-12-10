@@ -23,7 +23,7 @@ export { fileType } from './validators/file/file-type.cjs';
 export { minNumber } from './validators/number/min-number.cjs';
 export { maxNumber } from './validators/number/max-number.cjs';
 export { rangeNumber } from './validators/number/range-number.cjs';
+export { default as ModelConfig } from './types/model-config.cjs';
 export { FieldConfig } from './types/field.cjs';
 export { ValidationRule } from './types/rule.cjs';
 import 'vue';
-import './types/model.cjs';

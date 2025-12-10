@@ -43,7 +43,7 @@ yarn add @siyavuyachagi/vuesanity
 ```typescript
 import { reactive } from 'vue';
 import VueSanity, { required, email, minChars } from '@siyavuyachagi/vuesanity';
-import type ModelConfig from '@siyavuyachagi/vuesanity/types';
+import type { ModelConfig } from '@siyavuyachagi/vuesanity';
 
 // Define your form model with validation rules
 const userForm: ModelConfig = reactive({

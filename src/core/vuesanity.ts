@@ -1,8 +1,9 @@
 // ./src/core/vuesanity.ts
 
 import { reactive, Reactive, ref } from "vue";
-import ModelConfig, { ValidationRule } from "../types";
+import { ValidationRule } from "../types";
 import { getFormData } from "../helpers/form-data";
+import ModelConfig from "../types/model-config";
 
 /**
  * VueSanity - A form validation and normalization utility for Vue 3.

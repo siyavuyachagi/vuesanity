@@ -1,34 +1,11 @@
-
-# .github/workflows/publish.yml
 name: Manual Release & Auto Changelog
 
 on:
   release:
-    types: [published]   # only triggers when you create a release manually
+    types: [published]
 
 jobs:
-  changelog:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Generate CHANGELOG & release notes
-        uses: google-github-actions/release-please-action@v4
-        with:
-          release-type: node
-          package-name: vuesanity
-          command: github-release    # only generates release notes for the release
-          include-commits: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   publish:
-    needs: changelog
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -50,4 +27,3 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-

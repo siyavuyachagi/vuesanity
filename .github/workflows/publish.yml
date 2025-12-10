@@ -1,8 +1,9 @@
-name: Manual Release & Auto Changelog
+name: Manual Release & Publish
 
 on:
+  workflow_dispatch:   # allows manual trigger
   release:
-    types: [published]
+    types: [published] # keeps existing release trigger
 
 jobs:
   publish:

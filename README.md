@@ -125,7 +125,7 @@ console.log(form.formData); // FormData instance for file uploads
 
 ## Documentation
 
-For detailed usage instructions and advanced examples, see [/docs/usage.md](./docs/usage.md).
+For detailed usage instructions and advanced examples
 
 * Export Structure & Organization: [/docs/export-structure-organization.md](./docs/export-structure-organization.md)
 * Project Statistics: [/docs/project-stats.md](./docs/project-stats.md)

@@ -1,6 +1,6 @@
 // tests/unit/validators/number-date.test.ts
 import { describe, expect, it } from "vitest";
-import { maxDate, minDate, rangeDate } from "../../../src";
+import { maxDate, minDate, rangeDate } from "../../src";
 
 
 

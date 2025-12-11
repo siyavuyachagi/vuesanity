@@ -1,8 +1,8 @@
 // tests/unit/core/vuesanity.test.ts
 import { describe, it, expect } from 'vitest';
 import { reactive } from 'vue';
-import VueSanity, { required, email, minChars } from '../../../src';
-import type ModelConfig from '../../../src/types';
+import VueSanity, { required, email, minChars } from '../../src';
+import type ModelConfig from '../../src/types';
 
 describe('VueSanity Core', () => {
     describe('Initialization', () => {

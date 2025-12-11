@@ -6,7 +6,7 @@ import {
     fileType,
     maxFileSize,
     minFileSize,
-} from '../../../src';
+} from '../../src';
 
 describe('File Validators', () => {
     describe('fileExtension()', () => {

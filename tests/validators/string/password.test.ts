@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { password } from "../../../../src";
+import { password } from "../../../src";
 
 describe("password validator", () => {
 

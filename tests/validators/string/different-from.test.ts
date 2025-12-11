@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { differentFrom } from "../../../../src";
+import { differentFrom } from "../../../src";
 
 describe("String validator", () => {
     describe("differentFrom", () => {

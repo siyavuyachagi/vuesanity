@@ -5,6 +5,33 @@ All notable changes to VueSanity are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 2025-12-11
+
+### 🎉 Features
+
+* Added **`password` string validator**:
+  - Enforces minimum length of 6 characters
+  - Requires at least one special character
+  - Blocks passwords consisting of the same repeated character (case-insensitive)
+* Added **`differentFrom` validator**:
+  - Ensures a field is not equal to another value
+  - Accepts direct values or getter functions
+
+### 🧪 Tests
+
+* Full unit tests for `password` and `differentFrom` validators
+* Tests cover edge cases and rule enforcement
+
+### 📚 Documentation
+
+* Updated docs to include new validators
+* Added examples for `password` and `differentFrom`
+* Ensured TypeScript typings are documented
+
+### 📝 Notes
+
+* Backward compatible with all existing validators
+* No changes to existing string, number, or file validators
 
 
 ## [1.0.3] - 2025-12-11

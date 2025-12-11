@@ -1,10 +1,12 @@
 export { alpha } from './string/alpha.cjs';
 export { alphanumeric } from './string/alphanumeric.cjs';
 export { chars } from './string/chars.cjs';
+export { differentFrom } from './string/different-from.cjs';
 export { email } from './string/email.cjs';
 export { maxChars } from './string/max-chars.cjs';
 export { minChars } from './string/min-chars.cjs';
 export { numeric } from './string/numeric.cjs';
+export { password } from './string/password.cjs';
 export { phone } from './string/phone.cjs';
 export { regex } from './string/regex.cjs';
 export { required } from './string/required.cjs';

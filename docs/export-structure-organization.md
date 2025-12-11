@@ -6,57 +6,50 @@
 src/
 ├── core/
 │   ├── index.ts                    (Barrel: exports VueSanity + getFormData)
-│   ├── vuesanity.ts                (Main validation class)
-│   └── form-data.helper.ts         (FormData conversion utility)
-|
+│   └── vuesanity.ts                (Main validation class)
 ├── helpers/
 │   ├── country-codes.ts             (List of countries, ISO codes, dialing codes)
 │   └── form-data.ts                 (Utility for converting objects to FormData)
-|
-├── validators/
-│   ├── index.ts                    (Master barrel: re-exports all validators)
-│   │
-│   ├── string/
-│   │   ├── index.ts                (Barrel: all string validators)
-│   │   ├── required.ts
-│   │   ├── email.ts
-│   │   ├── min-chars.ts
-│   │   ├── max-chars.ts
-│   │   ├── chars.ts
-│   │   ├── phone.ts
-│   │   ├── same-as.ts
-│   │   ├── url.ts
-│   │   ├── regex.ts
-│   │   ├── alpha.ts
-│   │   ├── alphanumeric.ts
-│   │   └── numeric.ts
-│   │
-│   ├── file/
-│   │   ├── index.ts                (Barrel: all file validators)
-│   │   ├── extensions.ts
-│   │   ├── max-size.ts
-│   │   ├── min-size.ts
-│   │   ├── size.ts
-│   │   └── image.ts
-│   │
-│   ├── number/
-│   │   ├── index.ts                (Barrel: all number validators)
-│   │   ├── min.ts
-│   │   ├── max.ts
-│   │   └── range.ts
-│   │
-│   └── date/
-│       ├── index.ts                (Barrel: all date validators)
-│       ├── min.ts
-│       ├── max.ts
-│       └── range.ts
-│
 ├── types/
 │   ├── index.ts                    (Barrel: all types)
 │   ├── field.ts
-│   ├── model.ts
+│   ├── model-config.ts
 │   └── rule.ts
-│
+├── validators/
+│   ├── date/
+│   |   ├── index.ts                (Barrel: all date validators)
+│   |   ├── max-date.ts
+│   |   ├── min-date.ts
+│   │   └── range-date.ts
+│   ├── file/
+│   │   ├── file-extensions.ts
+│   │   ├── file-size.ts
+│   │   ├── file-type.ts
+│   │   ├── index.ts                (Barrel: all file validators)
+│   │   ├── max--file-size.ts
+│   │   └── min-file-size.ts
+│   ├── number/
+│   │   ├── index.ts                (Barrel: all number validators)
+│   │   ├── max-number.ts
+│   │   ├── min-number.ts
+│   │   └── range-nuumber.ts
+│   ├── string/
+│   │   ├── alpha.ts
+│   │   ├── alphanumeric.ts
+│   │   ├── chars.ts
+│   │   ├── different-from.ts
+│   │   ├── email.ts
+│   │   ├── index.ts                (Barrel: all string validators)
+│   │   ├── max-chars.ts
+│   │   ├── min-chars.ts
+│   │   ├── numeric.ts
+│   │   ├── password.ts
+│   │   ├── phone.ts
+│   │   ├── regex.ts
+│   │   ├── required.ts
+│   │   ├── same-as.ts
+│   │   └── url.ts
+│   └── index.ts                    (Master barrel: re-exports all validators)
 └── index.ts                        (Main entry point - exports everything)
 ```
 
@@ -104,7 +97,7 @@ import VueSanity, { getFormData } from '@siyavuyachagi/vuesanity/core';
 ```typescript
 import VueSanity from '@siyavuyachagi/vuesanity/core/vuesanity';
 import { required } from '@siyavuyachagi/vuesanity/validators/string/required';
-import type { ModelConfig } from '@siyavuyachagi/vuesanity/types/model';
+import type { ModelConfig } from '@siyavuyachagi/vuesanity/types/model-config';
 ```
 
 ## 📦 Export Hierarchy

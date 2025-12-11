@@ -4,15 +4,15 @@
 
 | Metric | Count |
 |--------|-------|
-| Total Validators | 23 |
-| String Validators | 12 |
+| Total Validators | 25 |
+| String Validators | 14 |
 | File Validators | 5 |
 | Number Validators | 3 |
 | Date Validators | 3 |
 | Lines of code | 11 956 |
-| Total files | 183 |
-| Package size | 83.6 kB |
-| Unpacked size | 683.4 kB |
+| Total files | 193 |
+| Package size | 85.9 kB |
+| Unpacked size | 694.1 kB |
 | Dependencies | 0 (Vue 3 peer only) |
 
 ---

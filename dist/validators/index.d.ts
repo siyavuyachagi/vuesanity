@@ -1,10 +1,12 @@
 export { alpha } from './string/alpha.js';
 export { alphanumeric } from './string/alphanumeric.js';
 export { chars } from './string/chars.js';
+export { differentFrom } from './string/different-from.js';
 export { email } from './string/email.js';
 export { maxChars } from './string/max-chars.js';
 export { minChars } from './string/min-chars.js';
 export { numeric } from './string/numeric.js';
+export { password } from './string/password.js';
 export { phone } from './string/phone.js';
 export { regex } from './string/regex.js';
 export { required } from './string/required.js';

@@ -23,10 +23,12 @@ __export(string_exports, {
   alpha: () => alpha,
   alphanumeric: () => alphanumeric,
   chars: () => chars,
+  differentFrom: () => differentFrom,
   email: () => email,
   maxChars: () => maxChars,
   minChars: () => minChars,
   numeric: () => numeric,
+  password: () => password,
   phone: () => phone,
   regex: () => regex,
   required: () => required,
@@ -65,6 +67,18 @@ var chars = (length, message) => {
     if (!value) return "";
     if (value.length !== length) {
       return message || `Number of characters required is ${length}!`;
+    }
+    return "";
+  };
+};
+
+// src/validators/string/different-from.ts
+var differentFrom = (compareValue, message) => {
+  return (value) => {
+    if (!value) return "";
+    const valueToCompare = typeof compareValue === "function" ? compareValue() : compareValue;
+    if (value === valueToCompare) {
+      return message || "Value must be different";
     }
     return "";
   };
@@ -121,6 +135,26 @@ var numeric = (allowDecimals = false, allowNegative = false, message) => {
     }
     if (!pattern.test(String(value))) {
       return message || "Only numeric values are allowed";
+    }
+    return "";
+  };
+};
+
+// src/validators/string/password.ts
+var password = (message) => {
+  return (value) => {
+    if (!value) return "";
+    const str = String(value);
+    if (str.length < 6) {
+      return message || "Password must be longer than 6 characters";
+    }
+    const lower = str.toLowerCase();
+    if ([...lower].every((c) => c === lower[0])) {
+      return "Password cannot consist of the same repeated character";
+    }
+    const specialPattern = /[!@#$%^&*()_\-+=\[\]{};:'",.<>/?\\|`~]/;
+    if (!specialPattern.test(str)) {
+      return message || "Password must include at least one special character";
     }
     return "";
   };
@@ -472,10 +506,12 @@ var url = (message) => {
   alpha,
   alphanumeric,
   chars,
+  differentFrom,
   email,
   maxChars,
   minChars,
   numeric,
+  password,
   phone,
   regex,
   required,

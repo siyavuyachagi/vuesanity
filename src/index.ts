@@ -11,11 +11,13 @@ export {
 
 // String Validators
 export {
+    chars,
+    differentFrom,
     required,
     email,
     minChars,
     maxChars,
-    chars,
+    password,
     phone,
     sameAs,
     url,

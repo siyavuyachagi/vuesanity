@@ -8,10 +8,19 @@ import {
 import {
   rangeNumber
 } from "./chunk-SK35QFWU.js";
-import "./chunk-MD4DFCOP.js";
+import "./chunk-SREK5EAQ.js";
+import {
+  required
+} from "./chunk-SILNHRHD.js";
+import {
+  sameAs
+} from "./chunk-7S4H5UQD.js";
 import {
   url
 } from "./chunk-ZHRR652B.js";
+import {
+  email
+} from "./chunk-GY26NANT.js";
 import {
   maxChars
 } from "./chunk-OULXO5JD.js";
@@ -22,17 +31,14 @@ import {
   numeric
 } from "./chunk-BF45BO6L.js";
 import {
+  password
+} from "./chunk-RHNWJPZK.js";
+import {
   phone
 } from "./chunk-UC4GEO7D.js";
 import {
   regex
 } from "./chunk-4Y62OQKR.js";
-import {
-  required
-} from "./chunk-SILNHRHD.js";
-import {
-  sameAs
-} from "./chunk-7S4H5UQD.js";
 import "./chunk-4E73TMLB.js";
 import {
   maxDate
@@ -53,8 +59,8 @@ import {
   chars
 } from "./chunk-Q5B3MF76.js";
 import {
-  email
-} from "./chunk-GY26NANT.js";
+  differentFrom
+} from "./chunk-FYQPJSHU.js";
 import "./chunk-K3ZSFUP2.js";
 import {
   fileExtension
@@ -74,15 +80,16 @@ import {
 import {
   VueSanity
 } from "./chunk-DB3U6EVW.js";
-import "./chunk-7WD7TX66.js";
 import {
   getFormData
 } from "./chunk-L6NAN44R.js";
+import "./chunk-7WD7TX66.js";
 export {
   alpha,
   alphanumeric,
   chars,
   VueSanity as default,
+  differentFrom,
   email,
   fileExtension,
   fileSize,
@@ -97,6 +104,7 @@ export {
   minFileSize,
   minNumber,
   numeric,
+  password,
   phone,
   rangeDate,
   rangeNumber,

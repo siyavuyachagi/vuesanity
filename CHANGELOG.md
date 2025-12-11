@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added examples for `password` and `differentFrom`
 * Ensured TypeScript typings are documented
 
+### ⌛ Maintanance
+
+* Publish workflow update.
+
 ### 📝 Notes
 
 * Backward compatible with all existing validators

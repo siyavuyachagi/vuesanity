@@ -78,22 +78,13 @@ console.log(form.formData); // FormData instance for file uploads
 
 ## Available Validators
 
-### String Validators
+### Date Validators
 
 | Validator | Description | Example |
 |-----------|-------------|---------|
-| `required(message?)` | Ensures field is not empty | `required('Field required')` |
-| `email(domains?, message?)` | Validates email format with optional domain restrictions | `email(['gmail.com'], 'Invalid email')` |
-| `minChars(length, message?)` | Ensures minimum character length | `minChars(8, 'Min 8 chars')` |
-| `maxChars(length, message?)` | Ensures maximum character length | `maxChars(50, 'Max 50 chars')` |
-| `chars(length, message?)` | Validates exact character length | `chars(10, 'Exactly 10 chars')` |
-| `phone(locale?, message?)` | Validates phone number format (E.164) | `phone('ZA', 'Invalid phone')` |
-| `sameAs(compareValue, message?)` | Compares with another field | `sameAs(() => form.password.value)` |
-| `url(message?)` | Validates URL format | `url('Invalid URL')` |
-| `regex(pattern, message?)` | Custom regex validation | `regex(/^[A-Z]{3}\d{3}$/)` |
-| `alpha(allowSpaces?, message?)` | Alphabetic characters only | `alpha(true, 'Letters only')` |
-| `alphanumeric(allowSpaces?, message?)` | Letters and numbers only | `alphanumeric()` |
-| `numeric(allowDecimals?, allowNegative?, message?)` | Numbers only | `numeric(true, false)` |
+| `minDate(date, message?)` | Minimum date validation | `minDate(new Date('2024-01-01'))` |
+| `maxDate(date, message?)` | Maximum date validation | `maxDate(new Date())` |
+| `rangeDate(minDate, maxDate, message?)` | Date range validation | `rangeDate(min, max)` |
 
 ### File Validators
 
@@ -113,17 +104,33 @@ console.log(form.formData); // FormData instance for file uploads
 | `maxNumber(value, message?)` | Maximum number value | `maxNumber(100)` |
 | `rangeNumber(min, max, message?)` | Number range validation | `rangeNumber(1, 100)` |
 
-### Date Validators
+### String Validators
 
 | Validator | Description | Example |
 |-----------|-------------|---------|
-| `minDate(date, message?)` | Minimum date validation | `minDate(new Date('2024-01-01'))` |
-| `maxDate(date, message?)` | Maximum date validation | `maxDate(new Date())` |
-| `rangeDate(minDate, maxDate, message?)` | Date range validation | `rangeDate(min, max)` |
+| `alpha(allowSpaces?, message?)` | Alphabetic characters only | `alpha(true, 'Letters only')` |
+| `alphanumeric(allowSpaces?, message?)` | Letters and numbers only | `alphanumeric()` |
+| `chars(length, message?)` | Validates exact character length | `chars(10, 'Exactly 10 chars')` |
+| `differentFrom(compareValue, message?)` | Compares with another field | `differentFrom(() => model.oldPass.value, "New password must be different")` |
+| `email(domains?, message?)` | Validates email format with optional domain restrictions | `email(['gmail.com'], 'Invalid email')` |
+| `maxChars(length, message?)` | Ensures maximum character length | `maxChars(50, 'Max 50 chars')` |
+| `minChars(length, message?)` | Ensures minimum character length | `minChars(8, 'Min 8 chars')` |
+| `numeric(allowDecimals?, allowNegative?, message?)` | Numbers only | `numeric(true, false)` |
+| `password(message?)` | Validates password | `password('Password must be longer than 6 characters ')` |
+| `phone(locale?, message?)` | Validates phone number format (E.164) | `phone('ZA', 'Invalid phone')` |
+| `regex(pattern, message?)` | Custom regex validation | `regex(/^[A-Z]{3}\d{3}$/)` |
+| `required(message?)` | Ensures field is not empty | `required('Field required')` |
+| `sameAs(compareValue, message?)` | Compares with another field | `sameAs(() => form.password.value)` |
+| `url(message?)` | Validates URL format | `url('Invalid URL')` |
 
 ## Documentation
 
 For detailed usage instructions and advanced examples, see [/docs/usage.md](./docs/usage.md).
+
+* Export Structure & Organization: [/docs/export-structure-organization.md](./docs/export-structure-organization.md)
+* Project Statistics: [/docs/project-stats.md](./docs/project-stats.md)
+* Quick Reference Commands: [/docs/quick-reference-commands.md](./docs/quick-reference-commands.md)
+* Usage Guide: [/docs/usage.md](./docs/usage.md)
 
 ## License
 

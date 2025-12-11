@@ -1,6 +1,3 @@
-import {
-  VueSanity
-} from "./chunk-DB3U6EVW.js";
 import "./chunk-SREK5EAQ.js";
 import {
   numeric
@@ -80,6 +77,9 @@ import {
 import {
   fileSize
 } from "./chunk-CMRMXGIK.js";
+import {
+  VueSanity
+} from "./chunk-DB3U6EVW.js";
 import "./chunk-7WD7TX66.js";
 import {
   getFormData

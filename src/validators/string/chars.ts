@@ -1,4 +1,7 @@
 // src/validators/string/chars.ts
+
+import { ValidationRule } from "~/src/types";
+
 /**
  * Exact character length validation.
  * @param {number} length Exact length of characters required.
@@ -8,13 +11,13 @@
 export const chars = (
     length: number,
     message?: string
-): ((value: any) => string) => {
-    return (value: any): string => {
-        if (!value) return "";
+): ValidationRule => {
+    return (value: any): string | null => {
+        if (!value) return null;
 
         if (value.length !== length) {
-            return message || `Number of characters required is ${length}!`;
+            return message || `Number of characters required is ${length}`;
         }
-        return "";
+        return null;
     };
 };

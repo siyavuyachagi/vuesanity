@@ -1,8 +1,9 @@
 // tests/integration/vuesanity.integration.test.ts
 import { describe, it, expect } from 'vitest';
 import { reactive } from 'vue';
-import VueSanity, { alphanumeric, email, fileExtension, maxFileSize, minChars, required, sameAs } from '../../src';
+import VueSanity, { alphanumeric, createModel, email, fileExtension, maxFileSize, minChars, required, sameAs } from '../../src';
 import type { ModelConfig } from '../../src/types';
+import { RegisterDto } from '../types/register-dto';
 
 describe('VueSanity Integration Tests', () => {
     describe('Real-world Form Scenarios', () => {
@@ -146,23 +147,22 @@ describe('VueSanity Integration Tests', () => {
                 createMockFile('archive.zip', 'application/zip', 5), // 5 MB
             ];
 
-            const filesForm: ModelConfig = reactive({
-                attachments: {
+            const registerDto = createModel<RegisterDto>({
+                documents: { 
                     value: files,
                     validations: [
                         required('At least one file is required'),
                         fileExtension(['png', 'jpeg'], 'Invalid file type. Allowed: png, jpeg'),
                         maxFileSize(4, 'File size must not exceed 4MB each')
                     ],
-                    errors: []
                 }
             });
 
-            const validator = new VueSanity(filesForm);
+            const validator = new VueSanity(registerDto);
 
             expect(validator.isValid).toBe(false);
-            expect(filesForm.attachments.errors).toContain('Invalid file type. Allowed: png, jpeg');
-            expect(filesForm.attachments.errors).toContain('File size must not exceed 4MB each');
+            expect(registerDto.documents.errors).toContain('Invalid file type. Allowed: png, jpeg');
+            expect(registerDto.documents.errors).toContain('File size must not exceed 4MB each');
         });
     })
 });

@@ -69,101 +69,117 @@ function getFormData(object) {
 
 // src/core/vuesanity.ts
 var VueSanity = class {
-  // private fields
+  /** Reactive model configuration */
   _model;
+  /** Should form values be cleared after successful validation */
   _cleanValues;
-  // Public fields
+  /** Validation errors keyed by field */
   errors = {};
+  /** Form validation status */
   isValid = false;
-  normalizedModel = (0, import_vue.ref)({});
+  /** Normalized, validated form payload */
+  normalizedModel = {};
+  /** FormData representation of the validated model */
   formData = new FormData();
-  // Static method to convert object to FormData: Accessible via VueSanity.getFormData()
+  /** Static helper to convert object to FormData */
   static getFormData = getFormData;
-  // Constructor
+  /**
+   * Constructor
+   * @param modelConfig - The strongly-typed form model configuration
+   * @param cleanValues - Automatically clear values after successful validation (default: true)
+   */
   constructor(modelConfig, cleanValues = true) {
     this._model = (0, import_vue.reactive)(modelConfig);
     this._cleanValues = cleanValues;
     this._validate();
   }
-  /** Main initial validation method */
+  /** Perform validations for all fields and update state */
   _validate() {
-    let isValid = true;
+    let valid = true;
     this._clearModelErrors();
-    Object.entries(this._model).forEach(([key, field]) => {
-      if (field.validations) {
-        field.validations.forEach((validation) => {
-          const fieldErrors = [];
-          if (Array.isArray(field.value)) {
-            Array.from(field.value).forEach((value) => {
-              const error = validation(value);
-              if (error) {
-                fieldErrors.push(error);
-              }
-            });
-          } else {
-            const error = validation(field.value);
-            if (error) {
-              fieldErrors.push(error);
-            }
-          }
-          if (fieldErrors.length > 0 && !this.errors[key]) {
-            this.errors[key] = [];
-            this.errors[key].push(...fieldErrors);
-          }
-          if (fieldErrors.length > 0) {
-            field.errors.push(...fieldErrors);
-            isValid = false;
-          }
+    for (const key in this._model) {
+      const field = this._model[key];
+      if (!field || !field.validations) continue;
+      if (!field.errors) {
+        field.errors = [];
+      }
+      const fieldErrors = [];
+      if (Array.isArray(field.value)) {
+        field.value.forEach((item) => {
+          field.validations.forEach((validator) => {
+            const error = validator(item);
+            if (error) fieldErrors.push(error);
+          });
+        });
+      } else {
+        field.validations.forEach((validator) => {
+          const error = validator(field.value);
+          if (error) fieldErrors.push(error);
         });
       }
-    });
-    this.isValid = isValid;
-    if (!isValid) {
+      if (fieldErrors.length > 0) {
+        valid = false;
+        field.errors.push(...fieldErrors);
+        this.errors[key] = [...fieldErrors];
+      }
+    }
+    this.isValid = valid;
+    this._normalizeModel();
+  }
+  /**
+   * Normalizes the data model
+   */
+  _normalizeModel() {
+    if (!this.isValid) {
       this.normalizedModel = {};
     } else {
-      this.normalizedModel = Object.entries(this._model).reduce(
-        (acc, [key, field]) => {
-          if (!field.errors || field.errors.length === 0) {
-            acc[key] = field.value;
-          }
-          return acc;
-        },
-        {}
-      );
-      Object.entries(this._model).forEach(([key, field]) => {
-        if (Array.isArray(field.value)) {
-          Array.from(field.value).forEach((value) => {
-            if (value) this.formData.append(key, value);
-          });
-        } else {
-          if (field.value) this.formData.append(key, field.value);
+      this.normalizedModel = Object.keys(this._model).reduce((acc, key) => {
+        const field = this._model[key];
+        if (!field.errors || field.errors.length === 0) {
+          acc[key] = field.value;
         }
-      });
+        return acc;
+      }, {});
+      this.formData = new FormData();
+      for (const key in this._model) {
+        const field = this._model[key];
+        const values = this._toArray(field.value);
+        for (const val of values) {
+          if (val !== null && val !== void 0) {
+            this.formData.append(key, val);
+          }
+        }
+      }
       this._deconstructor();
     }
   }
-  /** Clean model errors after validations */
-  _clearModelErrors = () => {
-    Object.entries(this._model).forEach(([key, field]) => {
-      field.errors = [];
-    });
-  };
-  /** Optionally clean model values after successful validations */
-  _clearModelValues = () => {
-    Object.keys(this._model).forEach((field) => {
-      if (this._model[field]) {
-        if (this._model[field].value !== void 0) {
-          if (Array.isArray(this._model[field].value))
-            Array.from(this._model[field].value).splice(0);
-          else this._model[field].value = null;
-        }
+  _toArray(val) {
+    return Array.isArray(val) ? val : [val];
+  }
+  /** Reset all model field errors */
+  _clearModelErrors() {
+    for (const key in this._model) {
+      const field = this._model[key];
+      if (field) field.errors = [];
+    }
+    this.errors = {};
+  }
+  /** Optionally clear all model field values */
+  _clearModelValues() {
+    for (const key in this._model) {
+      const field = this._model[key];
+      if (!field) continue;
+      if (Array.isArray(field.value)) {
+        field.value.splice(0);
+      } else {
+        field.value = null;
       }
-    });
-  };
-  /** Deconstructor */
-  _deconstructor = () => {
+    }
+  }
+  /** Clean-up method called after successful validation */
+  _deconstructor() {
     if (!this._model) return;
     if (this._cleanValues && this.isValid) this._clearModelValues();
     this._clearModelErrors();
-  };
+  }
 };

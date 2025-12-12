@@ -12,3 +12,4 @@ export { regex } from './regex.js';
 export { required } from './required.js';
 export { sameAs } from './same-as.js';
 export { url } from './url.js';
+import '../../types/validation-rule.js';

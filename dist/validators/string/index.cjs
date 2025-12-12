@@ -40,35 +40,35 @@ module.exports = __toCommonJS(string_exports);
 // src/validators/string/alpha.ts
 var alpha = (allowSpaces = true, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const pattern = allowSpaces ? /^[a-zA-Z\s]*$/ : /^[a-zA-Z]*$/;
     if (!pattern.test(value)) {
       return message || "Only alphabetic characters are allowed";
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/alphanumeric.ts
 var alphanumeric = (allowSpaces = false, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const pattern = allowSpaces ? /^[a-zA-Z0-9\s]*$/ : /^[a-zA-Z0-9]*$/;
     if (!pattern.test(value)) {
       return message || "Only alphanumeric characters are allowed";
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/chars.ts
 var chars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length !== length) {
-      return message || `Number of characters required is ${length}!`;
+      return message || `Number of characters required is ${length}`;
     }
-    return "";
+    return null;
   };
 };
 
@@ -88,7 +88,7 @@ var differentFrom = (compareValue, message) => {
 var email = (allowedDomains, message) => {
   const domains = Array.isArray(allowedDomains) ? allowedDomains : allowedDomains ? [allowedDomains] : [];
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(value)) {
       return message || "Invalid email format";
@@ -97,29 +97,29 @@ var email = (allowedDomains, message) => {
     if (domains.length > 0 && !domains.map((d) => d.toLowerCase()).includes(domain)) {
       return message || `Email domain must be one of: ${domains.join(", ")}`;
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/max-chars.ts
 var maxChars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length > length) {
       return message || `Maximum length of ${length} characters required`;
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/min-chars.ts
 var minChars = (length, message) => {
   return (value) => {
-    if (!value) return "";
-    if (value.length < length) {
+    const str = String(value);
+    if (str.length < length) {
       return message || `Minimum length of ${length} characters required`;
     }
-    return "";
+    return null;
   };
 };
 
@@ -143,10 +143,12 @@ var numeric = (allowDecimals = false, allowNegative = false, message) => {
 // src/validators/string/password.ts
 var password = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value || String(value).length === 0) {
+      return message || "Password must have 6 characters or more";
+    }
     const str = String(value);
     if (str.length < 6) {
-      return message || "Password must be longer than 6 characters";
+      return message || "Password must have 6 characters or more";
     }
     const lower = str.toLowerCase();
     if ([...lower].every((c) => c === lower[0])) {
@@ -156,7 +158,7 @@ var password = (message) => {
     if (!specialPattern.test(str)) {
       return message || "Password must include at least one special character";
     }
-    return "";
+    return null;
   };
 };
 
@@ -465,7 +467,7 @@ var regex = (pattern, message) => {
 };
 
 // src/validators/string/required.ts
-var required = (message = "This field is required!") => {
+var required = (message = "This field is required") => {
   return (value) => {
     if (value === null || value === void 0 || value === "") {
       return message;
@@ -492,10 +494,10 @@ var sameAs = (compareValue, message) => {
 // src/validators/string/url.ts
 var url = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     try {
       new URL(value);
-      return "";
+      return null;
     } catch {
       return message || "Invalid URL format";
     }

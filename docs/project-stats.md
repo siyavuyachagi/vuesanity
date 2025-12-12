@@ -4,11 +4,12 @@
 
 | Metric | Count |
 |--------|-------|
-| Total Validators | 25 |
-| String Validators | 14 |
-| File Validators | 5 |
-| Number Validators | 3 |
-| Date Validators | 3 |
+| Total validators | 27 |
+| Boolean validators | 2 |
+| String validators | 14 |
+| File validators | 5 |
+| Number validators | 3 |
+| Date validators | 3 |
 | Lines of code | 11 956 |
 | Total files | 193 |
 | Package size | 85.9 kB |

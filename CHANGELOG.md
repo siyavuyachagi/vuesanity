@@ -5,6 +5,36 @@ All notable changes to VueSanity are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-12-12
+
+### ⚠ Breaking Changes
+
+* Refactored **VueSanity** to use **generic typing** for strongly typed forms
+* `createModel<T>` utility added for automatic model type inference
+* Validators now integrate with typed model fields
+* Internal `_model` and field handling refactored; previous non-generic usage may need updating
+* NormalizedModel and formData generation now fully type-safe
+
+### 🎉 Features
+
+* Added `createModel<T>` to automatically infer form fields from DTO interfaces
+* VueSanity now works with strongly typed forms:
+  ```ts
+  interface LoginDto {
+      email: string;
+      password: string;
+      rememberMe: boolean;
+  }
+
+  const loginForm = createModel<LoginDto>({
+      email: { value: "" },
+      password: { value: "" },
+      rememberMe: { value: false }
+  });
+
+  const form = new VueSanity(loginForm);
+
+
 ## [1.0.4] - 2025-12-11
 
 ### 🎉 Features
@@ -227,19 +257,14 @@ Big thanks to everyone who downloaded and tested VueSanity on day one! Your supp
 
 ---
 
-## Version History
+<div align="center">
 
-| Version | Date | Status | Downloads |
-|---------|------|--------|-------------------|
-| 1.0.1 | 2025-10-15 | ☑️         | 107+ |
-| 1.0.2 | 2025-11-19 | ✅ Current | - |
+**Made with ❤️ by [Chagi Siyavuyachagi](https://github.com/siyavuyachagi)**
 
----
+Support VueSanity:  
+⭐ [Star on GitHub](https://github.com/siyavuyachagi/vuesanity)  
+🐛 [Report Issues](https://github.com/siyavuyachagi/vuesanity/issues)  
+💬 [Start Discussions](https://github.com/siyavuyachagi/vuesanity/discussions)  
+💖 [Sponsor](https://github.com/sponsors/siyavuyachagi)
 
-**Made with ❤️ by [Chagi Siyavuya](https://github.com/siyavuyachagi)**
-
-Support VueSanity:
-- ⭐ [Star on GitHub](https://github.com/siyavuyachagi/vuesanity)
-- 🐛 [Report Issues](https://github.com/siyavuyachagi/vuesanity/issues)
-- 💬 [Start Discussions](https://github.com/siyavuyachagi/vuesanity/discussions)
-- 💖 [Sponsor](https://github.com/sponsors/siyavuyachagi)
+</div>

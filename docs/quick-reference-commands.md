@@ -2,6 +2,19 @@
 
 ## 🎯 All Validators at a Glance
 
+### Boolean Validators
+```typescript
+requireTrue()                         // Before date
+requireFalse()             // After date
+```
+
+### Date Validators
+```typescript
+maxDate(new Date())                         // Before date
+minDate(new Date('2024-01-01'))             // After date
+rangeDate(min, max)                         // Between dates
+```
+
 ### String Validators
 ```typescript
 alpha(true)                           // Letters only
@@ -32,13 +45,6 @@ minFileSize(0.1)                                // Min 0.1MB
 maxNumber(100)                        // <= 100
 minNumber(0)                          // >= 0
 rangeNumber(1, 100)                   // Between 1-100
-```
-
-### Date Validators
-```typescript
-maxDate(new Date())                         // Before date
-minDate(new Date('2024-01-01'))             // After date
-rangeDate(min, max)                         // Between dates
 ```
 
 ---

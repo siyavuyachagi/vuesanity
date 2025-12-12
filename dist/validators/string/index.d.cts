@@ -12,3 +12,4 @@ export { regex } from './regex.cjs';
 export { required } from './required.cjs';
 export { sameAs } from './same-as.cjs';
 export { url } from './url.cjs';
+import '../../types/validation-rule.cjs';

@@ -1,4 +1,4 @@
-// src/validators/string/password.ts
+import { ValidationRule } from "../../types/validation-rule";
 
 /**
  * Password validation
@@ -9,19 +9,20 @@
  * - Must NOT consist of the same repeated character (e.g., "AAAAAAA!")
  *
  * @param {string} message Custom error message (Optional)
- * @returns Validation function that returns error message or empty string
+ * @returns Validation function that returns error message or null
  */
-export const password = (
-    message?: string
-): ((value: any) => string) => {
-    return (value: any): string => {
-        if (!value) return "";
+export const password = (message?: string): ValidationRule => {
+    return (value: any): string | null => {
+        // If empty, it should fail validation
+        if (!value || String(value).length === 0) {
+            return message || "Password must have 6 characters or more";
+        }
 
         const str = String(value);
 
         // Must be 6 characters or more
         if (str.length < 6) {
-            return message || "Password must be longer than 6 characters";
+            return message || "Password must have 6 characters or more";
         }
 
         // Case-insensitive repeated character rule
@@ -36,6 +37,6 @@ export const password = (
             return message || "Password must include at least one special character";
         }
 
-        return "";
+        return null; // success
     };
 };

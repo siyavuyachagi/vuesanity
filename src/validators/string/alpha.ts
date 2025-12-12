@@ -1,4 +1,7 @@
 // src/validators/string/alpha.ts
+
+import { ValidationRule } from "~/src/types";
+
 /**
  * Alphabetic characters only validation (a-z, A-Z, spaces optional)
  * @param {boolean} allowSpaces Allow spaces in the value (Optional, default: true)
@@ -8,14 +11,14 @@
 export const alpha = (
     allowSpaces: boolean = true,
     message?: string
-): ((value: any) => string) => {
-    return (value: any): string => {
-        if (!value) return "";
+): ValidationRule => {
+    return (value: any): string | null => {
+        if (!value) return null;
 
         const pattern = allowSpaces ? /^[a-zA-Z\s]*$/ : /^[a-zA-Z]*$/;
         if (!pattern.test(value)) {
             return message || "Only alphabetic characters are allowed";
         }
-        return "";
+        return null;
     };
 };

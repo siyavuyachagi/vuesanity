@@ -25,12 +25,12 @@ __export(alphanumeric_exports, {
 module.exports = __toCommonJS(alphanumeric_exports);
 var alphanumeric = (allowSpaces = false, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const pattern = allowSpaces ? /^[a-zA-Z0-9\s]*$/ : /^[a-zA-Z0-9]*$/;
     if (!pattern.test(value)) {
       return message || "Only alphanumeric characters are allowed";
     }
-    return "";
+    return null;
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

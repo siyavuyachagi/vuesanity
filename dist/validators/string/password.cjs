@@ -25,10 +25,12 @@ __export(password_exports, {
 module.exports = __toCommonJS(password_exports);
 var password = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value || String(value).length === 0) {
+      return message || "Password must have 6 characters or more";
+    }
     const str = String(value);
     if (str.length < 6) {
-      return message || "Password must be longer than 6 characters";
+      return message || "Password must have 6 characters or more";
     }
     const lower = str.toLowerCase();
     if ([...lower].every((c) => c === lower[0])) {
@@ -38,7 +40,7 @@ var password = (message) => {
     if (!specialPattern.test(str)) {
       return message || "Password must include at least one special character";
     }
-    return "";
+    return null;
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

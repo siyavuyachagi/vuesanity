@@ -23,6 +23,7 @@ __export(index_exports, {
   alpha: () => alpha,
   alphanumeric: () => alphanumeric,
   chars: () => chars,
+  createModel: () => createModel,
   default: () => VueSanity,
   differentFrom: () => differentFrom,
   email: () => email,
@@ -38,6 +39,8 @@ __export(index_exports, {
   minDate: () => minDate,
   minFileSize: () => minFileSize,
   minNumber: () => minNumber,
+  mustBeFalse: () => mustBeFalse,
+  mustBeTrue: () => mustBeTrue,
   numeric: () => numeric,
   password: () => password,
   phone: () => phone,
@@ -97,102 +100,156 @@ function getFormData(object) {
 
 // src/core/vuesanity.ts
 var VueSanity = class {
-  // private fields
+  /** Reactive model configuration */
   _model;
+  /** Should form values be cleared after successful validation */
   _cleanValues;
-  // Public fields
+  /** Validation errors keyed by field */
   errors = {};
+  /** Form validation status */
   isValid = false;
-  normalizedModel = (0, import_vue.ref)({});
+  /** Normalized, validated form payload */
+  normalizedModel = {};
+  /** FormData representation of the validated model */
   formData = new FormData();
-  // Static method to convert object to FormData: Accessible via VueSanity.getFormData()
+  /** Static helper to convert object to FormData */
   static getFormData = getFormData;
-  // Constructor
+  /**
+   * Constructor
+   * @param modelConfig - The strongly-typed form model configuration
+   * @param cleanValues - Automatically clear values after successful validation (default: true)
+   */
   constructor(modelConfig, cleanValues = true) {
     this._model = (0, import_vue.reactive)(modelConfig);
     this._cleanValues = cleanValues;
     this._validate();
   }
-  /** Main initial validation method */
+  /** Perform validations for all fields and update state */
   _validate() {
-    let isValid = true;
+    let valid = true;
     this._clearModelErrors();
-    Object.entries(this._model).forEach(([key, field]) => {
-      if (field.validations) {
-        field.validations.forEach((validation) => {
-          const fieldErrors = [];
-          if (Array.isArray(field.value)) {
-            Array.from(field.value).forEach((value) => {
-              const error = validation(value);
-              if (error) {
-                fieldErrors.push(error);
-              }
-            });
-          } else {
-            const error = validation(field.value);
-            if (error) {
-              fieldErrors.push(error);
-            }
-          }
-          if (fieldErrors.length > 0 && !this.errors[key]) {
-            this.errors[key] = [];
-            this.errors[key].push(...fieldErrors);
-          }
-          if (fieldErrors.length > 0) {
-            field.errors.push(...fieldErrors);
-            isValid = false;
-          }
+    for (const key in this._model) {
+      const field = this._model[key];
+      if (!field || !field.validations) continue;
+      if (!field.errors) {
+        field.errors = [];
+      }
+      const fieldErrors = [];
+      if (Array.isArray(field.value)) {
+        field.value.forEach((item) => {
+          field.validations.forEach((validator) => {
+            const error = validator(item);
+            if (error) fieldErrors.push(error);
+          });
+        });
+      } else {
+        field.validations.forEach((validator) => {
+          const error = validator(field.value);
+          if (error) fieldErrors.push(error);
         });
       }
-    });
-    this.isValid = isValid;
-    if (!isValid) {
+      if (fieldErrors.length > 0) {
+        valid = false;
+        field.errors.push(...fieldErrors);
+        this.errors[key] = [...fieldErrors];
+      }
+    }
+    this.isValid = valid;
+    this._normalizeModel();
+  }
+  /**
+   * Normalizes the data model
+   */
+  _normalizeModel() {
+    if (!this.isValid) {
       this.normalizedModel = {};
     } else {
-      this.normalizedModel = Object.entries(this._model).reduce(
-        (acc, [key, field]) => {
-          if (!field.errors || field.errors.length === 0) {
-            acc[key] = field.value;
-          }
-          return acc;
-        },
-        {}
-      );
-      Object.entries(this._model).forEach(([key, field]) => {
-        if (Array.isArray(field.value)) {
-          Array.from(field.value).forEach((value) => {
-            if (value) this.formData.append(key, value);
-          });
-        } else {
-          if (field.value) this.formData.append(key, field.value);
+      this.normalizedModel = Object.keys(this._model).reduce((acc, key) => {
+        const field = this._model[key];
+        if (!field.errors || field.errors.length === 0) {
+          acc[key] = field.value;
         }
-      });
+        return acc;
+      }, {});
+      this.formData = new FormData();
+      for (const key in this._model) {
+        const field = this._model[key];
+        const values = this._toArray(field.value);
+        for (const val of values) {
+          if (val !== null && val !== void 0) {
+            this.formData.append(key, val);
+          }
+        }
+      }
       this._deconstructor();
     }
   }
-  /** Clean model errors after validations */
-  _clearModelErrors = () => {
-    Object.entries(this._model).forEach(([key, field]) => {
-      field.errors = [];
-    });
-  };
-  /** Optionally clean model values after successful validations */
-  _clearModelValues = () => {
-    Object.keys(this._model).forEach((field) => {
-      if (this._model[field]) {
-        if (this._model[field].value !== void 0) {
-          if (Array.isArray(this._model[field].value))
-            Array.from(this._model[field].value).splice(0);
-          else this._model[field].value = null;
-        }
+  _toArray(val) {
+    return Array.isArray(val) ? val : [val];
+  }
+  /** Reset all model field errors */
+  _clearModelErrors() {
+    for (const key in this._model) {
+      const field = this._model[key];
+      if (field) field.errors = [];
+    }
+    this.errors = {};
+  }
+  /** Optionally clear all model field values */
+  _clearModelValues() {
+    for (const key in this._model) {
+      const field = this._model[key];
+      if (!field) continue;
+      if (Array.isArray(field.value)) {
+        field.value.splice(0);
+      } else {
+        field.value = null;
       }
-    });
-  };
-  /** Deconstructor */
-  _deconstructor = () => {
+    }
+  }
+  /** Clean-up method called after successful validation */
+  _deconstructor() {
     if (!this._model) return;
     if (this._cleanValues && this.isValid) this._clearModelValues();
     this._clearModelErrors();
+  }
+};
+
+// src/core/create-model.ts
+var import_vue2 = require("vue");
+function createModel(fields) {
+  const model = {};
+  for (const key in fields) {
+    model[key] = {
+      value: fields[key]?.value ?? "",
+      validations: fields[key]?.validations ?? [],
+      errors: fields[key]?.errors ?? []
+    };
+  }
+  return (0, import_vue2.reactive)(model);
+}
+
+// src/validators/boolean/must-be-false.ts
+var mustBeFalse = (message) => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") return null;
+    const normalized = value === true ? true : value === false ? false : value === "true" ? true : value === "false" ? false : value === 1 ? true : value === 0 ? false : Boolean(value);
+    if (normalized === true) {
+      return message || "Value must be false";
+    }
+    return null;
+  };
+};
+
+// src/validators/boolean/must-be-true.ts
+var mustBeTrue = (message) => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") return null;
+    const normalized = value === true ? true : value === false ? false : value === "true" ? true : value === "false" ? false : value === 1 ? true : value === 0 ? false : Boolean(value);
+    if (normalized === false) {
+      return message || "Value must be true";
+    }
+    return null;
   };
 };
 
@@ -248,35 +305,35 @@ var rangeDate = (minDate2, maxDate2, message) => {
 // src/validators/string/alpha.ts
 var alpha = (allowSpaces = true, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const pattern = allowSpaces ? /^[a-zA-Z\s]*$/ : /^[a-zA-Z]*$/;
     if (!pattern.test(value)) {
       return message || "Only alphabetic characters are allowed";
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/alphanumeric.ts
 var alphanumeric = (allowSpaces = false, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const pattern = allowSpaces ? /^[a-zA-Z0-9\s]*$/ : /^[a-zA-Z0-9]*$/;
     if (!pattern.test(value)) {
       return message || "Only alphanumeric characters are allowed";
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/chars.ts
 var chars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length !== length) {
-      return message || `Number of characters required is ${length}!`;
+      return message || `Number of characters required is ${length}`;
     }
-    return "";
+    return null;
   };
 };
 
@@ -296,7 +353,7 @@ var differentFrom = (compareValue, message) => {
 var email = (allowedDomains, message) => {
   const domains = Array.isArray(allowedDomains) ? allowedDomains : allowedDomains ? [allowedDomains] : [];
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(value)) {
       return message || "Invalid email format";
@@ -305,29 +362,29 @@ var email = (allowedDomains, message) => {
     if (domains.length > 0 && !domains.map((d) => d.toLowerCase()).includes(domain)) {
       return message || `Email domain must be one of: ${domains.join(", ")}`;
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/max-chars.ts
 var maxChars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length > length) {
       return message || `Maximum length of ${length} characters required`;
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/min-chars.ts
 var minChars = (length, message) => {
   return (value) => {
-    if (!value) return "";
-    if (value.length < length) {
+    const str = String(value);
+    if (str.length < length) {
       return message || `Minimum length of ${length} characters required`;
     }
-    return "";
+    return null;
   };
 };
 
@@ -351,10 +408,12 @@ var numeric = (allowDecimals = false, allowNegative = false, message) => {
 // src/validators/string/password.ts
 var password = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value || String(value).length === 0) {
+      return message || "Password must have 6 characters or more";
+    }
     const str = String(value);
     if (str.length < 6) {
-      return message || "Password must be longer than 6 characters";
+      return message || "Password must have 6 characters or more";
     }
     const lower = str.toLowerCase();
     if ([...lower].every((c) => c === lower[0])) {
@@ -364,7 +423,7 @@ var password = (message) => {
     if (!specialPattern.test(str)) {
       return message || "Password must include at least one special character";
     }
-    return "";
+    return null;
   };
 };
 
@@ -673,7 +732,7 @@ var regex = (pattern, message) => {
 };
 
 // src/validators/string/required.ts
-var required = (message = "This field is required!") => {
+var required = (message = "This field is required") => {
   return (value) => {
     if (value === null || value === void 0 || value === "") {
       return message;
@@ -700,10 +759,10 @@ var sameAs = (compareValue, message) => {
 // src/validators/string/url.ts
 var url = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     try {
       new URL(value);
-      return "";
+      return null;
     } catch {
       return message || "Invalid URL format";
     }
@@ -816,6 +875,7 @@ var rangeNumber = (min, max, message) => {
   alpha,
   alphanumeric,
   chars,
+  createModel,
   differentFrom,
   email,
   fileExtension,
@@ -830,6 +890,8 @@ var rangeNumber = (min, max, message) => {
   minDate,
   minFileSize,
   minNumber,
+  mustBeFalse,
+  mustBeTrue,
   numeric,
   password,
   phone,

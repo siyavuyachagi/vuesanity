@@ -9,7 +9,7 @@ import {
 } from '../../src';
 
 describe('File Validators', () => {
-    describe('fileExtension()', () => {
+    describe('1. fileExtension()', () => {
         it('should accept single extension as string', () => {
             const file = new File([''], 'document.pdf');
             const invalidFile = new File([''], 'document.pdf');
@@ -71,93 +71,7 @@ describe('File Validators', () => {
         });
     });
 
-    describe('maxFileSize()', () => {
-        it('should accept file under size limit', () => {
-            const validator = maxFileSize(5); // 5MB
-            const file = new File(['x'.repeat(1024 * 1024)], 'test.txt'); // 1MB
-            expect(validator(file)).toBe('');
-        });
-
-        it('should reject file over size limit', () => {
-            const validator = maxFileSize(1); // 1MB
-            const file = new File(['x'.repeat(2 * 1024 * 1024)], 'large.txt'); // 2MB
-            expect(validator(file)).toContain('Maximum file size');
-        });
-
-        it('should accept file at exact size limit', () => {
-            const validator = maxFileSize(1); // 1MB
-            const content = new Array(1024 * 1024).fill('x').join('');
-            const file = new File([content], 'test.txt');
-            expect(validator(file)).toBe('');
-        });
-
-        it('should return empty string for empty value', () => {
-            const validator = maxFileSize(5);
-            expect(validator('')).toBe('');
-        });
-
-        it('should return empty string for non-File value', () => {
-            const validator = maxFileSize(5);
-            expect(validator('not a file')).toBe('');
-        });
-
-        it('should use custom message', () => {
-            const validator = maxFileSize(1, 'File too big');
-            const file = new File(['x'.repeat(2 * 1024 * 1024)], 'large.txt');
-            expect(validator(file)).toBe('File too big');
-        });
-
-        it('should handle very small files', () => {
-            const validator = maxFileSize(0.001); // 1KB
-            const file = new File(['x'], 'tiny.txt');
-            expect(validator(file)).toBe('');
-        });
-
-        it('should handle zero-byte files', () => {
-            const validator = maxFileSize(1);
-            const file = new File([''], 'empty.txt');
-            expect(validator(file)).toBe('');
-        });
-    });
-
-    describe('minFileSize()', () => {
-        it('should accept file over minimum size', () => {
-            const validator = minFileSize(1); // 1MB
-            const file = new File(['x'.repeat(2 * 1024 * 1024)], 'test.txt'); // 2MB
-            expect(validator(file)).toBe('');
-        });
-
-        it('should reject file under minimum size', () => {
-            const validator = minFileSize(2); // 2MB
-            const file = new File(['x'.repeat(1024 * 1024)], 'small.txt'); // 1MB
-            expect(validator(file)).toContain('Minimum file size');
-        });
-
-        it('should accept file at exact minimum size', () => {
-            const validator = minFileSize(1); // 1MB
-            const content = new Array(1024 * 1024).fill('x').join('');
-            const file = new File([content], 'test.txt');
-            expect(validator(file)).toBe('');
-        });
-
-        it('should return empty string for empty value', () => {
-            const validator = minFileSize(1);
-            expect(validator('')).toBe('');
-        });
-
-        it('should return empty string for non-File value', () => {
-            const validator = minFileSize(1);
-            expect(validator('not a file')).toBe('');
-        });
-
-        it('should use custom message', () => {
-            const validator = minFileSize(2, 'File too small');
-            const file = new File(['x'], 'tiny.txt');
-            expect(validator(file)).toBe('File too small');
-        });
-    });
-
-    describe('fileSize()', () => {
+    describe('2. fileSize()', () => {
         it('should accept file at exact size', () => {
             const validator = fileSize(1); // 1MB
             const content = new Array(1024 * 1024).fill('x').join('');
@@ -188,7 +102,7 @@ describe('File Validators', () => {
         });
     });
 
-    describe('fileType()', () => {
+    describe('3. fileType()', () => {
         const allowedTypes = ['image/png', 'image/jpeg', 'application/pdf'];
 
         it('should accept single allowed MIME type as string', () => {
@@ -253,6 +167,92 @@ describe('File Validators', () => {
             const file = new File([''], 'photo.png', { type: 'image/png' });
             // Normalizing allowedTypes inside validator would be needed for true case-insensitivity
             expect(validator(file)).not.toBe('');
+        });
+    });
+
+    describe('4. maxFileSize()', () => {
+        it('should accept file under size limit', () => {
+            const validator = maxFileSize(5); // 5MB
+            const file = new File(['x'.repeat(1024 * 1024)], 'test.txt'); // 1MB
+            expect(validator(file)).toBe('');
+        });
+
+        it('should reject file over size limit', () => {
+            const validator = maxFileSize(1); // 1MB
+            const file = new File(['x'.repeat(2 * 1024 * 1024)], 'large.txt'); // 2MB
+            expect(validator(file)).toContain('Maximum file size');
+        });
+
+        it('should accept file at exact size limit', () => {
+            const validator = maxFileSize(1); // 1MB
+            const content = new Array(1024 * 1024).fill('x').join('');
+            const file = new File([content], 'test.txt');
+            expect(validator(file)).toBe('');
+        });
+
+        it('should return empty string for empty value', () => {
+            const validator = maxFileSize(5);
+            expect(validator('')).toBe('');
+        });
+
+        it('should return empty string for non-File value', () => {
+            const validator = maxFileSize(5);
+            expect(validator('not a file')).toBe('');
+        });
+
+        it('should use custom message', () => {
+            const validator = maxFileSize(1, 'File too big');
+            const file = new File(['x'.repeat(2 * 1024 * 1024)], 'large.txt');
+            expect(validator(file)).toBe('File too big');
+        });
+
+        it('should handle very small files', () => {
+            const validator = maxFileSize(0.001); // 1KB
+            const file = new File(['x'], 'tiny.txt');
+            expect(validator(file)).toBe('');
+        });
+
+        it('should handle zero-byte files', () => {
+            const validator = maxFileSize(1);
+            const file = new File([''], 'empty.txt');
+            expect(validator(file)).toBe('');
+        });
+    });
+
+    describe('5. minFileSize()', () => {
+        it('should accept file over minimum size', () => {
+            const validator = minFileSize(1); // 1MB
+            const file = new File(['x'.repeat(2 * 1024 * 1024)], 'test.txt'); // 2MB
+            expect(validator(file)).toBe('');
+        });
+
+        it('should reject file under minimum size', () => {
+            const validator = minFileSize(2); // 2MB
+            const file = new File(['x'.repeat(1024 * 1024)], 'small.txt'); // 1MB
+            expect(validator(file)).toContain('Minimum file size');
+        });
+
+        it('should accept file at exact minimum size', () => {
+            const validator = minFileSize(1); // 1MB
+            const content = new Array(1024 * 1024).fill('x').join('');
+            const file = new File([content], 'test.txt');
+            expect(validator(file)).toBe('');
+        });
+
+        it('should return empty string for empty value', () => {
+            const validator = minFileSize(1);
+            expect(validator('')).toBe('');
+        });
+
+        it('should return empty string for non-File value', () => {
+            const validator = minFileSize(1);
+            expect(validator('not a file')).toBe('');
+        });
+
+        it('should use custom message', () => {
+            const validator = minFileSize(2, 'File too small');
+            const file = new File(['x'], 'tiny.txt');
+            expect(validator(file)).toBe('File too small');
         });
     });
 });

@@ -1,3 +1,5 @@
+import { ValidationRule } from '../../types/validation-rule.cjs';
+
 /**
  * Password validation
  *
@@ -7,8 +9,8 @@
  * - Must NOT consist of the same repeated character (e.g., "AAAAAAA!")
  *
  * @param {string} message Custom error message (Optional)
- * @returns Validation function that returns error message or empty string
+ * @returns Validation function that returns error message or null
  */
-declare const password: (message?: string) => ((value: any) => string);
+declare const password: (message?: string) => ValidationRule;
 
 export { password };

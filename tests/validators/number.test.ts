@@ -3,7 +3,54 @@ import { describe, it, expect } from 'vitest';
 import { minNumber, maxNumber, rangeNumber } from '../../src';
 
 describe('Number Validators', () => {
-  describe('minNumber()', () => {
+  describe('1. maxNumber()', () => {
+    it('should accept value below maximum', () => {
+      const validator = maxNumber(100);
+      expect(validator(50)).toBe('');
+    });
+
+    it('should accept value at maximum', () => {
+      const validator = maxNumber(100);
+      expect(validator(100)).toBe('');
+    });
+
+    it('should reject value above maximum', () => {
+      const validator = maxNumber(100);
+      expect(validator(150)).toContain('cannot exceed 100');
+    });
+
+    it('should return empty string for empty value', () => {
+      const validator = maxNumber(100);
+      expect(validator('')).toBe('');
+      expect(validator(null)).toBe('');
+      expect(validator(undefined)).toBe('');
+    });
+
+    it('should use custom message', () => {
+      const validator = maxNumber(100, 'Too large');
+      expect(validator(150)).toBe('Too large');
+    });
+
+    it('should handle string numbers', () => {
+      const validator = maxNumber(100);
+      expect(validator('50')).toBe('');
+      expect(validator('150')).toContain('cannot exceed');
+    });
+
+    it('should handle negative numbers', () => {
+      const validator = maxNumber(-10);
+      expect(validator(-15)).toBe('');
+      expect(validator(-5)).toContain('cannot exceed');
+    });
+
+    it('should handle decimal numbers', () => {
+      const validator = maxNumber(100.5);
+      expect(validator(100.4)).toBe('');
+      expect(validator(100.6)).toContain('cannot exceed');
+    });
+  });
+
+  describe('2. minNumber()', () => {
     it('should accept value above minimum', () => {
       const validator = minNumber(10);
       expect(validator(15)).toBe('');
@@ -55,54 +102,8 @@ describe('Number Validators', () => {
     });
   });
 
-  describe('maxNumber()', () => {
-    it('should accept value below maximum', () => {
-      const validator = maxNumber(100);
-      expect(validator(50)).toBe('');
-    });
 
-    it('should accept value at maximum', () => {
-      const validator = maxNumber(100);
-      expect(validator(100)).toBe('');
-    });
-
-    it('should reject value above maximum', () => {
-      const validator = maxNumber(100);
-      expect(validator(150)).toContain('cannot exceed 100');
-    });
-
-    it('should return empty string for empty value', () => {
-      const validator = maxNumber(100);
-      expect(validator('')).toBe('');
-      expect(validator(null)).toBe('');
-      expect(validator(undefined)).toBe('');
-    });
-
-    it('should use custom message', () => {
-      const validator = maxNumber(100, 'Too large');
-      expect(validator(150)).toBe('Too large');
-    });
-
-    it('should handle string numbers', () => {
-      const validator = maxNumber(100);
-      expect(validator('50')).toBe('');
-      expect(validator('150')).toContain('cannot exceed');
-    });
-
-    it('should handle negative numbers', () => {
-      const validator = maxNumber(-10);
-      expect(validator(-15)).toBe('');
-      expect(validator(-5)).toContain('cannot exceed');
-    });
-
-    it('should handle decimal numbers', () => {
-      const validator = maxNumber(100.5);
-      expect(validator(100.4)).toBe('');
-      expect(validator(100.6)).toContain('cannot exceed');
-    });
-  });
-
-  describe('rangeNumber()', () => {
+  describe('3. rangeNumber()', () => {
     it('should accept value within range', () => {
       const validator = rangeNumber(10, 100);
       expect(validator(50)).toBe('');

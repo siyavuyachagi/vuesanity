@@ -25,11 +25,11 @@ __export(chars_exports, {
 module.exports = __toCommonJS(chars_exports);
 var chars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length !== length) {
-      return message || `Number of characters required is ${length}!`;
+      return message || `Number of characters required is ${length}`;
     }
-    return "";
+    return null;
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

@@ -1,6 +1,6 @@
 import {
   maxChars
-} from "../../chunk-OULXO5JD.js";
+} from "../../chunk-HCK5LPBB.js";
 export {
   maxChars
 };

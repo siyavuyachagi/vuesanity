@@ -1,3 +1,5 @@
+import { ValidationRule } from '../../types/validation-rule.cjs';
+
 /**
  * URL validation
  * @param {string} message Custom error message (Optional)
@@ -7,6 +9,6 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const url: (message?: string) => (value: any) => string;
+declare const url: (message?: string) => ValidationRule;
 
 export { url };

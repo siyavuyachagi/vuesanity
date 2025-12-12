@@ -1,3 +1,3 @@
-export { FieldConfig } from './field.cjs';
-export { default as ModelConfig } from './model-config.cjs';
-export { ValidationRule } from './rule.cjs';
+export { FieldConfig } from './field-config.cjs';
+export { ModelConfig } from './model-config.cjs';
+export { ValidationRule } from './validation-rule.cjs';

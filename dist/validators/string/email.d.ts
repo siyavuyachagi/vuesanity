@@ -1,3 +1,5 @@
+import { ValidationRule } from '../../types/validation-rule.js';
+
 /**
  * Email validation with domain restriction
  * @param {string | string[]} allowedDomains Allowed email domains (Optional)
@@ -8,8 +10,8 @@
  * // Or
  * email(["domain.com", "domain.co.za"], "Invalid email format");
  * ```
- * @returns Validation function that returns error message or empty string
+ * @returns Validation function that returns error message or null
  */
-declare const email: (allowedDomains?: string | string[], message?: string) => ((value: any) => string);
+declare const email: (allowedDomains?: string | string[], message?: string) => ValidationRule;
 
 export { email };

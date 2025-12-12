@@ -23,7 +23,7 @@ __export(required_exports, {
   required: () => required
 });
 module.exports = __toCommonJS(required_exports);
-var required = (message = "This field is required!") => {
+var required = (message = "This field is required") => {
   return (value) => {
     if (value === null || value === void 0 || value === "") {
       return message;

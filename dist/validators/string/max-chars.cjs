@@ -25,11 +25,11 @@ __export(max_chars_exports, {
 module.exports = __toCommonJS(max_chars_exports);
 var maxChars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length > length) {
       return message || `Maximum length of ${length} characters required`;
     }
-    return "";
+    return null;
   };
 };
 // Annotate the CommonJS export names for ESM import in node:

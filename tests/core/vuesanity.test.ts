@@ -1,146 +1,192 @@
 // tests/unit/core/vuesanity.test.ts
 import { describe, it, expect } from 'vitest';
 import { reactive } from 'vue';
-import VueSanity, { required, email, minChars } from '../../src';
-import type ModelConfig from '../../src/types';
+import VueSanity, { required, email, minChars, password, differentFrom, fileType, fileExtension, url, maxChars, numeric, mustBeFalse, mustBeTrue } from '../../src';
+import { ModelConfig, createModel } from '../../src';
+import { RegisterDto } from '../types/register-dto';
+
 
 describe('VueSanity Core', () => {
     describe('Initialization', () => {
-        it('should create instance with valid model config', () => {
-            const model: ModelConfig = reactive({
-                email: { value: '', validations: [required()], errors: [] }
+        it("1. should create instance with validated model config", () => {
+            const registerDto = createModel<RegisterDto>({
+                firstName: { validations: [required()] },
+                lastName: { validations: [required()] },
+                password: { validations: [password()] },
+                acceptedTerms: { value: false },
             });
 
-            const validator = new VueSanity(model);
+            const validator = new VueSanity(registerDto);
+
             expect(validator).toBeInstanceOf(VueSanity);
+            expect(validator.isValid).toBe(false);
+            expect(validator.errors.firstName).toContain("This field is required");
+            expect(validator.errors.password).toContain("Password must have 6 characters or more");
         });
 
-        it('should have all required public properties', () => {
-            const model: ModelConfig = reactive({
-                email: { value: '', validations: [], errors: [] }
+        it('2. should have all required public properties', () => {
+            const registerDto = createModel<RegisterDto>({
+                firstName: { validations: [required()] },
+                lastName: { validations: [required()] },
             });
 
-            const validator = new VueSanity(model);
+            const validator = new VueSanity(registerDto);
             expect(validator).toHaveProperty('errors');
             expect(validator).toHaveProperty('isValid');
             expect(validator).toHaveProperty('normalizedModel');
             expect(validator).toHaveProperty('formData');
         });
 
-        it('should validate on initialization', () => {
-            const model: ModelConfig = reactive({
-                email: { value: '', validations: [required('Required')], errors: [] }
+        it('3. should validate on initialization', () => {
+            const model = createModel<RegisterDto>({
+                firstName: { validations: [required()] },
             });
 
             const validator = new VueSanity(model);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toHaveProperty('email');
+            expect(validator.errors).toHaveProperty('firstName');
         });
     });
 
     describe('Validation State', () => {
-        it('should mark form as invalid when validation fails', () => {
-            const model: ModelConfig = reactive({
-                email: { value: '', validations: [required()], errors: [] }
+        it('1. should mark form as invalid when validation fails', () => {
+            const registerDto = createModel<RegisterDto>({
+                firstName: { validations: [required()] },
             });
 
-            const validator = new VueSanity(model);
+            const validator = new VueSanity(registerDto);
             expect(validator.isValid).toBe(false);
         });
 
-        it('should mark form as valid when all validations pass', () => {
-            const model: ModelConfig = reactive({
-                email: { value: 'test@example.com', validations: [required(), email()], errors: [] }
+        it('2. should mark form as valid when all validations pass', () => {
+            const registerDto = createModel<RegisterDto>({
+                firstName: { value: 'John', validations: [required()] },
+                lastName: { value: 'Doe', validations: [required()] },
+                password: { value: 'Pass@123', validations: [password()] },
+                acceptedTerms: { validations: [mustBeFalse()] },
             });
 
-            const validator = new VueSanity(model);
+            const validator = new VueSanity(registerDto);
             expect(validator.isValid).toBe(true);
         });
 
-        it('should populate errors object with field errors', () => {
-            const model: ModelConfig = reactive({
-                email: { value: 'invalid', validations: [email()], errors: [] },
-                password: { value: '', validations: [required('Required')], errors: [] }
+        it('3. should populate errors object with field errors', () => {
+            const registerDto = createModel<RegisterDto>({
+                firstName: { validations: [required()] },
+                lastName: { validations: [required()] },
+                email: { validations: [email()] },
+                password: { validations: [password()] },
+                acceptedTerms: { validations: [mustBeTrue()] },
             });
 
-            const validator = new VueSanity(model);
-            expect(validator.errors.email).toBeDefined();
-            expect(validator.errors.password).toBeDefined();
-            expect(validator.errors.email[0]).toBe('Invalid email format');
-            expect(validator.errors.password[0]).toBe('Required');
+            const validator = new VueSanity(registerDto);
+            expect(validator.errors.firstName).toContain('This field is required');
+            expect(validator.errors.lastName).toContain('This field is required');
+            expect(validator.errors.email).toBeUndefined; // null is truthy - specifically add required()
+            expect(validator.errors.password).toContain('Password must have 6 characters or more');
+            expect(validator.errors.acceptedTerms).toBeNull;
         });
 
-        it('should populate model field errors', () => {
-            const model: ModelConfig = reactive({
-                email: { value: '', validations: [required('Required')], errors: [] }
+        it('4. should populate model field errors', () => {
+            const registerDto = createModel<RegisterDto>({
+                firstName: { validations: [required()] },
+                lastName: { validations: [required()] },
+                email: { validations: [email()] },
+                password: { validations: [password()] },
+                acceptedTerms: { value: false, validations: [required(), mustBeTrue()] },
             });
 
-            const validator = new VueSanity(model);
-            expect(model.email.errors!).toHaveLength(1);
-            expect(model.email.errors![0]).toBe('Required');
+            new VueSanity(registerDto);
+            expect(registerDto.firstName.errors).toContain('This field is required');
+            expect(registerDto.lastName.errors).toContain('This field is required');
+            expect(registerDto.email.errors).toBeUndefined; // null is truthy - specifically add required()
+            expect(registerDto.password.errors).toContain('Password must have 6 characters or more');
+            expect(registerDto.acceptedTerms.errors).toContain('Value must be true');
         });
     });
 
     describe('Normalized Model', () => {
-        it('should return empty object when validation fails', () => {
-            const model: ModelConfig = reactive({
-                email: { value: '', validations: [required()], errors: [] }
+        it('1. should return empty object when validation fails', () => {
+            const model = createModel<RegisterDto>({
+                email: { validations: [required()] },
             });
 
             const validator = new VueSanity(model);
             expect(validator.normalizedModel).toEqual({});
         });
 
-        it('should return clean data when validation passes', () => {
-            const model: ModelConfig = reactive({
-                email: { value: 'test@example.com', validations: [email()], errors: [] },
-                password: { value: 'password123', validations: [minChars(8)], errors: [] }
+        it('2. should return clean data when validation passes', () => {
+            const model = createModel<RegisterDto>({
+                email: { value: 'test@example.com', validations: [email()] },
+                password: { value: 'Password123!', validations: [password()] },
+                acceptedTerms: { value: true, validations: [mustBeTrue()] }
             });
 
             const validator = new VueSanity(model);
+
+            expect(validator.isValid).toBe(true);
+            expect(validator.formData).toBeInstanceOf(FormData);
+            expect(validator.formData.get('email')).toBe('test@example.com');
             expect(validator.normalizedModel).toEqual({
                 email: 'test@example.com',
-                password: 'password123'
+                password: 'Password123!',
+                acceptedTerms: true
             });
         });
 
-        it('should exclude fields with errors from normalized model', () => {
-            const model: ModelConfig = reactive({
-                email: { value: 'invalid', validations: [email()], errors: [] },
-                password: { value: 'password123', validations: [minChars(8)], errors: [] }
+        it('3. should exclude all fields on invalid from from normalized model', () => {
+            const model = createModel<RegisterDto>({
+                email: { value: 'test@example.com', validations: [email()] },
+                password: { validations: [password()] },
+                acceptedTerms: { value: false, validations: [mustBeTrue()] }
             });
 
             const validator = new VueSanity(model);
+            expect(validator.normalizedModel).toStrictEqual({});
             expect(validator.normalizedModel).not.toHaveProperty('email');
         });
     });
 
     describe('FormData Generation', () => {
-        it('should generate FormData when validation passes', () => {
-            const model: ModelConfig = reactive({
-                name: { value: 'John', validations: [required()], errors: [] },
-                email: { value: 'john@example.com', validations: [email()], errors: [] }
+        it('1. should generate FormData when validation passes', () => {
+            const model = createModel<RegisterDto>({
+                firstName: { value: 'John', validations: [required()] },
+                email: { value: 'john@yahoo.com', validations: [email()] },
+                password: { value: 'Password123!', validations: [password()] },
+                acceptedTerms: { value: true, validations: [mustBeTrue()] }
             });
 
             const validator = new VueSanity(model);
             expect(validator.formData).toBeInstanceOf(FormData);
-            expect(validator.formData.get('name')).toBe('John');
-            expect(validator.formData.get('email')).toBe('john@example.com');
+            expect(validator.formData.get('firstName')).toBe('John');
+            expect(validator.formData.get('email')).toBe('john@yahoo.com');
+            expect(validator.formData.get('password')).toBe('Password123!');
+            expect(validator.formData.get('acceptedTerms')).toBe('true');
         });
 
-        it('should handle array values in FormData', () => {
-            const files = [new File([''], 'test1.txt'), new File([''], 'test2.txt')];
-            const model: ModelConfig = reactive({
-                files: { value: files, validations: [], errors: [] }
+        it('2. should handle array values in FormData', () => {
+            const files = [
+                createMockFile('photo.png', 'image/png', 1),        // 1 MB
+                createMockFile('photo.jpeg', 'image/jpeg', 2),      // 2 MB
+                createMockFile('document.pdf', 'application/pdf', 3),// 3 MB
+                createMockFile('presentation.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 4), // 4 MB
+                createMockFile('spreadsheet.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 5), // 5 MB
+                createMockFile('archive.zip', 'application/zip', 5), // 5 MB
+            ];
+
+            const model = createModel<RegisterDto>({
+                documents: { value: files, validations: [required()] }
             });
 
             const validator = new VueSanity(model);
-            expect(validator.formData.getAll('files')).toHaveLength(2);
+            expect(validator.formData.getAll('documents')).length.greaterThanOrEqual(6);
         });
 
-        it('should not generate FormData when validation fails', () => {
-            const model: ModelConfig = reactive({
-                email: { value: '', validations: [required()], errors: [] }
+        it('3. should not generate FormData when validation fails', () => {
+            const model = createModel<RegisterDto>({
+                email: { value: 'test@example.com', validations: [email()] },
+                password: { validations: [password()] },
+                acceptedTerms: { value: false, validations: [mustBeTrue()] }
             });
 
             const validator = new VueSanity(model);
@@ -149,99 +195,102 @@ describe('VueSanity Core', () => {
     });
 
     describe('Multiple Validations', () => {
-        it('should run all validations on a field', () => {
-            const model: ModelConfig = reactive({
-                password: {
-                    value: 'short',
-                    validations: [required(), minChars(8, 'Too short')],
-                    errors: []
-                }
+        it('1. should run all validations on a field', () => {
+            const model = createModel<RegisterDto>({
+                notes: { value: 'cj', validations: [required(), minChars(8), maxChars(1), numeric(), url()] },
             });
 
-            const validator = new VueSanity(model);
-            expect(model.password.errors).toContain('Too short');
+            new VueSanity(model);
+            expect(model.notes.errors).toContain('Minimum length of 8 characters required');
+            expect(model.notes.errors).toContain('Maximum length of 1 characters required');
+            expect(model.notes.errors).toContain('Only numeric values are allowed');
+            expect(model.notes.errors).toContain('Invalid URL format');
         });
 
-        it('should stop at first error per validation', () => {
-            const model: ModelConfig = reactive({
-                email: {
-                    value: 'invalid',
-                    validations: [required(), email('Bad format')],
-                    errors: []
-                }
+        it('2. should stop at first error per validation', () => {
+            const model = createModel<RegisterDto>({
+                email: { value: 'cj', validations: [required(), email()] },
             });
 
-            const validator = new VueSanity(model);
+            new VueSanity(model);
             expect(model.email.errors).toHaveLength(1);
             expect(model.email.errors![0]).toBe('Invalid email format');
         });
     });
 
     describe('Array Field Validation', () => {
-        it('should validate each item in array field', () => {
-            const model: ModelConfig = reactive({
-                tags: {
-                    value: ['', 'valid'],
-                    validations: [required('Required')],
-                    errors: []
-                }
+        it('1. should fail if one of the items if falsey', () => {
+            const files = [
+                createMockFile('photo.png', 'image/png', 1),        // 1 MB
+                createMockFile('document.pdf', 'application/pdf', 3),// 3 MB
+                createMockFile('archive.zip', 'application/zip', 5), // 5 MB
+            ];
+            const registerDto = createModel<RegisterDto>({
+                documents: {
+                    value: files,
+                    validations: [required(), fileExtension(['png', 'pdf'])]
+                },
             });
 
-            const validator = new VueSanity(model);
+            const validator = new VueSanity(registerDto);
             expect(validator.isValid).toBe(false);
-            expect(model.tags.errors).toHaveLength(1);
+            expect(registerDto.documents.errors).toHaveLength(1);
         });
 
-        it('should pass when all array items are valid', () => {
-            const model: ModelConfig = reactive({
-                tags: {
-                    value: ['tag1', 'tag2'],
-                    validations: [required()],
-                    errors: []
-                }
+        it('2. should pass when all array items are valid', () => {
+            const registerDto = createModel<RegisterDto>({
+                hobbies: {
+                    value: ["gaming", "soccer"],
+                    validations: [required()]
+                },
             });
 
-            const validator = new VueSanity(model);
+            const validator = new VueSanity(registerDto, false);
             expect(validator.isValid).toBe(true);
+            expect(registerDto.hobbies.value).toHaveLength(2);
         });
     });
 
     describe('Clean Values Option', () => {
-        it('should clear values after successful validation by default', () => {
-            const model: ModelConfig = reactive({
-                email: { value: 'test@example.com', validations: [email()], errors: [] }
+        it('1. should clear values after successful validation by default', () => {
+            const model = createModel<RegisterDto>({
+                firstName: { value: 'John', validations: [required()], errors: [] },
+                email: { value: 'john@yayhoo.com', validations: [required()], errors: [] },
             });
 
-            const validator = new VueSanity(model);
+            new VueSanity(model);
+            expect(model.firstName.value).toBeNull();
             expect(model.email.value).toBeNull();
         });
 
-        it('should not clear values when cleanValues is false', () => {
-            const model: ModelConfig = reactive({
-                email: { value: 'test@example.com', validations: [email()], errors: [] }
+        it('2. should not clear values when cleanValues is false', () => {
+            const model = createModel<RegisterDto>({
+                firstName: { value: 'John', validations: [required()], errors: [] },
+                email: { value: 'john@yayhoo.com', validations: [required()], errors: [] },
             });
 
-            const validator = new VueSanity(model, false);
-            expect(model.email.value).toBe('test@example.com');
+            new VueSanity(model, false);
+            expect(model.firstName.value).toBe('John');
+            expect(model.email.value).toBe('john@yayhoo.com');
         });
 
-        it('should not clear values when validation fails', () => {
-            const model: ModelConfig = reactive({
-                email: { value: 'invalid', validations: [email()], errors: [] }
+        it('3. should not clear values when validation fails', () => {
+            const model = createModel<RegisterDto>({
+                notes: { value: 'Write', validations: [minChars(10)], errors: [] },
             });
 
-            const validator = new VueSanity(model);
-            expect(model.email.value).toBe('invalid');
+            new VueSanity(model, false);
+            expect(model.notes.value).toBe('Write');
         });
     });
 
     describe('Static Methods', () => {
-        it('should have getFormData static method', () => {
+        it('1. should have getFormData static method', () => {
             expect(VueSanity.getFormData).toBeDefined();
             expect(typeof VueSanity.getFormData).toBe('function');
         });
 
-        it('should convert object to FormData via static method', () => {
+        it('2. should convert object to FormData via static method', () => {
             const data = { name: 'John', age: 30 };
             const formData = VueSanity.getFormData(data);
 
@@ -252,50 +301,48 @@ describe('VueSanity Core', () => {
     });
 
     describe('Edge Cases', () => {
-        it('should handle empty model config', () => {
-            const model: ModelConfig = reactive({});
-            const validator = new VueSanity(model);
+        it('1. should handle empty model config', () => {
+            const model = createModel<RegisterDto>({});
 
+            const validator = new VueSanity(model);
             expect(validator.isValid).toBe(true);
             expect(validator.errors).toEqual({});
         });
 
-        it('should handle field without validations', () => {
-            const model: ModelConfig = reactive({
-                name: { value: 'John', errors: [] }
+        it('2. should handle field without validations', () => {
+            const model = createModel<RegisterDto>({
+                firstName: { value: 'John' },
+                lastName: {}
             });
 
             const validator = new VueSanity(model);
             expect(validator.isValid).toBe(true);
         });
 
-        it('should handle null and undefined values', () => {
-            const model: ModelConfig = reactive({
-                field1: { value: null, validations: [], errors: [] },
-                field2: { value: undefined, validations: [], errors: [] }
+        it('3. should handle null and undefined values', () => {
+            const model = createModel<RegisterDto>({
+                firstName: { value: null }, // defined in dto
+                lastName: { value: undefined }
             });
 
             const validator = new VueSanity(model);
             expect(validator.isValid).toBe(true);
         });
 
-        it('should handle special characters in field values', () => {
-            const model: ModelConfig = reactive({
-                text: {
-                    value: '<script>alert("xss")</script>',
-                    validations: [required()],
-                    errors: []
-                }
+        it('4. should handle special characters in field values', () => {
+            const model = createModel<RegisterDto>({
+                notes: { value: '<script>alert("xss")</script>' , validations:[required()]}, // defined in dto
             });
 
             const validator = new VueSanity(model);
             expect(validator.isValid).toBe(true);
-            expect(validator.normalizedModel).toHaveProperty('text');
+            expect(validator.normalizedModel).toHaveProperty('notes');
+            expect(validator.normalizedModel.notes).toBe('<script>alert("xss")</script>');
         });
     });
 
     describe('Reactivity', () => {
-        it('should work with Vue reactive objects', () => {
+        it('1. should work with Vue reactive objects', () => {
             const model = reactive({
                 email: { value: '', validations: [required()], errors: [] }
             });
@@ -304,7 +351,7 @@ describe('VueSanity Core', () => {
             expect(validator.isValid).toBe(false);
         });
 
-        it('should maintain reactivity after validation', () => {
+        it('2. should maintain reactivity after validation', () => {
             const model = reactive({
                 email: { value: 'test@example.com', validations: [email()], errors: [] }
             });
@@ -316,3 +363,19 @@ describe('VueSanity Core', () => {
         });
     });
 });
+
+
+
+
+/**
+ * Create a dummy file
+ * @param name filename with an extension
+ * @param type mimeType 'image/png'
+ * @param sizeMB file size in MegaBytes(MB)
+ * @returns File
+ */
+const createMockFile = (name: string, type: string, sizeMB: number) => {
+    const sizeBytes = sizeMB * 1024 * 1024; // convert MB → bytes
+    const blob = new Blob([new Uint8Array(sizeBytes)], { type });
+    return new File([blob], name, { type });
+};

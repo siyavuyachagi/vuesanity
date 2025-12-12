@@ -1,4 +1,7 @@
 // src/validators/string/email.ts
+
+import { ValidationRule } from "~/src/types";
+
 /**
  * Email validation with domain restriction
  * @param {string | string[]} allowedDomains Allowed email domains (Optional)
@@ -9,12 +12,12 @@
  * // Or
  * email(["domain.com", "domain.co.za"], "Invalid email format");
  * ```
- * @returns Validation function that returns error message or empty string
+ * @returns Validation function that returns error message or null
  */
 export const email = (
     allowedDomains?: string | string[],
     message?: string
-): ((value: any) => string) => {
+): ValidationRule => {
     // Normalize allowed domains to an array for easier checking
     const domains = Array.isArray(allowedDomains)
         ? allowedDomains
@@ -22,8 +25,8 @@ export const email = (
             ? [allowedDomains]
             : [];
 
-    return (value: any): string => {
-        if (!value) return "";
+    return (value: any): string | null => {
+        if (!value) return null;
 
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(value)) {
@@ -35,6 +38,6 @@ export const email = (
             return message || `Email domain must be one of: ${domains.join(", ")}`;
         }
 
-        return "";
+        return null;
     };
 };

@@ -25,10 +25,10 @@ __export(url_exports, {
 module.exports = __toCommonJS(url_exports);
 var url = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     try {
       new URL(value);
-      return "";
+      return null;
     } catch {
       return message || "Invalid URL format";
     }

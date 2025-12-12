@@ -1,46 +1,71 @@
-import { Reactive } from 'vue';
+import { UnwrapRef } from 'vue';
+import { ModelConfig } from '../types/model-config.cjs';
 import { getFormData } from '../helpers/form-data.cjs';
-import ModelConfig from '../types/model-config.cjs';
-import '../types/field.cjs';
-import '../types/rule.cjs';
+import '../types/field-config.cjs';
+import '../types/validation-rule.cjs';
 
 /**
- * VueSanity - A form validation and normalization utility for Vue 3.
+ * VueSanity - Form validation & normalization utility for Vue 3.
  *
  * Handles complex form models with built-in validation, error tracking, and data normalization.
  * Automatically generates clean payloads and FormData objects from validated field values.
  *
- * @class VueSanity
- * @param {ModelConfig} modelConfig - Configuration object defining form fields with validation rules, initial values, and error tracking
- * @param {boolean} cleanValues - Whether to automatically clear field values after successful validation (default: true)
+ * @template T - Shape of the form data object
  *
  * @example
- * const form = new VueSanity({
- *   email: { value: '', validations: [required, email], errors: [] },
- *   password: { value: '', validations: [required, minChars(8)], errors: [] }
+ * ```ts
+ * interface LoginDto {
+ *   email: string;
+ *   password: string;
+ *   rememberMe: boolean;
+ * }
+ *
+ * const loginForm = createModel<LoginDto>({
+ *   email: { value: "" },
+ *   password: { value: "" },
+ *   rememberMe: { value: false }
  * });
  *
- * console.log(form.isValid); // boolean
- * console.log(form.normalizedModel); // validated data object
- * console.log(form.formData); // FormData instance for submission
- * console.log(form.errors); // validation errors by field
+ * const form = new VueSanity(loginForm);
+ * console.log(form.isValid);          // boolean
+ * console.log(form.normalizedModel);  // validated payload object
+ * console.log(form.formData);         // FormData instance
+ * console.log(form.errors);           // validation errors keyed by field
+ * ```
  */
-declare class VueSanity {
+declare class VueSanity<T extends Record<string, any>> {
+    /** Reactive model configuration */
     private _model;
+    /** Should form values be cleared after successful validation */
     private _cleanValues;
-    errors: Record<string, string[]>;
+    /** Validation errors keyed by field */
+    errors: Partial<Record<keyof T, string[]>>;
+    /** Form validation status */
     isValid: boolean;
-    normalizedModel: Reactive<Object>;
+    /** Normalized, validated form payload */
+    normalizedModel: UnwrapRef<T>;
+    /** FormData representation of the validated model */
     formData: FormData;
+    /** Static helper to convert object to FormData */
     static getFormData: typeof getFormData;
-    constructor(modelConfig: ModelConfig, cleanValues?: boolean);
-    /** Main initial validation method */
+    /**
+     * Constructor
+     * @param modelConfig - The strongly-typed form model configuration
+     * @param cleanValues - Automatically clear values after successful validation (default: true)
+     */
+    constructor(modelConfig: ModelConfig<T>, cleanValues?: boolean);
+    /** Perform validations for all fields and update state */
     private _validate;
-    /** Clean model errors after validations */
+    /**
+     * Normalizes the data model
+     */
+    private _normalizeModel;
+    private _toArray;
+    /** Reset all model field errors */
     private _clearModelErrors;
-    /** Optionally clean model values after successful validations */
+    /** Optionally clear all model field values */
     private _clearModelValues;
-    /** Deconstructor */
+    /** Clean-up method called after successful validation */
     private _deconstructor;
 }
 

@@ -1,6 +1,6 @@
 import {
   minChars
-} from "../../chunk-FNT5SFUY.js";
+} from "../../chunk-SSI7GCOB.js";
 export {
   minChars
 };

@@ -5,7 +5,51 @@ import { maxDate, minDate, rangeDate } from "../../src";
 
 
 describe('Date Validators', () => {
-    describe('minDate()', () => {
+    describe('1. maxDate()', () => {
+        it('should accept date before maximum', () => {
+            const validator = maxDate(new Date('2024-12-31'));
+            expect(validator(new Date('2024-06-15'))).toBe('');
+        });
+
+        it('should accept date at maximum', () => {
+            const maxDateValue = new Date('2024-12-31');
+            const validator = maxDate(maxDateValue);
+            expect(validator(maxDateValue)).toBe('');
+        });
+
+        it('should reject date after maximum', () => {
+            const validator = maxDate(new Date('2024-12-31'));
+            expect(validator(new Date('2025-01-01'))).toContain('must be before');
+        });
+
+        it('should return empty string for empty value', () => {
+            const validator = maxDate(new Date('2024-12-31'));
+            expect(validator('')).toBe('');
+        });
+
+        it('should use custom message', () => {
+            const validator = maxDate(new Date('2024-12-31'), 'Date too late');
+            expect(validator(new Date('2025-01-01'))).toBe('Date too late');
+        });
+
+        it('should handle string date input', () => {
+            const validator = maxDate('2024-12-31');
+            expect(validator('2024-06-15')).toBe('');
+            expect(validator('2025-01-01')).toContain('must be before');
+        });
+
+        it('should reject invalid date format', () => {
+            const validator = maxDate(new Date('2024-12-31'));
+            expect(validator('invalid-date')).toContain('Invalid date format');
+        });
+
+        it('should accept dates with time', () => {
+            const validator = maxDate(new Date('2024-12-31T23:59:59'));
+            expect(validator(new Date('2024-12-31T12:00:00'))).toBe('');
+        });
+    });
+
+    describe('2. minDate()', () => {
         it('should accept date after minimum', () => {
             const validator = minDate(new Date('2024-01-01'));
             expect(validator(new Date('2024-06-15'))).toBe('');
@@ -54,51 +98,7 @@ describe('Date Validators', () => {
         });
     });
 
-    describe('maxDate()', () => {
-        it('should accept date before maximum', () => {
-            const validator = maxDate(new Date('2024-12-31'));
-            expect(validator(new Date('2024-06-15'))).toBe('');
-        });
-
-        it('should accept date at maximum', () => {
-            const maxDateValue = new Date('2024-12-31');
-            const validator = maxDate(maxDateValue);
-            expect(validator(maxDateValue)).toBe('');
-        });
-
-        it('should reject date after maximum', () => {
-            const validator = maxDate(new Date('2024-12-31'));
-            expect(validator(new Date('2025-01-01'))).toContain('must be before');
-        });
-
-        it('should return empty string for empty value', () => {
-            const validator = maxDate(new Date('2024-12-31'));
-            expect(validator('')).toBe('');
-        });
-
-        it('should use custom message', () => {
-            const validator = maxDate(new Date('2024-12-31'), 'Date too late');
-            expect(validator(new Date('2025-01-01'))).toBe('Date too late');
-        });
-
-        it('should handle string date input', () => {
-            const validator = maxDate('2024-12-31');
-            expect(validator('2024-06-15')).toBe('');
-            expect(validator('2025-01-01')).toContain('must be before');
-        });
-
-        it('should reject invalid date format', () => {
-            const validator = maxDate(new Date('2024-12-31'));
-            expect(validator('invalid-date')).toContain('Invalid date format');
-        });
-
-        it('should accept dates with time', () => {
-            const validator = maxDate(new Date('2024-12-31T23:59:59'));
-            expect(validator(new Date('2024-12-31T12:00:00'))).toBe('');
-        });
-    });
-
-    describe('rangeDate()', () => {
+    describe('3. rangeDate()', () => {
         it('should accept date within range', () => {
             const validator = rangeDate(new Date('2024-01-01'), new Date('2024-12-31'));
             expect(validator(new Date('2024-06-15'))).toBe('');

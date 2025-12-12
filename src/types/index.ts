@@ -1,5 +1,5 @@
 // ./types/index.ts
 
-export * from "./field";
-export type { default as ModelConfig } from "./model-config";
-export * from "./rule";
+export * from "./field-config";
+export type { ModelConfig } from "./model-config";
+export * from "./validation-rule";

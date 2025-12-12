@@ -36,6 +36,8 @@ __export(validators_exports, {
   minDate: () => minDate,
   minFileSize: () => minFileSize,
   minNumber: () => minNumber,
+  mustBeFalse: () => mustBeFalse,
+  mustBeTrue: () => mustBeTrue,
   numeric: () => numeric,
   password: () => password,
   phone: () => phone,
@@ -48,38 +50,213 @@ __export(validators_exports, {
 });
 module.exports = __toCommonJS(validators_exports);
 
+// src/validators/boolean/must-be-false.ts
+var mustBeFalse = (message) => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") return null;
+    const normalized = value === true ? true : value === false ? false : value === "true" ? true : value === "false" ? false : value === 1 ? true : value === 0 ? false : Boolean(value);
+    if (normalized === true) {
+      return message || "Value must be false";
+    }
+    return null;
+  };
+};
+
+// src/validators/boolean/must-be-true.ts
+var mustBeTrue = (message) => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") return null;
+    const normalized = value === true ? true : value === false ? false : value === "true" ? true : value === "false" ? false : value === 1 ? true : value === 0 ? false : Boolean(value);
+    if (normalized === false) {
+      return message || "Value must be true";
+    }
+    return null;
+  };
+};
+
+// src/validators/date/min-date.ts
+var minDate = (minDate2, message) => {
+  return (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    const min = new Date(minDate2);
+    if (isNaN(date.getTime()) || isNaN(min.getTime())) {
+      return message || "Invalid date format";
+    }
+    if (date < min) {
+      return message || `Date must be after ${min.toDateString()}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/date/max-date.ts
+var maxDate = (maxDate2, message) => {
+  return (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    const max = new Date(maxDate2);
+    if (isNaN(date.getTime()) || isNaN(max.getTime())) {
+      return message || "Invalid date format";
+    }
+    if (date > max) {
+      return message || `Date must be before ${max.toDateString()}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/date/range-date.ts
+var rangeDate = (minDate2, maxDate2, message) => {
+  return (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    const min = new Date(minDate2);
+    const max = new Date(maxDate2);
+    if (isNaN(date.getTime()) || isNaN(min.getTime()) || isNaN(max.getTime())) {
+      return message || "Invalid date format";
+    }
+    if (date < min || date > max) {
+      return message || `Date must be between ${min.toDateString()} and ${max.toDateString()}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/file/file-extension.ts
+var fileExtension = (extensions, message) => {
+  const normalizedExtensions = (Array.isArray(extensions) ? extensions : [extensions]).map((ext) => ext.toLowerCase().replace(/^\./, ""));
+  return (value) => {
+    if (!value) return "";
+    if (!(value instanceof File)) return "";
+    const extension = value.name.substring(value.name.lastIndexOf(".") + 1);
+    if (!normalizedExtensions.includes(extension)) {
+      return message || `File ${value.name} not supported.`;
+    }
+    return "";
+  };
+};
+
+// src/validators/file/max-file-size.ts
+var maxFileSize = (sizeMB, message) => {
+  return (value) => {
+    if (!value) return "";
+    if (!(value instanceof File)) return "";
+    const sizeInMB = value.size / (1024 * 1024);
+    if (sizeInMB > sizeMB) {
+      return message || `Maximum file size of ${sizeMB} MB exceeded.`;
+    }
+    return "";
+  };
+};
+
+// src/validators/file/min-file-size.ts
+var minFileSize = (sizeMB, message) => {
+  return (value) => {
+    if (!value) return "";
+    if (!(value instanceof File)) return "";
+    const sizeInMB = value.size / (1024 * 1024);
+    if (sizeInMB < sizeMB) {
+      return message || `Minimum file size of ${sizeMB} MB required.`;
+    }
+    return "";
+  };
+};
+
+// src/validators/file/file-size.ts
+var fileSize = (sizeMB, message) => {
+  return (value) => {
+    if (!value) return "";
+    if (!(value instanceof File)) return "";
+    const sizeInMB = value.size / (1024 * 1024);
+    if (sizeInMB !== sizeMB) {
+      return message || `File must be exactly ${sizeMB} MB in size.`;
+    }
+    return "";
+  };
+};
+
+// src/validators/file/file-type.ts
+var fileType = (allowedTypes, message) => {
+  const types = Array.isArray(allowedTypes) ? allowedTypes : [allowedTypes];
+  return (value) => {
+    if (!value) return "";
+    if (!(value instanceof File)) return "";
+    if (!types.includes(value.type)) {
+      return message || `Invalid file type. Allowed types: ${types.join(", ")}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/number/min-number.ts
+var minNumber = (min, message) => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") return "";
+    const numValue = Number(value);
+    if (isNaN(numValue) || numValue < min) {
+      return message || `Value must be at least ${min}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/number/max-number.ts
+var maxNumber = (max, message) => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") return "";
+    const numValue = Number(value);
+    if (isNaN(numValue) || numValue > max) {
+      return message || `Value cannot exceed ${max}`;
+    }
+    return "";
+  };
+};
+
+// src/validators/number/range-number.ts
+var rangeNumber = (min, max, message) => {
+  return (value) => {
+    if (value === null || value === void 0 || value === "") return "";
+    const numValue = Number(value);
+    if (isNaN(numValue) || numValue < min || numValue > max) {
+      return message || `Value must be between ${min} and ${max}`;
+    }
+    return "";
+  };
+};
+
 // src/validators/string/alpha.ts
 var alpha = (allowSpaces = true, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const pattern = allowSpaces ? /^[a-zA-Z\s]*$/ : /^[a-zA-Z]*$/;
     if (!pattern.test(value)) {
       return message || "Only alphabetic characters are allowed";
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/alphanumeric.ts
 var alphanumeric = (allowSpaces = false, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const pattern = allowSpaces ? /^[a-zA-Z0-9\s]*$/ : /^[a-zA-Z0-9]*$/;
     if (!pattern.test(value)) {
       return message || "Only alphanumeric characters are allowed";
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/chars.ts
 var chars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length !== length) {
-      return message || `Number of characters required is ${length}!`;
+      return message || `Number of characters required is ${length}`;
     }
-    return "";
+    return null;
   };
 };
 
@@ -99,7 +276,7 @@ var differentFrom = (compareValue, message) => {
 var email = (allowedDomains, message) => {
   const domains = Array.isArray(allowedDomains) ? allowedDomains : allowedDomains ? [allowedDomains] : [];
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(value)) {
       return message || "Invalid email format";
@@ -108,29 +285,29 @@ var email = (allowedDomains, message) => {
     if (domains.length > 0 && !domains.map((d) => d.toLowerCase()).includes(domain)) {
       return message || `Email domain must be one of: ${domains.join(", ")}`;
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/max-chars.ts
 var maxChars = (length, message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     if (value.length > length) {
       return message || `Maximum length of ${length} characters required`;
     }
-    return "";
+    return null;
   };
 };
 
 // src/validators/string/min-chars.ts
 var minChars = (length, message) => {
   return (value) => {
-    if (!value) return "";
-    if (value.length < length) {
+    const str = String(value);
+    if (str.length < length) {
       return message || `Minimum length of ${length} characters required`;
     }
-    return "";
+    return null;
   };
 };
 
@@ -154,10 +331,12 @@ var numeric = (allowDecimals = false, allowNegative = false, message) => {
 // src/validators/string/password.ts
 var password = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value || String(value).length === 0) {
+      return message || "Password must have 6 characters or more";
+    }
     const str = String(value);
     if (str.length < 6) {
-      return message || "Password must be longer than 6 characters";
+      return message || "Password must have 6 characters or more";
     }
     const lower = str.toLowerCase();
     if ([...lower].every((c) => c === lower[0])) {
@@ -167,7 +346,7 @@ var password = (message) => {
     if (!specialPattern.test(str)) {
       return message || "Password must include at least one special character";
     }
-    return "";
+    return null;
   };
 };
 
@@ -476,7 +655,7 @@ var regex = (pattern, message) => {
 };
 
 // src/validators/string/required.ts
-var required = (message = "This field is required!") => {
+var required = (message = "This field is required") => {
   return (value) => {
     if (value === null || value === void 0 || value === "") {
       return message;
@@ -503,164 +682,13 @@ var sameAs = (compareValue, message) => {
 // src/validators/string/url.ts
 var url = (message) => {
   return (value) => {
-    if (!value) return "";
+    if (!value) return null;
     try {
       new URL(value);
-      return "";
+      return null;
     } catch {
       return message || "Invalid URL format";
     }
-  };
-};
-
-// src/validators/file/file-extension.ts
-var fileExtension = (extensions, message) => {
-  const normalizedExtensions = (Array.isArray(extensions) ? extensions : [extensions]).map((ext) => ext.toLowerCase().replace(/^\./, ""));
-  return (value) => {
-    if (!value) return "";
-    if (!(value instanceof File)) return "";
-    const extension = value.name.substring(value.name.lastIndexOf(".") + 1);
-    if (!normalizedExtensions.includes(extension)) {
-      return message || `File ${value.name} not supported.`;
-    }
-    return "";
-  };
-};
-
-// src/validators/file/max-file-size.ts
-var maxFileSize = (sizeMB, message) => {
-  return (value) => {
-    if (!value) return "";
-    if (!(value instanceof File)) return "";
-    const sizeInMB = value.size / (1024 * 1024);
-    if (sizeInMB > sizeMB) {
-      return message || `Maximum file size of ${sizeMB} MB exceeded.`;
-    }
-    return "";
-  };
-};
-
-// src/validators/file/min-file-size.ts
-var minFileSize = (sizeMB, message) => {
-  return (value) => {
-    if (!value) return "";
-    if (!(value instanceof File)) return "";
-    const sizeInMB = value.size / (1024 * 1024);
-    if (sizeInMB < sizeMB) {
-      return message || `Minimum file size of ${sizeMB} MB required.`;
-    }
-    return "";
-  };
-};
-
-// src/validators/file/file-size.ts
-var fileSize = (sizeMB, message) => {
-  return (value) => {
-    if (!value) return "";
-    if (!(value instanceof File)) return "";
-    const sizeInMB = value.size / (1024 * 1024);
-    if (sizeInMB !== sizeMB) {
-      return message || `File must be exactly ${sizeMB} MB in size.`;
-    }
-    return "";
-  };
-};
-
-// src/validators/file/file-type.ts
-var fileType = (allowedTypes, message) => {
-  const types = Array.isArray(allowedTypes) ? allowedTypes : [allowedTypes];
-  return (value) => {
-    if (!value) return "";
-    if (!(value instanceof File)) return "";
-    if (!types.includes(value.type)) {
-      return message || `Invalid file type. Allowed types: ${types.join(", ")}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/number/min-number.ts
-var minNumber = (min, message) => {
-  return (value) => {
-    if (value === null || value === void 0 || value === "") return "";
-    const numValue = Number(value);
-    if (isNaN(numValue) || numValue < min) {
-      return message || `Value must be at least ${min}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/number/max-number.ts
-var maxNumber = (max, message) => {
-  return (value) => {
-    if (value === null || value === void 0 || value === "") return "";
-    const numValue = Number(value);
-    if (isNaN(numValue) || numValue > max) {
-      return message || `Value cannot exceed ${max}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/number/range-number.ts
-var rangeNumber = (min, max, message) => {
-  return (value) => {
-    if (value === null || value === void 0 || value === "") return "";
-    const numValue = Number(value);
-    if (isNaN(numValue) || numValue < min || numValue > max) {
-      return message || `Value must be between ${min} and ${max}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/date/min-date.ts
-var minDate = (minDate2, message) => {
-  return (value) => {
-    if (!value) return "";
-    const date = new Date(value);
-    const min = new Date(minDate2);
-    if (isNaN(date.getTime()) || isNaN(min.getTime())) {
-      return message || "Invalid date format";
-    }
-    if (date < min) {
-      return message || `Date must be after ${min.toDateString()}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/date/max-date.ts
-var maxDate = (maxDate2, message) => {
-  return (value) => {
-    if (!value) return "";
-    const date = new Date(value);
-    const max = new Date(maxDate2);
-    if (isNaN(date.getTime()) || isNaN(max.getTime())) {
-      return message || "Invalid date format";
-    }
-    if (date > max) {
-      return message || `Date must be before ${max.toDateString()}`;
-    }
-    return "";
-  };
-};
-
-// src/validators/date/range-date.ts
-var rangeDate = (minDate2, maxDate2, message) => {
-  return (value) => {
-    if (!value) return "";
-    const date = new Date(value);
-    const min = new Date(minDate2);
-    const max = new Date(maxDate2);
-    if (isNaN(date.getTime()) || isNaN(min.getTime()) || isNaN(max.getTime())) {
-      return message || "Invalid date format";
-    }
-    if (date < min || date > max) {
-      return message || `Date must be between ${min.toDateString()} and ${max.toDateString()}`;
-    }
-    return "";
   };
 };
 // Annotate the CommonJS export names for ESM import in node:
@@ -681,6 +709,8 @@ var rangeDate = (minDate2, maxDate2, message) => {
   minDate,
   minFileSize,
   minNumber,
+  mustBeFalse,
+  mustBeTrue,
   numeric,
   password,
   phone,

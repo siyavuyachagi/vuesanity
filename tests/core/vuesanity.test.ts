@@ -97,11 +97,11 @@ describe('VueSanity Core', () => {
             });
 
             new VueSanity(registerDto);
-            expect(registerDto.firstName.errors).toContain('This field is required');
-            expect(registerDto.lastName.errors).toContain('This field is required');
-            expect(registerDto.email.errors).toBeUndefined; // null is truthy - specifically add required()
-            expect(registerDto.password.errors).toContain('Password must have 6 characters or more');
-            expect(registerDto.acceptedTerms.errors).toContain('Value must be true');
+            expect(registerDto.firstName?.errors).toContain('This field is required');
+            expect(registerDto.lastName?.errors).toContain('This field is required');
+            expect(registerDto.email?.errors).toBeUndefined; // null is truthy - specifically add required()
+            expect(registerDto.password?.errors).toContain('Password must have 6 characters or more');
+            expect(registerDto.acceptedTerms?.errors).toContain('Value must be true');
         });
     });
 

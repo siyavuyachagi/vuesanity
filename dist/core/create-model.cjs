@@ -27,13 +27,17 @@ var import_vue = require("vue");
 function createModel(fields) {
   const model = {};
   for (const key in fields) {
+    const fieldConfig = fields[key];
     model[key] = {
-      value: fields[key]?.value ?? "",
-      validations: fields[key]?.validations ?? [],
-      errors: fields[key]?.errors ?? []
+      value: fieldConfig?.value ?? getDefaultValue(),
+      validations: fieldConfig?.validations ?? [],
+      errors: fieldConfig?.errors ?? []
     };
   }
   return (0, import_vue.reactive)(model);
+}
+function getDefaultValue() {
+  return "";
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

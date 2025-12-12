@@ -32,5 +32,5 @@ import { FieldConfig } from "./field-config";
  * ```
  */
 export type ModelConfig<T extends Record<string, any>> = {
-  [P in keyof T]: FieldConfig<T[P]>;
+  [P in keyof T]?: FieldConfig<T[P]>;
 };

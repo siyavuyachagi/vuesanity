@@ -69,16 +69,18 @@ var VueSanity = class {
     if (!this.isValid) {
       this.normalizedModel = {};
     } else {
-      this.normalizedModel = Object.keys(this._model).reduce((acc, key) => {
+      const result = {};
+      for (const key in this._model) {
         const field = this._model[key];
-        if (!field.errors || field.errors.length === 0) {
-          acc[key] = field.value;
+        if (field && (!field.errors || field.errors.length === 0) && field.value !== void 0) {
+          result[key] = field.value;
         }
-        return acc;
-      }, {});
+      }
+      this.normalizedModel = result;
       this.formData = new FormData();
       for (const key in this._model) {
         const field = this._model[key];
+        if (!field) continue;
         const values = this._toArray(field.value);
         for (const val of values) {
           if (val !== null && val !== void 0) {
@@ -90,6 +92,7 @@ var VueSanity = class {
     }
   }
   _toArray(val) {
+    if (val === void 0 || val === null) return [];
     return Array.isArray(val) ? val : [val];
   }
   /** Reset all model field errors */
@@ -105,10 +108,12 @@ var VueSanity = class {
     for (const key in this._model) {
       const field = this._model[key];
       if (!field) continue;
-      if (Array.isArray(field.value)) {
-        field.value.splice(0);
-      } else {
-        field.value = null;
+      if (field.value !== void 0) {
+        if (Array.isArray(field.value)) {
+          field.value.splice(0);
+        } else {
+          field.value = void 0;
+        }
       }
     }
   }

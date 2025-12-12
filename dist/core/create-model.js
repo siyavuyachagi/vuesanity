@@ -1,6 +1,6 @@
 import {
   createModel
-} from "../chunk-KJ5LMHJD.js";
+} from "../chunk-NNOGKUM6.js";
 export {
   createModel
 };

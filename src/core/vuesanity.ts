@@ -1,6 +1,5 @@
-// ./src/core/vuesanity.ts
-import { reactive, Ref, ref, UnwrapRef } from "vue";
-import { ModelConfig, FieldConfig, ValidationRule } from "../types";
+import { reactive, UnwrapRef } from "vue";
+import { ModelConfig, ValidationRule } from "../types";
 import { getFormData } from "../helpers/form-data";
 
 /**
@@ -125,18 +124,21 @@ export default class VueSanity<T extends Record<string, any>> {
             this.normalizedModel = {} as UnwrapRef<T>;
         } else {
             // Build normalized object
-            this.normalizedModel = Object.keys(this._model).reduce((acc, key) => {
-                const field = this._model[key]!;
-                if (!field.errors || field.errors.length === 0) {
-                    acc[key as keyof T] = field.value;
+            const result: any = {};
+            for (const key in this._model) {
+                const field = this._model[key];
+                if (field && (!field.errors || field.errors.length === 0) && field.value !== undefined) {
+                    result[key] = field.value;
                 }
-                return acc;
-            }, {} as T) as UnwrapRef<T>;
+            }
+            this.normalizedModel = result as UnwrapRef<T>;
 
             // Build FormData
             this.formData = new FormData();
             for (const key in this._model) {
-                const field = this._model[key]!;
+                const field = this._model[key];
+                if (!field) continue;
+                
                 const values = this._toArray(field.value);
                 for (const val of values) {
                     if (val !== null && val !== undefined) {
@@ -150,7 +152,8 @@ export default class VueSanity<T extends Record<string, any>> {
     }
 
 
-    private _toArray<Value>(val: Value | Value[]): Value[] {
+    private _toArray<Value>(val: Value | Value[] | undefined): Value[] {
+        if (val === undefined || val === null) return [];
         return Array.isArray(val) ? val : [val];
     }
 
@@ -170,10 +173,12 @@ export default class VueSanity<T extends Record<string, any>> {
             const field = this._model[key];
             if (!field) continue;
 
-            if (Array.isArray(field.value)) {
-                field.value.splice(0);
-            } else {
-                field.value = null as unknown as typeof field.value;
+            if (field.value !== undefined) {
+                if (Array.isArray(field.value)) {
+                    field.value.splice(0);
+                } else {
+                    field.value = undefined as any;
+                }
             }
         }
     }

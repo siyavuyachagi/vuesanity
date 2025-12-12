@@ -33,7 +33,7 @@ import './validation-rule.js';
  * ```
  */
 type ModelConfig<T extends Record<string, any>> = {
-    [P in keyof T]: FieldConfig<T[P]>;
+    [P in keyof T]?: FieldConfig<T[P]>;
 };
 
 export type { ModelConfig };

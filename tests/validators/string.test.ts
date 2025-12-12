@@ -15,9 +15,11 @@ import VueSanity, {
   numeric,
   createModel,
   password,
-  differentFrom
+  differentFrom,
+  ModelConfig
 } from '../../src';
 import { RegisterDto } from '../types/register-dto';
+import { reactive } from 'vue';
 
 describe('String Validators', () => {
 
@@ -447,9 +449,26 @@ describe('String Validators', () => {
 
   describe('13. sameAs()', () => {
     it('should compare with direct value', () => {
-      const validator = sameAs('password123');
-      expect(validator('password123')).toBe('');
-      expect(validator('different')).toBe("Values don't match");
+      const model = reactive<ModelConfig<RegisterDto>>({
+        password: { value: 'password@123', validations: [password()] },
+        confirmPassword: { value: 'password@123', validations: [sameAs(() => model.password?.value)] }
+      });
+
+      const validator = new VueSanity(model);
+      console.log(model, validator)
+      expect(validator.errors.password).toBeUndefined();
+      expect(validator.errors.confirmPassword).toBeUndefined();
+    });
+
+    it('should fail when values dont match', () => {
+      const model = reactive<ModelConfig<RegisterDto>>({
+        password: { value: 'Pass@123', validations: [password()] },
+        confirmPassword: { value: 'password@123', validations: [sameAs(() => model.password?.value)] }
+      });
+
+      const validator = new VueSanity(model);
+      expect(validator.isValid).toBe(false);
+      expect(validator.errors.confirmPassword).toContain("Values don't match");
     });
 
     it('should compare with function value', () => {

@@ -8,6 +8,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const minDate: (minDate: Date | string, message?: string) => ((value: any) => string);
-
-export { minDate };
+export declare const minDate: (minDate: Date | string, message?: string) => ((value: any) => string);

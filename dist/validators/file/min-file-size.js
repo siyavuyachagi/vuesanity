@@ -1,6 +1,24 @@
-import {
-  minFileSize
-} from "../../chunk-TX36PPSI.js";
-export {
-  minFileSize
+// src/validators/file/min-file-size.ts
+/**
+ * Minimum file size validation
+ * @param {number} sizeMB Minimum file size in megabytes.
+ * @param {string} message Error message (Optional)
+ * @example
+ * ```ts
+ * minFileSize(0.1, "File is too small!")
+ * ```
+ * @returns Validation function that returns error message or empty string
+ */
+export const minFileSize = (sizeMB, message) => {
+    return (value) => {
+        if (!value)
+            return "";
+        if (!(value instanceof File))
+            return "";
+        const sizeInMB = value.size / (1024 * 1024);
+        if (sizeInMB < sizeMB) {
+            return message || `Minimum file size of ${sizeMB} MB required.`;
+        }
+        return "";
+    };
 };

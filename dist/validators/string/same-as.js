@@ -1,6 +1,23 @@
-import {
-  sameAs
-} from "../../chunk-7S4H5UQD.js";
-export {
-  sameAs
+// src/validators/string/same-as.ts
+/**
+ * SameAs - Compares two values for equality
+ * @param {any | (() => any)} compareValue The value to compare against or getter function
+ * @param {string} message Custom error message (Optional)
+ * @example
+ * ```ts
+ *  sameAs(() => model.password.value, "Passwords don't match!")
+ * ```
+ * @returns Validation function that returns error message or empty string
+ */
+export const sameAs = (compareValue, message) => {
+    return (value) => {
+        if (!value)
+            return null;
+        const valueToCompare = typeof compareValue === "function" ? compareValue() : compareValue;
+        console.log('Comparing:', { value, valueToCompare, match: value === valueToCompare });
+        if (value !== valueToCompare) {
+            return message || "Values don't match";
+        }
+        return null;
+    };
 };

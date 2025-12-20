@@ -9,6 +9,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const rangeNumber: (min: number, max: number, message?: string) => (value: any) => string;
-
-export { rangeNumber };
+export declare const rangeNumber: (min: number, max: number, message?: string) => (value: any) => string;

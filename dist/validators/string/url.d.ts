@@ -1,5 +1,4 @@
-import { ValidationRule } from '../../types/validation-rule.js';
-
+import { ValidationRule } from "~/src/types";
 /**
  * URL validation
  * @param {string} message Custom error message (Optional)
@@ -9,6 +8,4 @@ import { ValidationRule } from '../../types/validation-rule.js';
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const url: (message?: string) => ValidationRule;
-
-export { url };
+export declare const url: (message?: string) => ValidationRule;

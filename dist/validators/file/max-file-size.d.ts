@@ -8,6 +8,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const maxFileSize: (sizeMB: number, message?: string) => (value: any) => string;
-
-export { maxFileSize };
+export declare const maxFileSize: (sizeMB: number, message?: string) => (value: any) => string;

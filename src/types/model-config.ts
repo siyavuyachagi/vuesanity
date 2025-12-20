@@ -31,6 +31,7 @@ import { FieldConfig } from "./field-config";
  * model.firstName.value = 'Siyavuya'; // Reactive!
  * ```
  */
-export type ModelConfig<T extends Record<string, any>> = {
-  [P in keyof T]?: FieldConfig<T[P]>;
-};
+export type ModelConfig<T extends Record<string, any>> = Partial<{
+  [P in keyof T]: FieldConfig<T[P]>;
+}>;
+

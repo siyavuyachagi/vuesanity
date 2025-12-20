@@ -8,6 +8,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const maxDate: (maxDate: Date | string, message?: string) => ((value: any) => string);
-
-export { maxDate };
+export declare const maxDate: (maxDate: Date | string, message?: string) => ((value: any) => string);

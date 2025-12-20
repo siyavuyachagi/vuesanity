@@ -39,7 +39,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup src --dts --format esm,cjs --out-dir dist --clean",
+    "build": "tsc -p tsconfig.build.json",
     "export:structure": "node scripts/export-structure.js",
     "metrics": "node scripts/metrics.js",
     "prepare": "npm run build",

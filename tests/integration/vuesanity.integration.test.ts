@@ -4,11 +4,12 @@ import { reactive } from 'vue';
 import VueSanity, { alphanumeric, createModel, email, fileExtension, maxFileSize, minChars, required, sameAs } from '../../src';
 import type { ModelConfig } from '../../src/types';
 import { RegisterDto } from '../types/register-dto';
+import { LoginDto } from '../types/login-dto';
 
 describe('VueSanity Integration Tests', () => {
     describe('Real-world Form Scenarios', () => {
         it('should validate a complete login form', () => {
-            const loginForm: ModelConfig = reactive({
+            const loginForm = reactive<ModelConfig<LoginDto>>({
                 email: {
                     value: 'user@example.com',
                     validations: [
@@ -18,7 +19,7 @@ describe('VueSanity Integration Tests', () => {
                     errors: []
                 },
                 password: {
-                    value: 'SecurePass123',
+                    value: 'SecurePass@123',
                     validations: [
                         required('Password is required'),
                         minChars(8, 'Password must be at least 8 characters')
@@ -35,12 +36,12 @@ describe('VueSanity Integration Tests', () => {
             expect(validator.normalizedModel).toHaveProperty('password');
             expect(Object.keys(validator.normalizedModel)).toHaveLength(2);
             expect(validator.formData.get('email')).toBe('user@example.com');
-            expect(validator.formData.get('password')).toBe('SecurePass123');
+            expect(validator.formData.get('password')).toBe('SecurePass@123');
         });
 
         it('should validate a registration form with password confirmation', () => {
-            const registrationForm: ModelConfig = reactive({
-                username: {
+            const registrationForm = reactive<ModelConfig<RegisterDto>>({
+                userName: {
                     value: 'johndoe123',
                     validations: [
                         required('Username is required'),
@@ -69,7 +70,7 @@ describe('VueSanity Integration Tests', () => {
                     value: 'SecurePass123',
                     validations: [
                         required('Please confirm password'),
-                        sameAs(() => registrationForm.password.value, 'Passwords do not match')
+                        sameAs(() => registrationForm.password!.value, 'Passwords do not match')
                     ],
                     errors: []
                 }
@@ -83,8 +84,8 @@ describe('VueSanity Integration Tests', () => {
         });
 
         it('should validate a registration form and detect errors', () => {
-            const registrationForm: ModelConfig = reactive({
-                username: {
+            const registrationForm= reactive<ModelConfig<RegisterDto>>({
+                userName: {
                     value: 'jd',
                     validations: [
                         required('Username is required'),
@@ -113,7 +114,7 @@ describe('VueSanity Integration Tests', () => {
                     value: '321',
                     validations: [
                         required('Please confirm password'),
-                        sameAs(() => registrationForm.password.value, 'Passwords do not match')
+                        sameAs(() => registrationForm.password!.value, 'Passwords do not match')
                     ],
                     errors: []
                 }
@@ -124,10 +125,10 @@ describe('VueSanity Integration Tests', () => {
             expect(validator.isValid).toBe(false);
 
             // Check specific errors
-            expect(registrationForm.username.errors).toContain('Username must be at least 3 characters');
-            expect(registrationForm.email.errors).toContain('Invalid email domain');
-            expect(registrationForm.password.errors).toContain('Password must be at least 8 characters');
-            expect(registrationForm.confirmPassword.errors).toContain('Passwords do not match');
+            expect(registrationForm.userName!.errors).toContain('Username must be at least 3 characters');
+            expect(registrationForm.email!.errors).toContain('Invalid email domain');
+            expect(registrationForm.password!.errors).toContain('Password must be at least 8 characters');
+            expect(registrationForm.confirmPassword!.errors).toContain('Passwords do not match');
         });
 
         it('should validate a form with multiple files', () => {
@@ -161,8 +162,8 @@ describe('VueSanity Integration Tests', () => {
             const validator = new VueSanity(registerDto);
 
             expect(validator.isValid).toBe(false);
-            expect(registerDto.documents.errors).toContain('Invalid file type. Allowed: png, jpeg');
-            expect(registerDto.documents.errors).toContain('File size must not exceed 4MB each');
+            expect(registerDto.documents!.errors).toContain('Invalid file type. Allowed: png, jpeg');
+            expect(registerDto.documents!.errors).toContain('File size must not exceed 4MB each');
         });
     })
 });

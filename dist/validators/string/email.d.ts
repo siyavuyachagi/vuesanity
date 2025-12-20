@@ -1,5 +1,4 @@
-import { ValidationRule } from '../../types/validation-rule.js';
-
+import { ValidationRule } from "~/src/types";
 /**
  * Email validation with domain restriction
  * @param {string | string[]} allowedDomains Allowed email domains (Optional)
@@ -12,6 +11,4 @@ import { ValidationRule } from '../../types/validation-rule.js';
  * ```
  * @returns Validation function that returns error message or null
  */
-declare const email: (allowedDomains?: string | string[], message?: string) => ValidationRule;
-
-export { email };
+export declare const email: (allowedDomains?: string | string[], message?: string) => ValidationRule;

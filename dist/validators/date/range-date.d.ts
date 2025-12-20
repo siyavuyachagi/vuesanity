@@ -9,6 +9,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const rangeDate: (minDate: Date | string, maxDate: Date | string, message?: string) => ((value: any) => string);
-
-export { rangeDate };
+export declare const rangeDate: (minDate: Date | string, maxDate: Date | string, message?: string) => ((value: any) => string);

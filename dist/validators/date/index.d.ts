@@ -1,3 +1,3 @@
-export { minDate } from './min-date.js';
-export { maxDate } from './max-date.js';
-export { rangeDate } from './range-date.js';
+export { minDate } from './min-date';
+export { maxDate } from './max-date';
+export { rangeDate } from './range-date';

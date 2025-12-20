@@ -1,9 +1,6 @@
-import { UnwrapRef } from 'vue';
-import { ModelConfig } from '../types/model-config.js';
-import { getFormData } from '../helpers/form-data.js';
-import '../types/field-config.js';
-import '../types/validation-rule.js';
-
+import { UnwrapRef } from "vue";
+import { ModelConfig } from "../types";
+import { getFormData } from "../helpers/form-data";
 /**
  * VueSanity - Form validation & normalization utility for Vue 3.
  *
@@ -33,7 +30,7 @@ import '../types/validation-rule.js';
  * console.log(form.errors);           // validation errors keyed by field
  * ```
  */
-declare class VueSanity<T extends Record<string, any>> {
+export default class VueSanity<T extends Record<string, any>> {
     /** Reactive model configuration */
     private _model;
     /** Should form values be cleared after successful validation */
@@ -68,5 +65,3 @@ declare class VueSanity<T extends Record<string, any>> {
     /** Clean-up method called after successful validation */
     private _deconstructor;
 }
-
-export { VueSanity as default };

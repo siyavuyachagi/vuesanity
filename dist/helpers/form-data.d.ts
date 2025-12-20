@@ -10,6 +10,4 @@
  * @param {Record<string, any>} object - The object to convert into FormData.
  * @returns {FormData} A `FormData` instance containing the object's data.
  */
-declare function getFormData(object: Record<string, any>): FormData;
-
-export { getFormData };
+export declare function getFormData(object: Record<string, any>): FormData;

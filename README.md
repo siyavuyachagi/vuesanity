@@ -94,7 +94,7 @@ console.log(form.formData); // FormData instance for file uploads
 | `maxFileSize(sizeMB, message?)` | Validates maximum file size | `maxFileSize(5, 'Max 5MB')` |
 | `minFileSize(sizeMB, message?)` | Validates minimum file size | `minFileSize(0.1)` |
 | `fileSize(sizeMB, message?)` | Validates exact file size | `fileSize(2)` |
-| `fileType(allowedTypes, message?)` | Validates file MIME types | `fileType(["image/png", "image/jpeg"],'Invalid image')` |
+| `fileType(allowedTypes, message?)` | Validates file MIME types | `fileType(["image/*", "application/pdf"],'Only images and pdf file')` |
 
 ### Number Validators
 

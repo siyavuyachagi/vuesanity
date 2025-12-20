@@ -8,6 +8,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const regex: (pattern: RegExp, message?: string) => ((value: any) => string);
-
-export { regex };
+export declare const regex: (pattern: RegExp, message?: string) => ((value: any) => string);

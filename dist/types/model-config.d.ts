@@ -1,6 +1,4 @@
-import { FieldConfig } from './field-config.js';
-import './validation-rule.js';
-
+import { FieldConfig } from "./field-config";
 /**
  * ModelConfig is a dictionary of field configurations.
  * @example
@@ -32,8 +30,6 @@ import './validation-rule.js';
  * model.firstName.value = 'Siyavuya'; // Reactive!
  * ```
  */
-type ModelConfig<T extends Record<string, any>> = {
-    [P in keyof T]?: FieldConfig<T[P]>;
-};
-
-export type { ModelConfig };
+export type ModelConfig<T extends Record<string, any>> = Partial<{
+    [P in keyof T]: FieldConfig<T[P]>;
+}>;

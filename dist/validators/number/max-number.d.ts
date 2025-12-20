@@ -8,6 +8,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const maxNumber: (max: number, message?: string) => (value: any) => string;
-
-export { maxNumber };
+export declare const maxNumber: (max: number, message?: string) => (value: any) => string;

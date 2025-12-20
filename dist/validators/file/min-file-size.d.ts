@@ -8,6 +8,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const minFileSize: (sizeMB: number, message?: string) => (value: any) => string;
-
-export { minFileSize };
+export declare const minFileSize: (sizeMB: number, message?: string) => (value: any) => string;

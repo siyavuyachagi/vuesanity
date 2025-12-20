@@ -21,8 +21,6 @@
  * console.log(validate('hello')); // null - success
  * ```
  */
-interface ValidationRule {
+export interface ValidationRule {
     (value: any): string | null;
 }
-
-export type { ValidationRule };

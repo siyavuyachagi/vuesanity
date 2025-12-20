@@ -1,5 +1,4 @@
-import { ValidationRule } from './validation-rule.js';
-
+import { ValidationRule } from "./validation-rule";
 /**
  * FieldConfig is an object containing fields such as `value`, `validations`, and `errors`.
  * All properties are optional to allow flexible configuration.
@@ -24,10 +23,8 @@ import { ValidationRule } from './validation-rule.js';
  * const optionalField: FieldConfig<string> = {};
  * ```
  */
-interface FieldConfig<T = any> {
+export interface FieldConfig<T = any> {
     value?: T;
     errors?: string[];
     validations?: ValidationRule[];
 }
-
-export type { FieldConfig };

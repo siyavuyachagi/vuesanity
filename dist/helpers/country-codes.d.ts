@@ -9,7 +9,7 @@
  * - maxLength: maximum national number length
  * - hasLeadingZero: whether the country uses leading 0 in national format
  */
-declare const countryPhoneData: readonly [{
+export declare const countryPhoneData: readonly [{
     readonly iso: "AF";
     readonly countryCode: "+93";
     readonly country: "Afghanistan";
@@ -1658,7 +1658,7 @@ declare const countryPhoneData: readonly [{
 /**
  * Get country data by ISO code
  */
-declare const getCountryByISO: (iso: string) => {
+export declare const getCountryByISO: (iso: string) => {
     readonly iso: "AF";
     readonly countryCode: "+93";
     readonly country: "Afghanistan";
@@ -3307,7 +3307,7 @@ declare const getCountryByISO: (iso: string) => {
 /**
  * Get country data by country code (dialing prefix)
  */
-declare const getCountryByCode: (code: string) => {
+export declare const getCountryByCode: (code: string) => {
     readonly iso: "AF";
     readonly countryCode: "+93";
     readonly country: "Afghanistan";
@@ -4956,11 +4956,11 @@ declare const getCountryByCode: (code: string) => {
 /**
  * Get all country codes
  */
-declare const getAllCountryCodes: () => ("+93" | "+355" | "+213" | "+1" | "+376" | "+244" | "+54" | "+374" | "+297" | "+61" | "+43" | "+994" | "+973" | "+880" | "+375" | "+32" | "+501" | "+229" | "+975" | "+591" | "+387" | "+267" | "+55" | "+246" | "+673" | "+359" | "+226" | "+95" | "+257" | "+855" | "+237" | "+238" | "+236" | "+235" | "+56" | "+86" | "+57" | "+269" | "+242" | "+243" | "+682" | "+506" | "+225" | "+385" | "+53" | "+357" | "+420" | "+45" | "+253" | "+593" | "+20" | "+503" | "+240" | "+291" | "+372" | "+251" | "+500" | "+298" | "+679" | "+358" | "+33" | "+594" | "+689" | "+262" | "+241" | "+220" | "+995" | "+49" | "+233" | "+350" | "+30" | "+299" | "+590" | "+502" | "+44" | "+224" | "+245" | "+592" | "+509" | "+504" | "+852" | "+36" | "+354" | "+91" | "+62" | "+98" | "+964" | "+353" | "+972" | "+39" | "+81" | "+962" | "+7" | "+254" | "+686" | "+850" | "+82" | "+965" | "+996" | "+856" | "+371" | "+961" | "+266" | "+231" | "+218" | "+423" | "+370" | "+352" | "+853" | "+389" | "+261" | "+265" | "+60" | "+960" | "+223" | "+356" | "+692" | "+596" | "+222" | "+230" | "+52" | "+691" | "+373" | "+377" | "+976" | "+382" | "+212" | "+258" | "+264" | "+674" | "+977" | "+31" | "+599" | "+687" | "+64" | "+505" | "+227" | "+234" | "+683" | "+672" | "+47" | "+968" | "+92" | "+680" | "+507" | "+675" | "+595" | "+51" | "+63" | "+48" | "+351" | "+974" | "+40" | "+250" | "+685" | "+378" | "+239" | "+966" | "+221" | "+381" | "+248" | "+232" | "+65" | "+421" | "+386" | "+677" | "+252" | "+27" | "+211" | "+34" | "+94" | "+508" | "+249" | "+597" | "+46" | "+41" | "+963" | "+886" | "+992" | "+255" | "+66" | "+670" | "+228" | "+690" | "+676" | "+216" | "+90" | "+993" | "+688" | "+256" | "+380" | "+971" | "+598" | "+998" | "+678" | "+58" | "+84" | "+681" | "+967" | "+260" | "+263")[];
+export declare const getAllCountryCodes: () => ("+93" | "+355" | "+213" | "+1" | "+376" | "+244" | "+54" | "+374" | "+297" | "+61" | "+43" | "+994" | "+973" | "+880" | "+375" | "+32" | "+501" | "+229" | "+975" | "+591" | "+387" | "+267" | "+55" | "+246" | "+673" | "+359" | "+226" | "+95" | "+257" | "+855" | "+237" | "+238" | "+236" | "+235" | "+56" | "+86" | "+57" | "+269" | "+242" | "+243" | "+682" | "+506" | "+225" | "+385" | "+53" | "+357" | "+420" | "+45" | "+253" | "+593" | "+20" | "+503" | "+240" | "+291" | "+372" | "+251" | "+500" | "+298" | "+679" | "+358" | "+33" | "+594" | "+689" | "+262" | "+241" | "+220" | "+995" | "+49" | "+233" | "+350" | "+30" | "+299" | "+590" | "+502" | "+44" | "+224" | "+245" | "+592" | "+509" | "+504" | "+852" | "+36" | "+354" | "+91" | "+62" | "+98" | "+964" | "+353" | "+972" | "+39" | "+81" | "+962" | "+7" | "+254" | "+686" | "+850" | "+82" | "+965" | "+996" | "+856" | "+371" | "+961" | "+266" | "+231" | "+218" | "+423" | "+370" | "+352" | "+853" | "+389" | "+261" | "+265" | "+60" | "+960" | "+223" | "+356" | "+692" | "+596" | "+222" | "+230" | "+52" | "+691" | "+373" | "+377" | "+976" | "+382" | "+212" | "+258" | "+264" | "+674" | "+977" | "+31" | "+599" | "+687" | "+64" | "+505" | "+227" | "+234" | "+683" | "+672" | "+47" | "+968" | "+92" | "+680" | "+507" | "+675" | "+595" | "+51" | "+63" | "+48" | "+351" | "+974" | "+40" | "+250" | "+685" | "+378" | "+239" | "+966" | "+221" | "+381" | "+248" | "+232" | "+65" | "+421" | "+386" | "+677" | "+252" | "+27" | "+211" | "+34" | "+94" | "+508" | "+249" | "+597" | "+46" | "+41" | "+963" | "+886" | "+992" | "+255" | "+66" | "+670" | "+228" | "+690" | "+676" | "+216" | "+90" | "+993" | "+688" | "+256" | "+380" | "+971" | "+598" | "+998" | "+678" | "+58" | "+84" | "+681" | "+967" | "+260" | "+263")[];
 /**
  * Get all countries sorted alphabetically
  */
-declare const getAllCountriesSorted: () => ({
+export declare const getAllCountriesSorted: () => ({
     readonly iso: "AF";
     readonly countryCode: "+93";
     readonly country: "Afghanistan";
@@ -6609,13 +6609,11 @@ declare const getAllCountriesSorted: () => ({
 /**
  * Validate phone number against country specs
  */
-declare const validatePhoneByCountry: (phoneNumber: string, iso: string) => {
+export declare const validatePhoneByCountry: (phoneNumber: string, iso: string) => {
     valid: boolean;
     error?: string;
 };
 /**
  * Get total number of countries
  */
-declare const getTotalCountries: () => 235;
-
-export { countryPhoneData, getAllCountriesSorted, getAllCountryCodes, getCountryByCode, getCountryByISO, getTotalCountries, validatePhoneByCountry };
+export declare const getTotalCountries: () => 235;

@@ -1,15 +1,4 @@
-import "../chunk-PFUSRKMN.js";
-import {
-  createModel
-} from "../chunk-NNOGKUM6.js";
-import {
-  VueSanity
-} from "../chunk-54SG4NTL.js";
-import {
-  getFormData
-} from "../chunk-L6NAN44R.js";
-export {
-  createModel,
-  VueSanity as default,
-  getFormData
-};
+// src/core/index.ts
+export { default } from './vuesanity';
+export { getFormData } from '../helpers/form-data';
+export { createModel } from './create-model';

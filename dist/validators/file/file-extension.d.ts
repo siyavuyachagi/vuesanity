@@ -10,6 +10,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const fileExtension: (extensions: string | string[], message?: string) => ((value: any) => string);
-
-export { fileExtension };
+export declare const fileExtension: (extensions: string | string[], message?: string) => ((value: any) => string);

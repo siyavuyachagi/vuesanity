@@ -8,6 +8,4 @@
  * ```
  * @returns Validation function that returns error message or empty string
  */
-declare const differentFrom: (compareValue: (() => any) | any, message?: string) => ((value: any) => string);
-
-export { differentFrom };
+export declare const differentFrom: (compareValue: (() => any) | any, message?: string) => ((value: any) => string);

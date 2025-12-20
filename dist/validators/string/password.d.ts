@@ -1,5 +1,4 @@
-import { ValidationRule } from '../../types/validation-rule.js';
-
+import { ValidationRule } from "../../types/validation-rule";
 /**
  * Password validation
  *
@@ -11,6 +10,4 @@ import { ValidationRule } from '../../types/validation-rule.js';
  * @param {string} message Custom error message (Optional)
  * @returns Validation function that returns error message or null
  */
-declare const password: (message?: string) => ValidationRule;
-
-export { password };
+export declare const password: (message?: string) => ValidationRule;

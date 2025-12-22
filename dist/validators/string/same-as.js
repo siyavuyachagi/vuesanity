@@ -14,7 +14,6 @@ export const sameAs = (compareValue, message) => {
         if (!value)
             return null;
         const valueToCompare = typeof compareValue === "function" ? compareValue() : compareValue;
-        console.log('Comparing:', { value, valueToCompare, match: value === valueToCompare });
         if (value !== valueToCompare) {
             return message || "Values don't match";
         }

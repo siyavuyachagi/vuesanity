@@ -54,4 +54,5 @@ export {
 // Types - Export as types only
 export type { ModelConfig } from './types/model-config';
 export type { FieldConfig } from './types/field-config';
+export type { Field } from './types/field-config';
 export type { ValidationRule } from './types/validation-rule';

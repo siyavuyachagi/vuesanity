@@ -8,4 +8,5 @@ export { fileExtension, fileSize, fileType, maxFileSize, minFileSize, } from './
 export { maxNumber, minNumber, rangeNumber, } from './validators/number/index';
 export type { ModelConfig } from './types/model-config';
 export type { FieldConfig } from './types/field-config';
+export type { Field } from './types/field-config';
 export type { ValidationRule } from './types/validation-rule';

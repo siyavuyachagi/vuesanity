@@ -1,5 +1,6 @@
 /**
  * Validation types
+ * @returns `string` or `null`
  * @example
  * ```ts
  * // Example validation rule

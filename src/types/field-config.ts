@@ -1,4 +1,5 @@
 // src/types/field-config.ts
+import { reactive } from "vue";
 import { ValidationRule } from "./validation-rule";
 
 /**

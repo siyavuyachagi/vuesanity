@@ -27,7 +27,7 @@ import { FieldConfig } from "./field-config";
  * });
  *
  * // Usage
- * model.firstName.value = 'Siyavuya'; // Reactive!
+ * model.firstName.value = 'CeeJay'; // Reactive!
  * ```
  */
 export type ModelConfig<T extends Record<string, any>> = Partial<{

@@ -1,0 +1,2 @@
+
+export type Success = Boolean;

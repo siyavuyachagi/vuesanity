@@ -474,13 +474,13 @@ describe('String Validators', () => {
     it('should compare with function value', () => {
       let compareValue = 'password123';
       const validator = sameAs(() => compareValue);
-      expect(validator('password123')).toBe('');
+      expect(validator('password123')).toBeNull();
       expect(validator('different')).toBe("Values don't match");
     });
 
-    it('should return empty string for empty value', () => {
+    it('should return null string for empty value', () => {
       const validator = sameAs('test');
-      expect(validator('')).toBe('');
+      expect(validator('')).toBeNull();
     });
 
     it('should use custom message', () => {
@@ -490,7 +490,7 @@ describe('String Validators', () => {
 
     it('should handle null comparison', () => {
       const validator = sameAs(null);
-      expect(validator(null)).toBe('');
+      expect(validator(null)).toBeNull();
     });
   });
 

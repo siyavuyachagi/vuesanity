@@ -258,8 +258,8 @@ describe('VueSanity Core', () => {
             });
 
             new VueSanity(model);
-            expect(model.firstName?.value).toBeNull();
-            expect(model.email?.value).toBeNull();
+            expect(model.firstName?.value).toBeUndefined();
+            expect(model.email?.value).toBeUndefined();
         });
 
         it('2. should not clear values when cleanValues is false', () => {

@@ -2,7 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://img.shields.io/npm/v/@siyavuyachagi/vuesanity.svg)](https://www.npmjs.com/package/@siyavuyachagi/vuesanity)
-[![npm version](https://img.shields.io/npm/v/@siyavuyachagi/typesharp.svg?label=Version)](https://www.npmjs.com/package/@siyavuyachagi/typesharp)
 [![npm downloads](https://img.shields.io/npm/dm/@siyavuyachagi/typesharp.svg?label=Downloads)](https://www.npmjs.com/package/@siyavuyachagi/typesharp)
 [![GitHub stars](https://img.shields.io/github/stars/siyavuyachagi/typesharp?label=Stars)](https://github.com/siyavuyachagi/typesharp/stargazers)
 [![Sponsor](https://img.shields.io/badge/Sponsor-💖-ff69b4)](https://github.com/sponsors/siyavuyachagi)

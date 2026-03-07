@@ -1,0 +1,1009 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for vuesanity/src/helpers/country-codes.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">vuesanity/src/helpers</a> country-codes.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">92.85% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>247/266</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>4/4</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">33.33% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>2/6</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">92.85% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>247/266</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a>
+<a name='L302'></a><a href='#L302'>302</a>
+<a name='L303'></a><a href='#L303'>303</a>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// src/helpers/country-codes.ts
+&nbsp;
+/**
+ * Complete country phone code metadata for all 195+ countries.
+ * 
+ * Each entry contains:
+ * - iso: ISO 3166-1 alpha-2 code
+ * - countryCode: dialing prefix (with +)
+ * - country: Country name
+ * - minLength: minimum national number length
+ * - maxLength: maximum national number length
+ * - hasLeadingZero: whether the country uses leading 0 in national format
+ */
+export const countryPhoneData = [
+    { iso: "AF", countryCode: "+93", country: "Afghanistan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "AL", countryCode: "+355", country: "Albania", minLength: 8, maxLength: 9, hasLeadingZero: true },
+    { iso: "DZ", countryCode: "+213", country: "Algeria", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "AS", countryCode: "+1", country: "American Samoa", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "AD", countryCode: "+376", country: "Andorra", minLength: 6, maxLength: 6, hasLeadingZero: false },
+    { iso: "AO", countryCode: "+244", country: "Angola", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "AI", countryCode: "+1", country: "Anguilla", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "AG", countryCode: "+1", country: "Antigua and Barbuda", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "AR", countryCode: "+54", country: "Argentina", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "AM", countryCode: "+374", country: "Armenia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "AW", countryCode: "+297", country: "Aruba", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "AU", countryCode: "+61", country: "Australia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "AT", countryCode: "+43", country: "Austria", minLength: 10, maxLength: 11, hasLeadingZero: true },
+    { iso: "AZ", countryCode: "+994", country: "Azerbaijan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "BS", countryCode: "+1", country: "Bahamas", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "BH", countryCode: "+973", country: "Bahrain", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "BD", countryCode: "+880", country: "Bangladesh", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "BB", countryCode: "+1", country: "Barbados", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "BY", countryCode: "+375", country: "Belarus", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "BE", countryCode: "+32", country: "Belgium", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "BZ", countryCode: "+501", country: "Belize", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "BJ", countryCode: "+229", country: "Benin", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "BM", countryCode: "+1", country: "Bermuda", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "BT", countryCode: "+975", country: "Bhutan", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "BO", countryCode: "+591", country: "Bolivia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "BA", countryCode: "+387", country: "Bosnia and Herzegovina", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "BW", countryCode: "+267", country: "Botswana", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "BR", countryCode: "+55", country: "Brazil", minLength: 10, maxLength: 11, hasLeadingZero: true },
+    { iso: "IO", countryCode: "+246", country: "British Indian Ocean Territory", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "VG", countryCode: "+1", country: "British Virgin Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "BN", countryCode: "+673", country: "Brunei", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "BG", countryCode: "+359", country: "Bulgaria", minLength: 8, maxLength: 9, hasLeadingZero: true },
+    { iso: "BF", countryCode: "+226", country: "Burkina Faso", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "MM", countryCode: "+95", country: "Myanmar", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "BI", countryCode: "+257", country: "Burundi", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "KH", countryCode: "+855", country: "Cambodia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "CM", countryCode: "+237", country: "Cameroon", minLength: 8, maxLength: 9, hasLeadingZero: false },
+    { iso: "CA", countryCode: "+1", country: "Canada", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "CV", countryCode: "+238", country: "Cape Verde", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "KY", countryCode: "+1", country: "Cayman Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "CF", countryCode: "+236", country: "Central African Republic", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "TD", countryCode: "+235", country: "Chad", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "CL", countryCode: "+56", country: "Chile", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "CN", countryCode: "+86", country: "China", minLength: 11, maxLength: 13, hasLeadingZero: false },
+    { iso: "CX", countryCode: "+61", country: "Christmas Island", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "CC", countryCode: "+61", country: "Cocos Islands", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "CO", countryCode: "+57", country: "Colombia", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "KM", countryCode: "+269", country: "Comoros", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "CG", countryCode: "+242", country: "Republic of Congo", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "CD", countryCode: "+243", country: "Democratic Republic of Congo", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "CK", countryCode: "+682", country: "Cook Islands", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "CR", countryCode: "+506", country: "Costa Rica", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "CI", countryCode: "+225", country: "Ivory Coast", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "HR", countryCode: "+385", country: "Croatia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "CU", countryCode: "+53", country: "Cuba", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "CY", countryCode: "+357", country: "Cyprus", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "CZ", countryCode: "+420", country: "Czech Republic", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "DK", countryCode: "+45", country: "Denmark", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "DJ", countryCode: "+253", country: "Djibouti", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "DM", countryCode: "+1", country: "Dominica", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "DO", countryCode: "+1", country: "Dominican Republic", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "EC", countryCode: "+593", country: "Ecuador", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "EG", countryCode: "+20", country: "Egypt", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "SV", countryCode: "+503", country: "El Salvador", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "GQ", countryCode: "+240", country: "Equatorial Guinea", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "ER", countryCode: "+291", country: "Eritrea", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "EE", countryCode: "+372", country: "Estonia", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "ET", countryCode: "+251", country: "Ethiopia", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "FK", countryCode: "+500", country: "Falkland Islands", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "FO", countryCode: "+298", country: "Faroe Islands", minLength: 6, maxLength: 6, hasLeadingZero: false },
+    { iso: "FJ", countryCode: "+679", country: "Fiji", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "FI", countryCode: "+358", country: "Finland", minLength: 7, maxLength: 7, hasLeadingZero: true },
+    { iso: "FR", countryCode: "+33", country: "France", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "GF", countryCode: "+594", country: "French Guiana", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "PF", countryCode: "+689", country: "French Polynesia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "TF", countryCode: "+262", country: "French Southern Territories", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "GA", countryCode: "+241", country: "Gabon", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "GM", countryCode: "+220", country: "Gambia", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "GE", countryCode: "+995", country: "Georgia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "DE", countryCode: "+49", country: "Germany", minLength: 10, maxLength: 11, hasLeadingZero: true },
+    { iso: "GH", countryCode: "+233", country: "Ghana", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "GI", countryCode: "+350", country: "Gibraltar", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "GR", countryCode: "+30", country: "Greece", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "GL", countryCode: "+299", country: "Greenland", minLength: 6, maxLength: 6, hasLeadingZero: false },
+    { iso: "GD", countryCode: "+1", country: "Grenada", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "GP", countryCode: "+590", country: "Guadeloupe", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "GU", countryCode: "+1", country: "Guam", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "GT", countryCode: "+502", country: "Guatemala", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "GG", countryCode: "+44", country: "Guernsey", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "GN", countryCode: "+224", country: "Guinea", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "GW", countryCode: "+245", country: "Guinea-Bissau", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "GY", countryCode: "+592", country: "Guyana", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "HT", countryCode: "+509", country: "Haiti", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "HN", countryCode: "+504", country: "Honduras", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "HK", countryCode: "+852", country: "Hong Kong", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "HU", countryCode: "+36", country: "Hungary", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "IS", countryCode: "+354", country: "Iceland", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "IN", countryCode: "+91", country: "India", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "ID", countryCode: "+62", country: "Indonesia", minLength: 9, maxLength: 11, hasLeadingZero: true },
+    { iso: "IR", countryCode: "+98", country: "Iran", minLength: 10, maxLength: 11, hasLeadingZero: true },
+    { iso: "IQ", countryCode: "+964", country: "Iraq", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "IE", countryCode: "+353", country: "Ireland", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "IM", countryCode: "+44", country: "Isle of Man", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "IL", countryCode: "+972", country: "Israel", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "IT", countryCode: "+39", country: "Italy", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "JM", countryCode: "+1", country: "Jamaica", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "JP", countryCode: "+81", country: "Japan", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "JE", countryCode: "+44", country: "Jersey", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "JO", countryCode: "+962", country: "Jordan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "KZ", countryCode: "+7", country: "Kazakhstan", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "KE", countryCode: "+254", country: "Kenya", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "KI", countryCode: "+686", country: "Kiribati", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "KP", countryCode: "+850", country: "North Korea", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "KR", countryCode: "+82", country: "South Korea", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "KW", countryCode: "+965", country: "Kuwait", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "KG", countryCode: "+996", country: "Kyrgyzstan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "LA", countryCode: "+856", country: "Laos", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "LV", countryCode: "+371", country: "Latvia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "LB", countryCode: "+961", country: "Lebanon", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "LS", countryCode: "+266", country: "Lesotho", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "LR", countryCode: "+231", country: "Liberia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "LY", countryCode: "+218", country: "Libya", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "LI", countryCode: "+423", country: "Liechtenstein", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "LT", countryCode: "+370", country: "Lithuania", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "LU", countryCode: "+352", country: "Luxembourg", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "MO", countryCode: "+853", country: "Macau", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "MK", countryCode: "+389", country: "Macedonia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "MG", countryCode: "+261", country: "Madagascar", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "MW", countryCode: "+265", country: "Malawi", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "MY", countryCode: "+60", country: "Malaysia", minLength: 9, maxLength: 10, hasLeadingZero: true },
+    { iso: "MV", countryCode: "+960", country: "Maldives", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "ML", countryCode: "+223", country: "Mali", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "MT", countryCode: "+356", country: "Malta", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "MH", countryCode: "+692", country: "Marshall Islands", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "MQ", countryCode: "+596", country: "Martinique", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "MR", countryCode: "+222", country: "Mauritania", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "MU", countryCode: "+230", country: "Mauritius", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "YT", countryCode: "+262", country: "Mayotte", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "MX", countryCode: "+52", country: "Mexico", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "FM", countryCode: "+691", country: "Micronesia", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "MD", countryCode: "+373", country: "Moldova", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "MC", countryCode: "+377", country: "Monaco", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "MN", countryCode: "+976", country: "Mongolia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "ME", countryCode: "+382", country: "Montenegro", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "MA", countryCode: "+212", country: "Morocco", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "MZ", countryCode: "+258", country: "Mozambique", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "NA", countryCode: "+264", country: "Namibia", minLength: 8, maxLength: 8, hasLeadingZero: true },
+    { iso: "NR", countryCode: "+674", country: "Nauru", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "NP", countryCode: "+977", country: "Nepal", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "NL", countryCode: "+31", country: "Netherlands", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "AN", countryCode: "+599", country: "Netherlands Antilles", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "NC", countryCode: "+687", country: "New Caledonia", minLength: 6, maxLength: 6, hasLeadingZero: false },
+    { iso: "NZ", countryCode: "+64", country: "New Zealand", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "NI", countryCode: "+505", country: "Nicaragua", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "NE", countryCode: "+227", country: "Niger", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "NG", countryCode: "+234", country: "Nigeria", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "NU", countryCode: "+683", country: "Niue", minLength: 4, maxLength: 4, hasLeadingZero: false },
+    { iso: "NF", countryCode: "+672", country: "Norfolk Island", minLength: 6, maxLength: 6, hasLeadingZero: false },
+    { iso: "MP", countryCode: "+1", country: "Northern Mariana Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "NO", countryCode: "+47", country: "Norway", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "OM", countryCode: "+968", country: "Oman", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "PK", countryCode: "+92", country: "Pakistan", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "PW", countryCode: "+680", country: "Palau", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "PA", countryCode: "+507", country: "Panama", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "PG", countryCode: "+675", country: "Papua New Guinea", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "PY", countryCode: "+595", country: "Paraguay", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "PE", countryCode: "+51", country: "Peru", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "PH", countryCode: "+63", country: "Philippines", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "PN", countryCode: "+64", country: "Pitcairn Islands", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "PL", countryCode: "+48", country: "Poland", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "PT", countryCode: "+351", country: "Portugal", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "PR", countryCode: "+1", country: "Puerto Rico", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "QA", countryCode: "+974", country: "Qatar", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "RE", countryCode: "+262", country: "Reunion", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "RO", countryCode: "+40", country: "Romania", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "RU", countryCode: "+7", country: "Russia", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "RW", countryCode: "+250", country: "Rwanda", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "BL", countryCode: "+590", country: "Saint Barthélemy", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "KN", countryCode: "+1", country: "Saint Kitts and Nevis", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "LC", countryCode: "+1", country: "Saint Lucia", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "MF", countryCode: "+590", country: "Saint Martin", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "VC", countryCode: "+1", country: "Saint Vincent and the Grenadines", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "WS", countryCode: "+685", country: "Samoa", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "SM", countryCode: "+378", country: "San Marino", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "ST", countryCode: "+239", country: "São Tomé and Príncipe", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "SA", countryCode: "+966", country: "Saudi Arabia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "SN", countryCode: "+221", country: "Senegal", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "RS", countryCode: "+381", country: "Serbia", minLength: 9, maxLength: 10, hasLeadingZero: true },
+    { iso: "SC", countryCode: "+248", country: "Seychelles", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "SL", countryCode: "+232", country: "Sierra Leone", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "SG", countryCode: "+65", country: "Singapore", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "SK", countryCode: "+421", country: "Slovakia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "SI", countryCode: "+386", country: "Slovenia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "SB", countryCode: "+677", country: "Solomon Islands", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "SO", countryCode: "+252", country: "Somalia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "ZA", countryCode: "+27", country: "South Africa", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "SS", countryCode: "+211", country: "South Sudan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "ES", countryCode: "+34", country: "Spain", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "LK", countryCode: "+94", country: "Sri Lanka", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "PM", countryCode: "+508", country: "Saint Pierre and Miquelon", minLength: 6, maxLength: 6, hasLeadingZero: false },
+    { iso: "SD", countryCode: "+249", country: "Sudan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "SR", countryCode: "+597", country: "Suriname", minLength: 7, maxLength: 7, hasLeadingZero: false },
+    { iso: "SE", countryCode: "+46", country: "Sweden", minLength: 8, maxLength: 9, hasLeadingZero: true },
+    { iso: "CH", countryCode: "+41", country: "Switzerland", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "SY", countryCode: "+963", country: "Syria", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "TW", countryCode: "+886", country: "Taiwan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "TJ", countryCode: "+992", country: "Tajikistan", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "TZ", countryCode: "+255", country: "Tanzania", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "TH", countryCode: "+66", country: "Thailand", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "TL", countryCode: "+670", country: "Timor-Leste", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "TG", countryCode: "+228", country: "Togo", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "TK", countryCode: "+690", country: "Tokelau", minLength: 4, maxLength: 4, hasLeadingZero: false },
+    { iso: "TO", countryCode: "+676", country: "Tonga", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "TT", countryCode: "+1", country: "Trinidad and Tobago", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "TN", countryCode: "+216", country: "Tunisia", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "TR", countryCode: "+90", country: "Turkey", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "TM", countryCode: "+993", country: "Turkmenistan", minLength: 8, maxLength: 8, hasLeadingZero: false },
+    { iso: "TV", countryCode: "+688", country: "Tuvalu", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "UG", countryCode: "+256", country: "Uganda", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "UA", countryCode: "+380", country: "Ukraine", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "AE", countryCode: "+971", country: "United Arab Emirates", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "GB", countryCode: "+44", country: "United Kingdom", minLength: 10, maxLength: 11, hasLeadingZero: true },
+    { iso: "US", countryCode: "+1", country: "United States", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "UY", countryCode: "+598", country: "Uruguay", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "UZ", countryCode: "+998", country: "Uzbekistan", minLength: 9, maxLength: 9, hasLeadingZero: false },
+    { iso: "VU", countryCode: "+678", country: "Vanuatu", minLength: 5, maxLength: 5, hasLeadingZero: false },
+    { iso: "VA", countryCode: "+39", country: "Vatican City", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "VE", countryCode: "+58", country: "Venezuela", minLength: 10, maxLength: 10, hasLeadingZero: true },
+    { iso: "VN", countryCode: "+84", country: "Vietnam", minLength: 9, maxLength: 10, hasLeadingZero: true },
+    { iso: "VI", countryCode: "+1", country: "US Virgin Islands", minLength: 10, maxLength: 10, hasLeadingZero: false },
+    { iso: "WF", countryCode: "+681", country: "Wallis and Futuna", minLength: 6, maxLength: 6, hasLeadingZero: false },
+    { iso: "EH", countryCode: "+212", country: "Western Sahara", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "YE", countryCode: "+967", country: "Yemen", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "ZM", countryCode: "+260", country: "Zambia", minLength: 9, maxLength: 9, hasLeadingZero: true },
+    { iso: "ZW", countryCode: "+263", country: "Zimbabwe", minLength: 9, maxLength: 9, hasLeadingZero: true },
+] as const;
+&nbsp;
+/**
+ * Get country data by ISO code
+ */
+export const getCountryByISO = (iso: string) =&gt; {
+    return countryPhoneData.find(c =&gt; c.iso.toUpperCase() === iso.toUpperCase());
+};
+&nbsp;
+/**
+ * Get country data by country code (dialing prefix)
+ */
+export const getCountryByCode = <span class="fstat-no" title="function not covered" >(code: string) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return countryPhoneData.find(c =&gt; c.countryCode === code);</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;
+/**
+ * Get all country codes
+ */
+export const getAllCountryCodes = () =&gt; {
+    return countryPhoneData.map(c =&gt; c.countryCode);
+};
+&nbsp;
+/**
+ * Get all countries sorted alphabetically
+ */
+export const getAllCountriesSorted = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return [...countryPhoneData].sort((a, b) =&gt; a.country.localeCompare(b.country));</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;
+/**
+ * Validate phone number against country specs
+ */
+export const validatePhoneByCountry = <span class="fstat-no" title="function not covered" >(phoneNumber: string, iso: string): { valid: boolean; error?: string } =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const country = getCountryByISO(iso);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!country) {</span>
+<span class="cstat-no" title="statement not covered" >        return { valid: false, error: "Country not found" };</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
+    // Remove non-digit characters
+<span class="cstat-no" title="statement not covered" >    const digits = phoneNumber.replace(/\D/g, '');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (digits.length &lt; country.minLength) {</span>
+<span class="cstat-no" title="statement not covered" >        return { valid: false, error: `Too short. Min: ${country.minLength}` };</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (digits.length &gt; country.maxLength) {</span>
+<span class="cstat-no" title="statement not covered" >        return { valid: false, error: `Too long. Max: ${country.maxLength}` };</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return { valid: true };</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;
+/**
+ * Get total number of countries
+ */
+export const getTotalCountries = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return countryPhoneData.length;</span>
+<span class="cstat-no" title="statement not covered" >};</span></pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-03-07T01:35:29.700Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

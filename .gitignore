@@ -1,6 +1,7 @@
 # Ignore the following irectories
 node_modules/
 temp/
+coverage
 
 # Ignore .env files
 .env
@@ -10,3 +11,4 @@ temp/
 !CHANGELOG.md
 !README.md
 !docs/**/*.md 
+

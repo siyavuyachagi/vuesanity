@@ -3,48 +3,55 @@
 ## 🎯 All Validators at a Glance
 
 ### Boolean Validators
+
 ```typescript
-requireTrue()                         // Before date
-requireFalse()             // After date
+mustBeTrue(); // Value must be true
+mustBeFalse(); // Value must be false
 ```
 
 ### Date Validators
+
 ```typescript
-maxDate(new Date())                         // Before date
-minDate(new Date('2024-01-01'))             // After date
-rangeDate(min, max)                         // Between dates
+maxDate(new Date()); // Before date
+minDate(new Date("2024-01-01")); // After date
+rangeDate(min, max); // Between dates
 ```
 
 ### String Validators
+
 ```typescript
-alpha(true)                           // Letters only
-alphanumeric(false)                   // Letters + numbers
-chars(10)                             // Exact length
-email()                               // Valid email
-maxChars(50)                          // Max length
-minChars(8)                           // Min length
-numeric(true, false)                  // Numbers only, allow (decimals, negative)
-phone()                               // E.164 format
-regex(/^[A-Z]{3}\d{3}$/)              // Custom pattern
-required()                            // Not empty
-sameAs(() => pwd.value)               // Compare values
-url()                                 // Valid URL
+alpha(true); // Letters only
+alphanumeric(false); // Letters + numbers
+chars(10); // Exact length
+differentFrom(() => model.old.value); // Must differ from another field
+email(); // Valid email
+maxChars(50); // Max length
+minChars(8); // Min length
+numeric(true, false); // Numbers only, allow (decimals, negative)
+password(); // Password strength
+phone(); // E.164 format
+regex(/^[A-Z]{3}\d{3}$/); // Custom pattern
+required(); // Not empty
+sameAs(() => pwd.value); // Compare values
+url(); // Valid URL
 ```
 
 ### File Validators
+
 ```typescript
-fileExtensions(['pdf', 'doc'])                  // File type
-fileSize(2)                                     // Exactly 2MB
-fileType("image/png", "Invalid file type")      // Image file
-maxFileSize(5)                                  // Max 5MB
-minFileSize(0.1)                                // Min 0.1MB
+fileExtension(["pdf", "doc"]); // File type by extension
+fileSize(2); // Exactly 2MB
+fileType("image/png", "Invalid file type"); // Image file
+maxFileSize(5); // Max 5MB
+minFileSize(0.1); // Min 0.1MB
 ```
 
 ### Number Validators
+
 ```typescript
-maxNumber(100)                        // <= 100
-minNumber(0)                          // >= 0
-rangeNumber(1, 100)                   // Between 1-100
+maxNumber(100); // <= 100
+minNumber(0); // >= 0
+rangeNumber(1, 100); // Between 1-100
 ```
 
 ---
@@ -52,27 +59,57 @@ rangeNumber(1, 100)                   // Between 1-100
 ## 🚀 Quick Start
 
 ### Installation
+
 ```bash
 npm install @siyavuyachagi/vuesanity
 ```
 
-### Basic Form
-```typescript
-import { reactive } from 'vue';
-import VueSanity, { required, email, minChars } from '@siyavuyachagi/vuesanity';
-import type ModelConfig from '@siyavuyachagi/vuesanity/types'
+### With createModel<T> (Recommended)
 
-const form: ModelConfig = reactive({
-  email: { value: '', validations: [required(), email()], errors: [] },
-  password: { value: '', validations: [required(), minChars(8)], errors: [] }
+```typescript
+import VueSanity, {
+  createModel,
+  required,
+  email,
+  minChars,
+} from "@siyavuyachagi/vuesanity";
+
+interface LoginDto {
+  email: string;
+  password: string;
+}
+
+const loginForm = createModel<LoginDto>({
+  email: { value: "", validations: [required(), email()] },
+  password: { value: "", validations: [required(), minChars(8)] },
+});
+
+const validator = new VueSanity(loginForm);
+
+console.log(validator.isValid); // true/false
+console.log(validator.errors); // { email: [...], password: [...] }
+console.log(validator.normalizedModel); // { email: '...', password: '...' }
+console.log(validator.formData); // FormData object
+```
+
+### With reactive<ModelConfig<T>> (Manual)
+
+```typescript
+import { reactive } from "vue";
+import VueSanity, { required, email, minChars } from "@siyavuyachagi/vuesanity";
+import type { ModelConfig } from "@siyavuyachagi/vuesanity";
+
+interface LoginDto {
+  email: string;
+  password: string;
+}
+
+const form = reactive<ModelConfig<LoginDto>>({
+  email: { value: "", validations: [required(), email()], errors: [] },
+  password: { value: "", validations: [required(), minChars(8)], errors: [] },
 });
 
 const validator = new VueSanity(form);
-
-console.log(validator.isValid);           // true/false
-console.log(validator.errors);            // { email: [...], password: [...] }
-console.log(validator.normalizedModel);   // { email: '...', password: '...' }
-console.log(validator.formData);          // FormData object
 ```
 
 ---
@@ -80,33 +117,76 @@ console.log(validator.formData);          // FormData object
 ## 📥 Import Patterns
 
 ### All Validators (Main Entry)
+
 ```typescript
 import VueSanity, {
-  required, email, minChars,
-  maxFileSize, fileExtensions,
-  minNumber, maxNumber, rangeNumber,
-  minDate, maxDate
-} from '@siyavuyachagi/vuesanity';
+  createModel,
+  mustBeTrue,
+  mustBeFalse,
+  required,
+  email,
+  minChars,
+  password,
+  differentFrom,
+  maxFileSize,
+  fileExtension,
+  minNumber,
+  maxNumber,
+  rangeNumber,
+  minDate,
+  maxDate,
+} from "@siyavuyachagi/vuesanity";
 ```
 
 ### By Category
+
 ```typescript
 // Strings only
-import { required, email, minChars } from '@siyavuyachagi/vuesanity/validators/string';
+import {
+  required,
+  email,
+  minChars,
+  password,
+  differentFrom,
+} from "@siyavuyachagi/vuesanity/validators/string";
+
+// Booleans only
+import {
+  mustBeTrue,
+  mustBeFalse,
+} from "@siyavuyachagi/vuesanity/validators/boolean";
 
 // Files only
-import { maxSize, extensions } from '@siyavuyachagi/vuesanity/validators/file';
+import {
+  maxFileSize,
+  fileExtension,
+  fileType,
+} from "@siyavuyachagi/vuesanity/validators/file";
 
 // Numbers only
-import { min, max, range } from '@siyavuyachagi/vuesanity/validators/number';
+import {
+  minNumber,
+  maxNumber,
+  rangeNumber,
+} from "@siyavuyachagi/vuesanity/validators/number";
 
 // Dates only
-import { minDate, maxDate } from '@siyavuyachagi/vuesanity/validators/date';
+import {
+  minDate,
+  maxDate,
+  rangeDate,
+} from "@siyavuyachagi/vuesanity/validators/date";
 ```
 
 ### Types
+
 ```typescript
-import type { ModelConfig, FieldConfig, ValidationRule } from '@siyavuyachagi/vuesanity';
+import type {
+  ModelConfig,
+  FieldConfig,
+  Field,
+  ValidationRule,
+} from "@siyavuyachagi/vuesanity";
 ```
 
 ---
@@ -114,29 +194,25 @@ import type { ModelConfig, FieldConfig, ValidationRule } from '@siyavuyachagi/vu
 ## 💾 FormData Usage
 
 ### Automatic Generation
+
 ```typescript
 const validator = new VueSanity(form);
 if (validator.isValid) {
-  // FormData ready to go
   const formData = validator.formData;
-  
-  await fetch('/api/upload', {
-    method: 'POST',
-    body: formData
+
+  await fetch("/api/upload", {
+    method: "POST",
+    body: formData,
   });
 }
 ```
 
 ### Manual Generation
+
 ```typescript
-import VueSanity from '@siyavuyachagi/vuesanity';
+import VueSanity from "@siyavuyachagi/vuesanity";
 
-const data = {
-  name: 'John',
-  age: 25,
-  file: fileObject
-};
-
+const data = { name: "John", age: 25, file: fileObject };
 const formData = VueSanity.getFormData(data);
 ```
 
@@ -169,30 +245,37 @@ npm publish
 ## 🧪 Testing Patterns
 
 ### Test Valid Form
+
 ```typescript
-const form = { email: { value: 'test@example.com', validations: [email()], errors: [] } };
+const form = createModel<{ email: string }>({
+  email: { value: "test@example.com", validations: [email()] },
+});
 const v = new VueSanity(form);
 expect(v.isValid).toBe(true);
 expect(v.errors.email).toBeUndefined();
 ```
 
 ### Test Invalid Form
+
 ```typescript
-const form = { email: { value: 'invalid', validations: [email()], errors: [] } };
+const form = createModel<{ email: string }>({
+  email: { value: "invalid", validations: [email()] },
+});
 const v = new VueSanity(form);
 expect(v.isValid).toBe(false);
 expect(v.errors.email).toBeDefined();
 ```
 
 ### Test FormData
+
 ```typescript
-const form = {
-  name: { value: 'John', validations: [required()], errors: [] },
-  file: { value: fileObj, validations: [required()], errors: [] }
-};
+const form = createModel<{ name: string; file: File }>({
+  name: { value: "John", validations: [required()] },
+  file: { value: fileObj, validations: [required()] },
+});
 const v = new VueSanity(form);
-expect(v.formData.get('name')).toBe('John');
-expect(v.formData.get('file')).toBe(fileObj);
+expect(v.formData.get("name")).toBe("John");
+expect(v.formData.get("file")).toBe(fileObj);
 ```
 
 ---
@@ -210,6 +293,7 @@ expect(v.formData.get('file')).toBe(fileObj);
 ## 🐛 Troubleshooting
 
 ### Issue: Imports not working
+
 ```bash
 # Ensure build is run
 npm run build
@@ -221,23 +305,45 @@ ls -la dist/
 cat dist/index.d.ts
 ```
 
-### Issue: TypeScript errors
-```typescript
-// Ensure types are imported
-import type ModelConfig from '@siyavuyachagi/vuesanity/types';
+### Issue: TypeScript errors with createModel
 
-// Use proper typing
-const form: ModelConfig = reactive({...});
+```typescript
+// Define a DTO interface
+interface LoginDto {
+  email: string;
+  password: string;
+}
+
+// Use createModel<T> — no need to manually type errors or reactive
+const form = createModel<LoginDto>({
+  email: { value: "", validations: [required(), email()] },
+  password: { value: "", validations: [required()] },
+});
+```
+
+### Issue: TypeScript errors with reactive
+
+```typescript
+// Use ModelConfig<T> with an interface
+import type { ModelConfig } from '@siyavuyachagi/vuesanity';
+
+interface LoginDto { email: string; password: string; }
+
+const form = reactive<ModelConfig<LoginDto>>({
+  email: { value: '', validations: [...], errors: [] },
+  password: { value: '', validations: [...], errors: [] }
+});
 ```
 
 ### Issue: Validation not working
+
 ```typescript
-// Ensure errors array is initialized
+// When using reactive manually, ensure errors array is initialized
 {
   email: {
     value: '',
     validations: [...],
-    errors: []  // ← Required!
+    errors: []  // ← Required when not using createModel!
   }
 }
 
@@ -260,38 +366,99 @@ const validator = new VueSanity(myForm);
 ## 🎯 Common Use Cases
 
 ### Login Form
+
 ```typescript
-const loginForm: ModelConfig = reactive({
-  email: { value: '', validations: [required(), email()], errors: [] },
-  password: { value: '', validations: [required(), minChars(8)], errors: [] }
+interface LoginDto {
+  email: string;
+  password: string;
+}
+
+const loginForm = createModel<LoginDto>({
+  email: { value: "", validations: [required(), email()] },
+  password: { value: "", validations: [required(), minChars(8)] },
 });
 ```
 
 ### Registration Form
+
 ```typescript
-const regForm: ModelConfig = reactive({
-  firstName: { value: '', validations: [required(), alpha(true)], errors: [] },
-  email: { value: '', validations: [required(), email()], errors: [] },
-  age: { value: null, validations: [required(), min(18), max(120)], errors: [] },
-  password: { value: '', validations: [required(), minChars(8)], errors: [] },
-  confirm: { value: '', validations: [required(), sameAs(() => password)], errors: [] }
+interface RegisterDto {
+  firstName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  acceptedTerms: boolean;
+}
+
+const regForm = createModel<RegisterDto>({
+  firstName: { value: "", validations: [required(), alpha(true)] },
+  email: { value: "", validations: [required(), email()] },
+  password: { value: "", validations: [required(), password()] },
+  confirmPassword: {
+    value: "",
+    validations: [required(), sameAs(() => regForm.password!.value)],
+  },
+  acceptedTerms: {
+    value: false,
+    validations: [mustBeTrue("You must accept the terms")],
+  },
+});
+```
+
+### Change Password Form
+
+```typescript
+interface ChangePasswordDto {
+  oldPassword: string;
+  newPassword: string;
+}
+
+const changeForm = createModel<ChangePasswordDto>({
+  oldPassword: { value: "", validations: [required()] },
+  newPassword: {
+    value: "",
+    validations: [
+      required(),
+      password(),
+      differentFrom(
+        () => changeForm.oldPassword!.value,
+        "New password must differ",
+      ),
+    ],
+  },
 });
 ```
 
 ### File Upload
+
 ```typescript
-const uploadForm: ModelConfig = reactive({
-  title: { value: '', validations: [required()], errors: [] },
-  file: { value: null, validations: [required(), extensions(['pdf']), maxSize(5)], errors: [] }
+interface UploadDto {
+  title: string;
+  file: File;
+}
+
+const uploadForm = createModel<UploadDto>({
+  title: { value: "", validations: [required()] },
+  file: {
+    value: null,
+    validations: [required(), fileExtension(["pdf"]), maxFileSize(5)],
+  },
 });
 ```
 
 ### Survey Form
+
 ```typescript
-const surveyForm: ModelConfig = reactive({
-  birthDate: { value: null, validations: [required(), maxDate(new Date())], errors: [] },
-  rating: { value: null, validations: [required(), range(1, 5)], errors: [] },
-  website: { value: '', validations: [url()], errors: [] }
+interface SurveyDto {
+  birthDate: string;
+  rating: number;
+  website: string;
+}
+
+const surveyForm = createModel<SurveyDto>({
+  birthDate: { value: null, validations: [required(), maxDate(new Date())] },
+  rating: { value: null, validations: [required(), rangeNumber(1, 5)] },
+  website: { value: "", validations: [url()] },
 });
 ```
 
@@ -299,11 +466,12 @@ const surveyForm: ModelConfig = reactive({
 
 ## 💡 Pro Tips
 
-1. **Custom Validators** - Create your own following the pattern
-2. **Async Validation** - Create wrapper that awaits before validating
-3. **Multi-step Forms** - Validate each step separately
-4. **Dynamic Fields** - Add/remove validators dynamically
-5. **Nested Forms** - Create validators per section
-6. **Reset Forms** - Clear all values and errors
+1. **`createModel<T>`** - Prefer this over manual `reactive<ModelConfig<T>>` for full type safety
+2. **`Field` type** - Use for individual field props in components: `defineProps<{ name: Field }>()`
+3. **Custom Validators** - Create your own following the `(value: any) => string | null` pattern
+4. **Async Validation** - Wrap in a composable that awaits before calling `new VueSanity(...)`
+5. **Multi-step Forms** - Validate each step separately using partial models
+6. **`cleanValues: false`** - Pass `false` as second arg to preserve values after validation
+7. **Reset Forms** - Clear values and re-instantiate VueSanity to reset state
 
 ---

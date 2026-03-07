@@ -5,34 +5,39 @@
 ```
 src/
 ├── core/
-│   ├── index.ts                    (Barrel: exports VueSanity + getFormData)
+│   ├── index.ts                    (Barrel: exports VueSanity, getFormData, createModel)
+│   ├── create-model.ts             (createModel<T> utility)
 │   └── vuesanity.ts                (Main validation class)
 ├── helpers/
 │   ├── country-codes.ts             (List of countries, ISO codes, dialing codes)
 │   └── form-data.ts                 (Utility for converting objects to FormData)
 ├── types/
 │   ├── index.ts                    (Barrel: all types)
-│   ├── field.ts
+│   ├── field-config.ts             (FieldConfig<T> and Field interfaces)
 │   ├── model-config.ts
-│   └── rule.ts
+│   └── validation-rule.ts
 ├── validators/
+│   ├── boolean/
+│   │   ├── index.ts                (Barrel: all boolean validators)
+│   │   ├── must-be-false.ts
+│   │   └── must-be-true.ts
 │   ├── date/
 │   |   ├── index.ts                (Barrel: all date validators)
 │   |   ├── max-date.ts
 │   |   ├── min-date.ts
 │   │   └── range-date.ts
 │   ├── file/
-│   │   ├── file-extensions.ts
+│   │   ├── file-extension.ts
 │   │   ├── file-size.ts
 │   │   ├── file-type.ts
 │   │   ├── index.ts                (Barrel: all file validators)
-│   │   ├── max--file-size.ts
+│   │   ├── max-file-size.ts
 │   │   └── min-file-size.ts
 │   ├── number/
 │   │   ├── index.ts                (Barrel: all number validators)
 │   │   ├── max-number.ts
 │   │   ├── min-number.ts
-│   │   └── range-nuumber.ts
+│   │   └── range-number.ts
 │   ├── string/
 │   │   ├── alpha.ts
 │   │   ├── alphanumeric.ts
@@ -58,31 +63,37 @@ src/
 ### Pattern 1: Import Everything (Recommended for small projects)
 ```typescript
 import VueSanity, {
+  createModel,
   required,
   email,
   minChars,
   maxChars,
   phone,
-  maxSize,
+  mustBeTrue,
+  mustBeFalse,
+  maxFileSize,
   minDate,
-  range
+  rangeDate
 } from '@siyavuyachagi/vuesanity';
-import type { ModelConfig, FieldConfig, ValidationRule } from '@siyavuyachagi/vuesanity';
+import type { ModelConfig, FieldConfig, Field, ValidationRule } from '@siyavuyachagi/vuesanity';
 ```
 
 ### Pattern 2: Import by Category (Recommended for larger projects)
 ```typescript
 // String validators only
-import { required, email, minChars } from '@siyavuyachagi/vuesanity/validators/string';
+import { required, email, minChars, password, differentFrom } from '@siyavuyachagi/vuesanity/validators/string';
+
+// Boolean validators only
+import { mustBeTrue, mustBeFalse } from '@siyavuyachagi/vuesanity/validators/boolean';
 
 // File validators only
-import { maxSize, extensions, image } from '@siyavuyachagi/vuesanity/validators/file';
+import { maxFileSize, fileExtension, fileType } from '@siyavuyachagi/vuesanity/validators/file';
 
 // Number validators only
-import { min, max, range } from '@siyavuyachagi/vuesanity/validators/number';
+import { minNumber, maxNumber, rangeNumber } from '@siyavuyachagi/vuesanity/validators/number';
 
 // Date validators only
-import { minDate, maxDate, dateRange } from '@siyavuyachagi/vuesanity/validators/date';
+import { minDate, maxDate, rangeDate } from '@siyavuyachagi/vuesanity/validators/date';
 
 // All validators
 import * as validators from '@siyavuyachagi/vuesanity/validators';
@@ -90,7 +101,7 @@ import * as validators from '@siyavuyachagi/vuesanity/validators';
 
 ### Pattern 3: Import Core Only
 ```typescript
-import VueSanity, { getFormData } from '@siyavuyachagi/vuesanity/core';
+import VueSanity, { getFormData, createModel } from '@siyavuyachagi/vuesanity/core';
 ```
 
 ### Pattern 4: Individual Imports (Tree-shaking friendly)
@@ -107,27 +118,38 @@ import type { ModelConfig } from '@siyavuyachagi/vuesanity/types/model-config';
 Exports:
 ├── VueSanity (class)
 ├── getFormData (utility)
-├── All String Validators (12)
+├── createModel (utility)
+├── All Boolean Validators (2)
+├── All String Validators (14)
 ├── All File Validators (5)
 ├── All Number Validators (3)
 ├── All Date Validators (3)
-└── All Types
+└── All Types (ModelConfig, FieldConfig, Field, ValidationRule)
 ```
 
 ### src/core/index.ts
 ```
 Exports:
 ├── VueSanity (class)
-└── getFormData (utility)
+├── getFormData (utility)
+└── createModel (utility)
 ```
 
 ### src/validators/index.ts
 ```
 Re-exports:
+├── src/validators/boolean/index
 ├── src/validators/string/index
 ├── src/validators/file/index
 ├── src/validators/number/index
 └── src/validators/date/index
+```
+
+### src/validators/boolean/index.ts
+```
+Exports:
+├── mustBeTrue
+└── mustBeFalse
 ```
 
 ### src/validators/string/index.ts
@@ -140,29 +162,31 @@ Exports:
 ├── chars
 ├── phone
 ├── sameAs
+├── differentFrom
 ├── url
 ├── regex
 ├── alpha
 ├── alphanumeric
-└── numeric
+├── numeric
+└── password
 ```
 
 ### src/validators/file/index.ts
 ```
 Exports:
-├── extensions
-├── maxSize
-├── minSize
-├── size
-└── image
+├── fileExtension
+├── maxFileSize
+├── minFileSize
+├── fileSize
+└── fileType
 ```
 
 ### src/validators/number/index.ts
 ```
 Exports:
-├── min
-├── max
-└── range
+├── minNumber
+├── maxNumber
+└── rangeNumber
 ```
 
 ### src/validators/date/index.ts
@@ -170,13 +194,14 @@ Exports:
 Exports:
 ├── minDate
 ├── maxDate
-└── dateRange
+└── rangeDate
 ```
 
 ### src/types/index.ts
 ```
 Exports:
 ├── FieldConfig
+├── Field
 ├── ModelConfig
 └── ValidationRule
 ```

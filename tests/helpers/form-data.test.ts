@@ -264,4 +264,71 @@ describe('FormData Helper', () => {
             expect(formData.get('numbers[5]')).toBe('9');
         });
     });
+
+
+    describe('Nested File Handling', () => {
+        it('should handle a File nested inside an object', () => {
+            const file = new File(['content'], 'constitution.pdf', { type: 'application/pdf' });
+            const data = {
+                name: 'My Federation',
+                legalInfo: {
+                    registrationNumber: '2001/012345/08',
+                    constitutionDocument: file,
+                }
+            };
+
+            const formData = getFormData(data);
+
+            expect(formData.get('legalInfo[registrationNumber]')).toBe('2001/012345/08');
+            expect(formData.get('legalInfo[constitutionDocument]')).toBe(file);
+        });
+
+        it('should handle multiple Files nested inside an object', () => {
+            const constitution = new File(['content'], 'constitution.pdf', { type: 'application/pdf' });
+            const proof = new File(['content'], 'proof.pdf', { type: 'application/pdf' });
+
+            const data = {
+                legalInfo: {
+                    constitutionDocument: constitution,
+                    proofOfRegistrationDocument: proof,
+                }
+            };
+
+            const formData = getFormData(data);
+
+            expect(formData.get('legalInfo[constitutionDocument]')).toBe(constitution);
+            expect(formData.get('legalInfo[proofOfRegistrationDocument]')).toBe(proof);
+        });
+
+        it('should handle deeply nested File inside a ModelConfig-like structure', () => {
+            const file = new File(['content'], 'doc.pdf', { type: 'application/pdf' });
+
+            // Simulates what VueSanity.getFormData receives from a store model
+            const data = {
+                organizationLegalInformationCreateDto: {
+                    constitutionDocument: file,
+                    registrationNumber: '2001/012345/08',
+                }
+            };
+
+            const formData = getFormData(data);
+
+            expect(formData.get('organizationLegalInformationCreateDto[constitutionDocument]')).toBe(file);
+            expect(formData.get('organizationLegalInformationCreateDto[registrationNumber]')).toBe('2001/012345/08');
+        });
+
+        it('should handle a FieldConfig-like object wrapping a File (reactive model field)', () => {
+            // Simulates { value: File } — what VueSanity sees in a model field
+            const file = new File(['content'], 'constitution.pdf', { type: 'application/pdf' });
+
+            const data = {
+                constitutionDocument: { value: file }
+            };
+
+            const formData = getFormData(data);
+
+            // getFormData unwraps .value, so the key should be 'constitutionDocument' with the File
+            expect(formData.get('constitutionDocument')).toBe(file);
+        });
+    });
 });

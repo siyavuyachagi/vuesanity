@@ -21,46 +21,79 @@ export function getFormData(object: Record<string, any>) {
         return value;
     }
 
+    // function appendToFormData(obj: any, prefix = "") {
+    //     if (obj === null || obj === undefined) {
+    //         return;
+    //     }
+
+    //     // Handle unwrapping of reactive values
+    //     obj = processValue(obj);
+
+    //     if (obj instanceof File) {
+    //         formData.append(prefix, obj);
+    //     } else if (Array.isArray(obj)) {
+    //         // Handle arrays of files specifically
+    //         if (obj.length > 0 && obj[0] instanceof File) {
+    //             obj.forEach((file) => {
+    //                 formData.append(`${prefix}`, file);
+    //             });
+    //         } else {
+    //             // Handle other array types
+    //             obj.forEach((item, index) => {
+    //                 appendToFormData(item, `${prefix}[${index}]`);
+    //             });
+    //         }
+    //     } else if (
+    //         typeof obj === "object" &&
+    //         !(obj instanceof File) &&
+    //         !(obj instanceof Blob) &&
+    //         !(obj instanceof Date)
+    //     ) {
+    //         Object.keys(obj).forEach((key) => {
+    //             const value = obj[key];
+    //             const newPrefix = prefix ? `${prefix}[${key}]` : key;
+    //             appendToFormData(value, newPrefix);
+    //         });
+    //     } else if (obj instanceof Date) {
+    //         formData.append(prefix, obj.toISOString());
+    //     } else if (obj !== undefined) {
+    //         formData.append(prefix, String(obj));
+    //     }
+    // }
+
     function appendToFormData(obj: any, prefix = "") {
         if (obj === null || obj === undefined) {
             return;
         }
-
-        // Handle unwrapping of reactive values
+    
+        // Unwrap reactive .value at every level
         obj = processValue(obj);
-
+    
         if (obj instanceof File) {
             formData.append(prefix, obj);
+        } else if (obj instanceof Blob) {
+            formData.append(prefix, obj);
+        } else if (obj instanceof Date) {
+            formData.append(prefix, obj.toISOString());
         } else if (Array.isArray(obj)) {
-            // Handle arrays of files specifically
             if (obj.length > 0 && obj[0] instanceof File) {
                 obj.forEach((file) => {
-                    formData.append(`${prefix}`, file);
+                    formData.append(prefix, file);
                 });
             } else {
-                // Handle other array types
                 obj.forEach((item, index) => {
                     appendToFormData(item, `${prefix}[${index}]`);
                 });
             }
-        } else if (
-            typeof obj === "object" &&
-            !(obj instanceof File) &&
-            !(obj instanceof Blob) &&
-            !(obj instanceof Date)
-        ) {
+        } else if (typeof obj === "object") {
             Object.keys(obj).forEach((key) => {
-                const value = obj[key];
                 const newPrefix = prefix ? `${prefix}[${key}]` : key;
-                appendToFormData(value, newPrefix);
+                appendToFormData(obj[key], newPrefix);
             });
-        } else if (obj instanceof Date) {
-            formData.append(prefix, obj.toISOString());
         } else if (obj !== undefined) {
             formData.append(prefix, String(obj));
         }
     }
-
     appendToFormData(object);
     return formData;
 }

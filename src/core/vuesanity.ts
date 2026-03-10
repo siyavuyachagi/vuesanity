@@ -133,30 +133,12 @@ export default class VueSanity<T extends Record<string, any>> {
             }
             this.normalizedModel = result as UnwrapRef<T>;
 
-            // Build FormData
-            this.formData = new FormData();
-            for (const key in this._model) {
-                const field = this._model[key];
-                if (!field) continue;
-                
-                const values = this._toArray(field.value);
-                for (const val of values) {
-                    if (val !== null && val !== undefined) {
-                        this.formData.append(key, val as any);
-                    }
-                }
-            }
+            // Build FormData using getFormData to handle nested objects, Files, arrays, etc.
+            this.formData = getFormData(this.normalizedModel as Record<string, any>);
 
             this._deconstructor();
         }
     }
-
-
-    private _toArray<Value>(val: Value | Value[] | undefined): Value[] {
-        if (val === undefined || val === null) return [];
-        return Array.isArray(val) ? val : [val];
-    }
-
 
     /** Reset all model field errors */
     private _clearModelErrors() {

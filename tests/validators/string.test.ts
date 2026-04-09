@@ -528,17 +528,4 @@ describe('String Validators', () => {
       expect(validator('ftp://example.com')).toBeNull;
     });
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
 })

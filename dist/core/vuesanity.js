@@ -108,26 +108,10 @@ class VueSanity {
                 }
             }
             this.normalizedModel = result;
-            // Build FormData
-            this.formData = new FormData();
-            for (const key in this._model) {
-                const field = this._model[key];
-                if (!field)
-                    continue;
-                const values = this._toArray(field.value);
-                for (const val of values) {
-                    if (val !== null && val !== undefined) {
-                        this.formData.append(key, val);
-                    }
-                }
-            }
+            // Build FormData using getFormData to handle nested objects, Files, arrays, etc.
+            this.formData = getFormData(this.normalizedModel);
             this._deconstructor();
         }
-    }
-    _toArray(val) {
-        if (val === undefined || val === null)
-            return [];
-        return Array.isArray(val) ? val : [val];
     }
     /** Reset all model field errors */
     _clearModelErrors() {

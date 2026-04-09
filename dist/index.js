@@ -1,5 +1,5 @@
 // src/index.ts (Main entry point)
-export { default } from './core/vuesanity';
+export { default } from './core';
 export { getFormData } from './helpers/form-data';
 export { createModel } from './core';
 // Boolean Validators

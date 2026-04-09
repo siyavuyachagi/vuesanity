@@ -57,7 +57,6 @@ export default class VueSanity<T extends Record<string, any>> {
      * Normalizes the data model
      */
     private _normalizeModel;
-    private _toArray;
     /** Reset all model field errors */
     private _clearModelErrors;
     /** Optionally clear all model field values */

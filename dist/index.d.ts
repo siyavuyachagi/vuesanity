@@ -1,4 +1,4 @@
-export { default } from './core/vuesanity';
+export { default } from './core';
 export { getFormData } from './helpers/form-data';
 export { createModel } from './core';
 export { mustBeFalse, mustBeTrue, } from './validators/boolean/index';

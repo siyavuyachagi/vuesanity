@@ -5,7 +5,7 @@ All notable changes to VueSanity are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.1] - 2026-03-10
+## [2.0.1] - 2026-04-09
 
 ### 🐛 Bug Fixes
 
@@ -13,9 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `processValue` (`.value` unwrapping) now runs at every level of recursion, not just the top level
   - `instanceof File` and `instanceof Blob` checks now take priority over the generic object check at all depths
   - `instanceof Date` moved before the object check to also fix dates in nested objects
+- Fixed import issues
 
-  ---
-  
+---
+
 ## [2.0.0] - 2026-03-07
 
 ### ⚠ Breaking Changes

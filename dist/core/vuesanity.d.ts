@@ -1,6 +1,6 @@
 import { UnwrapRef } from "vue";
 import { ModelConfig } from "../types";
-import { getFormData } from "../helpers/form-data";
+import { getFormData } from "../helpers/form-data.js";
 /**
  * VueSanity - Form validation & normalization utility for Vue 3.
  *

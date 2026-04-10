@@ -1,6 +1,6 @@
 import { reactive, UnwrapRef } from "vue";
 import { ModelConfig, ValidationRule } from "../types";
-import { getFormData } from "../helpers/form-data";
+import { getFormData } from "../helpers/form-data.js";
 
 /**
  * VueSanity - Form validation & normalization utility for Vue 3.
@@ -92,7 +92,7 @@ export default class VueSanity<T extends Record<string, any>> {
                     });
                 });
             }
-            
+
             // --- NON-ARRAY CASE ---
             else {
                 // Run validations on the field value

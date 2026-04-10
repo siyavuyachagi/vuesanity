@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import { getFormData } from "../helpers/form-data";
+import { getFormData } from "../helpers/form-data.js";
 /**
  * VueSanity - Form validation & normalization utility for Vue 3.
  *

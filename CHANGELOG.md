@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `cleanValues` initial value on validator initialization is now `false`, Which means values won't be automatically cleared.
 - [/docs/project-structure.md](./docs/project-structure.md) : new document that has all the project file structure
 - Document updates
+- Add `.js` extension to all module imports in validators
 
 ### 🐛 Bug Fixes
 

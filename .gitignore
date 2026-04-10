@@ -7,6 +7,4 @@ coverage
 # Ignore .env files
 .env
 
-# Ignore all Markdown files except README.md
-!docs/**/*.md 
 

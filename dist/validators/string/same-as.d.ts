@@ -1,4 +1,4 @@
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 /**
  * SameAs - Compares two values for equality
  * @param {any | (() => any)} compareValue The value to compare against or getter function

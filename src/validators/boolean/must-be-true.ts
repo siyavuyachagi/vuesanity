@@ -1,4 +1,4 @@
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * Validates that a value is true, but only if the value is present.
@@ -9,14 +9,14 @@ export const mustBeTrue = (message?: string): ValidationRule => {
     return (value: any): string | null => {
         if (value === null || value === undefined || value === "") return null;
 
-        const normalized = 
+        const normalized =
             value === true ? true :
-            value === false ? false :
-            value === "true" ? true :
-            value === "false" ? false :
-            value === 1 ? true :
-            value === 0 ? false :
-            Boolean(value);
+                value === false ? false :
+                    value === "true" ? true :
+                        value === "false" ? false :
+                            value === 1 ? true :
+                                value === 0 ? false :
+                                    Boolean(value);
 
         if (normalized === false) {
             return message || "Value must be true";

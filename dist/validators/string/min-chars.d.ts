@@ -1,4 +1,4 @@
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 /**
  * Minimum characters required.
  * @param {number} length Minimum length of characters required.

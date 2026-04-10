@@ -37,6 +37,16 @@ Use [Semantic Versioning](https://semver.org/spec/v2.0.0.html):
 - [ ] All tests pass: `npm test`
 - [ ] Coverage is 90%+: `npm run test:coverage`
 
+#### Test with a real project
+
+- [ ] Build the package locally: `npm run build`
+- [ ] Link the package globally: `npm link`
+- [ ] In your consuming project, link it: `npm link @siyavuyachagi/vuesanity`
+- [ ] Verify the link: `npm ls @siyavuyachagi/vuesanity`
+- [ ] Test all affected features in the consuming project
+- [ ] After testing, unlink: `npm unlink @siyavuyachagi/vuesanity`
+- [ ] Rebuild after any changes: `npm run build` (no re-link needed)
+
 ### Build
 
 - [ ] Clean build succeeds: `npm run build`

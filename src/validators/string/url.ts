@@ -1,6 +1,6 @@
 // src/validators/string/url.ts
 
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * URL validation

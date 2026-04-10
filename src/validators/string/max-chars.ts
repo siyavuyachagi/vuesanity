@@ -1,6 +1,6 @@
 // src/validators/string/max-chars.ts
 
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * Maximum characters required.
@@ -8,7 +8,7 @@ import { ValidationRule } from "~/src/types";
  * @param {string} message Error message (Optional)
  * @returns Validation function that returns error message or empty string
  */
-export const maxChars = (length: number, message?: string) : ValidationRule => {
+export const maxChars = (length: number, message?: string): ValidationRule => {
     return (value: any): string | null => {
         if (!value) return null;
 

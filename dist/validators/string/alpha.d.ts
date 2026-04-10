@@ -1,4 +1,4 @@
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 /**
  * Alphabetic characters only validation (a-z, A-Z, spaces optional)
  * @param {boolean} allowSpaces Allow spaces in the value (Optional, default: true)

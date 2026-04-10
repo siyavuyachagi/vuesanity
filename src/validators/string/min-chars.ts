@@ -1,6 +1,6 @@
 // src/validators/string/min-chars.ts
 
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * Minimum characters required.

@@ -1,9 +1,8 @@
 
 // src/index.ts (Main entry point)
-export { default } from './core';
-export { getFormData } from './helpers/form-data';
-export { createModel } from './core';
-
+export { default } from './core/index.js';
+export { createModel } from './core/index.js';
+export { getFormData } from './helpers/form-data.js';
 // Boolean Validators
 export {
     mustBeFalse,

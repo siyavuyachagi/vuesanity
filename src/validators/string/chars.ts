@@ -1,6 +1,6 @@
 // src/validators/string/chars.ts
 
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * Exact character length validation.

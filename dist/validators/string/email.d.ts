@@ -1,4 +1,4 @@
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 /**
  * Email validation with domain restriction
  * @param {string | string[]} allowedDomains Allowed email domains (Optional)

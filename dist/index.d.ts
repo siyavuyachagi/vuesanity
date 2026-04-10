@@ -1,6 +1,6 @@
-export { default } from './core';
-export { getFormData } from './helpers/form-data';
-export { createModel } from './core';
+export { default } from './core/index.js';
+export { createModel } from './core/index.js';
+export { getFormData } from './helpers/form-data.js';
 export { mustBeFalse, mustBeTrue, } from './validators/boolean/index';
 export { minDate, maxDate, rangeDate, } from './validators/date/index';
 export { chars, differentFrom, required, email, minChars, maxChars, password, phone, sameAs, url, regex, alpha, alphanumeric, numeric, } from './validators/string/index';

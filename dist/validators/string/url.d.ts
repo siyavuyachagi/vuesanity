@@ -1,4 +1,4 @@
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 /**
  * URL validation
  * @param {string} message Custom error message (Optional)

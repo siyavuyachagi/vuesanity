@@ -1,6 +1,6 @@
 // src/validators/string/email.ts
 
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * Email validation with domain restriction

@@ -1,4 +1,4 @@
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 /**
  * Exact character length validation.
  * @param {number} length Exact length of characters required.

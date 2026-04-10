@@ -1,6 +1,6 @@
 // src/validators/string/same-as.ts
 
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * SameAs - Compares two values for equality

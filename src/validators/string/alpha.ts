@@ -1,6 +1,6 @@
 // src/validators/string/alpha.ts
 
-import { ValidationRule } from "~/src/types";
+import { ValidationRule } from "../../types";
 
 /**
  * Alphabetic characters only validation (a-z, A-Z, spaces optional)

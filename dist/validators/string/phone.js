@@ -1,5 +1,5 @@
 // src/validators/string/phone.ts
-import { getCountryByISO, getAllCountryCodes } from '../../helpers/country-codes';
+import { getCountryByISO, getAllCountryCodes } from '../../helpers/country-codes.js';
 /**
  * Phone number validation with optional country-specific validation
  *

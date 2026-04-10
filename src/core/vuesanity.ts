@@ -56,9 +56,9 @@ export default class VueSanity<T extends Record<string, any>> {
     /**
      * Constructor
      * @param modelConfig - The strongly-typed form model configuration
-     * @param cleanValues - Automatically clear values after successful validation (default: true)
+     * @param cleanValues - Automatically clear values after successful validation (default: false)
      */
-    constructor(modelConfig: ModelConfig<T>, cleanValues: boolean = true) {
+    constructor(modelConfig: ModelConfig<T>, cleanValues: boolean = false) {
         this._model = reactive(modelConfig) as ModelConfig<T>;
         this._cleanValues = cleanValues;
 

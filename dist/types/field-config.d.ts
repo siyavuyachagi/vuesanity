@@ -1,4 +1,4 @@
-import { ValidationRule } from "./validation-rule";
+import { ValidationRule } from "./validation-rule.js";
 /**
  * FieldConfig represents a single form field with its value, validations, and errors.
  *

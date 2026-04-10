@@ -6,8 +6,8 @@ import path from "path";
 // -----------------------------
 // CONFIG
 // -----------------------------
-const OUTPUT_FILE = path.join("temp", "project-structure.md");
-const EXCLUDE = ["node_modules", ".git", "bin", "obj", "dist", "temp"];
+const OUTPUT_FILE = path.join(".output", "project-structure.md");
+const EXCLUDE = ["node_modules", ".git", "bin", "obj", "dist", ".output"];
 const ROOT = process.cwd();
 
 // -----------------------------
@@ -42,17 +42,21 @@ function writeMarkdown(items) {
   lines.push("# Project Structure");
   lines.push(`Generated: ${new Date().toISOString()}`);
   lines.push("");
-
+  
   lines.push("## Flat List");
+  lines.push("```");
   items.forEach(i => lines.push(i.path));
+  lines.push("```");
   lines.push("");
-
+  
   lines.push("## Tree View");
+  lines.push("```");
   items.forEach(i => {
     const indent = "  ".repeat(i.depth);
     const name = i.path.split("/").pop();
     lines.push(`${indent}- ${name}`);
   });
+  lines.push("```");
 
   // Ensure output folder exists
   const outDir = path.dirname(OUTPUT_FILE);

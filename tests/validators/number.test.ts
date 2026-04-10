@@ -1,12 +1,20 @@
 // tests/unit/validators/number.test.ts
 import { describe, it, expect } from 'vitest';
-import { minNumber, maxNumber, rangeNumber } from '../../src';
+import VueSanity, { minNumber, maxNumber, rangeNumber, createModel } from '../../src';
 
 describe('Number Validators', () => {
   describe('1. maxNumber()', () => {
     it('should accept value below maximum', () => {
-      const validator = maxNumber(100);
-      expect(validator(50)).toBe('');
+      interface Model {
+        age: number
+      }
+      const model = createModel<Model>({
+        age: { value: 8, validations: [maxNumber(10)] }
+      })
+
+      const validator = new VueSanity(model)
+      expect(validator.isValid).toBe(true)
+      expect(validator.errors['age']).toBeUndefined
     });
 
     it('should accept value at maximum', () => {

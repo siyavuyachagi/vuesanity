@@ -13,7 +13,10 @@ export const sameAs = (compareValue, message) => {
     return (value) => {
         if (!value)
             return null;
-        const valueToCompare = typeof compareValue === "function" ? compareValue() : compareValue;
+        // If i'ts a function execute to get the actual value else return the type as is
+        let valueToCompare = typeof compareValue === "function" ? compareValue() : compareValue;
+        // If its of type object and can resolve to FieldConfig extract only the value else return as is
+        valueToCompare = (typeof valueToCompare === 'object') ? valueToCompare.value : valueToCompare;
         if (value !== valueToCompare) {
             return message || "Values don't match";
         }

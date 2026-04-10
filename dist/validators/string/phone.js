@@ -22,7 +22,7 @@ import { getCountryByISO, getAllCountryCodes } from '../../helpers/country-codes
 export const phone = (locale, message) => {
     return (value) => {
         if (!value)
-            return "";
+            return;
         if (typeof value !== "string" && typeof value !== "number") {
             return message || "Invalid phone number!";
         }
@@ -53,7 +53,7 @@ export const phone = (locale, message) => {
             if (nationalNumber.length > countryData.maxLength) {
                 return message || `Phone number too long for ${countryData.country}. Maximum: ${countryData.maxLength} digits`;
             }
-            return "";
+            return;
         }
         // Generic E.164 validation (no country specified)
         const validCountryCodes = getAllCountryCodes();
@@ -73,6 +73,6 @@ export const phone = (locale, message) => {
         if (!isValidCountry && phoneNumber.startsWith('+')) {
             return message || "Invalid country code";
         }
-        return "";
+        return;
     };
 };

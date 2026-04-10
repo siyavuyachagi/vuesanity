@@ -1,4 +1,4 @@
-import { ValidationRule } from "../../types";
+import { FieldConfig, ValidationRule } from "../../types";
 /**
  * SameAs - Compares two values for equality
  * @param {any | (() => any)} compareValue The value to compare against or getter function
@@ -9,4 +9,4 @@ import { ValidationRule } from "../../types";
  * ```
  * @returns Validation function that returns error message or empty string
  */
-export declare const sameAs: (compareValue: (() => any) | any, message?: string) => ValidationRule;
+export declare const sameAs: (compareValue: (() => any) | FieldConfig | any, message?: string) => ValidationRule;

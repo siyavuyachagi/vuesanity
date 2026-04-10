@@ -17,4 +17,4 @@
  * phone('US')
  * ```
  */
-export declare const phone: (locale?: string, message?: string) => (value: any) => string;
+export declare const phone: (locale?: string, message?: string) => (value: any) => string | void;

@@ -168,6 +168,7 @@ For detailed usage instructions and advanced examples:
 - Project Statistics: [/docs/project-stats.md](./docs/project-stats.md)
 - Quick Reference Commands: [/docs/quick-reference-commands.md](./docs/quick-reference-commands.md)
 - Usage Guide: [/docs/usage.md](./docs/usage.md)
+- Complete Project File Structure: [/docs/project-structure.md](./docs/project-structure.md)
 
 ## License
 

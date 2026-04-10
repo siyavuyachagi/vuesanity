@@ -1,6 +1,7 @@
 # Ignore the following irectories
 node_modules/
 temp/
+.output/
 coverage
 
 # Ignore .env files

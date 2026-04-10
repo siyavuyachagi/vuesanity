@@ -251,26 +251,26 @@ describe('VueSanity Core', () => {
     });
 
     describe('Clean Values Option', () => {
-        it('1. should clear values after successful validation by default', () => {
+        it('1. should not clear values after successful validation by default', () => {
             const model = reactive<ModelConfig<RegisterDto>>({
                 firstName: { value: 'John', validations: [required()], errors: [] },
-                email: { value: 'john@yayhoo.com', validations: [required()], errors: [] },
+                email: { value: 'john@yahoo.com', validations: [required()], errors: [] },
             });
 
             new VueSanity(model);
-            expect(model.firstName?.value).toBeUndefined();
-            expect(model.email?.value).toBeUndefined();
+            expect(model.firstName?.value).toBe('John');
+            expect(model.email?.value).toBe('john@yahoo.com');
         });
 
         it('2. should not clear values when cleanValues is false', () => {
             const model = createModel<RegisterDto>({
                 firstName: { value: 'John', validations: [required()], errors: [] },
-                email: { value: 'john@yayhoo.com', validations: [required()], errors: [] },
+                email: { value: 'john@yahoo.com', validations: [required()], errors: [] },
             });
 
             new VueSanity(model, false);
             expect(model.firstName!.value).toBe('John');
-            expect(model.email!.value).toBe('john@yayhoo.com');
+            expect(model.email!.value).toBe('john@yahoo.com');
         });
 
         it('3. should not clear values when validation fails', () => {

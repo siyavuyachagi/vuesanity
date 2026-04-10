@@ -455,7 +455,6 @@ describe('String Validators', () => {
       });
 
       const validator = new VueSanity(model);
-      console.log(model, validator)
       expect(validator.errors.password).toBeUndefined();
       expect(validator.errors.confirmPassword).toBeUndefined();
     });
@@ -491,6 +490,19 @@ describe('String Validators', () => {
     it('should handle null comparison', () => {
       const validator = sameAs(null);
       expect(validator(null)).toBeNull();
+    });
+
+    it('should work with numbers too', () => {
+      interface Model {
+        min: number,
+        max: number,
+      }
+      const model = createModel<Model>({
+        min: { value: 8 },
+        max: { value: 8, validations: [sameAs(() => model.min)] }
+      })
+      const validator = new VueSanity(model)
+      expect(validator.isValid).toBe(true)
     });
   });
 

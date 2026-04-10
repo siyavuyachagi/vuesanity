@@ -7,14 +7,14 @@ export { getFormData } from './helpers/form-data.js';
 export {
     mustBeFalse,
     mustBeTrue,
-} from './validators/boolean/index';
+} from './validators/boolean/index.js';
 
 // Date Validators
 export {
     minDate,
     maxDate,
     rangeDate,
-} from './validators/date/index';
+} from './validators/date/index.js';
 
 // String Validators
 export {
@@ -32,7 +32,7 @@ export {
     alpha,
     alphanumeric,
     numeric,
-} from './validators/string/index';
+} from './validators/string/index.js';
 
 // File Validators
 export {
@@ -41,17 +41,17 @@ export {
     fileType,
     maxFileSize,
     minFileSize,
-} from './validators/file/index';
+} from './validators/file/index.js';
 
 // Number Validators
 export {
     maxNumber,
     minNumber,
     rangeNumber,
-} from './validators/number/index';
+} from './validators/number/index.js';
 
 // Types - Export as types only
-export type { ModelConfig } from './types/model-config';
-export type { FieldConfig } from './types/field-config';
-export type { Field } from './types/field-config';
-export type { ValidationRule } from './types/validation-rule';
+export type { ModelConfig } from './types/model-config.js';
+export type { FieldConfig } from './types/field-config.js';
+export type { Field } from './types/field-config.js';
+export type { ValidationRule } from './types/validation-rule.js';

@@ -33,9 +33,9 @@ class VueSanity {
     /**
      * Constructor
      * @param modelConfig - The strongly-typed form model configuration
-     * @param cleanValues - Automatically clear values after successful validation (default: true)
+     * @param cleanValues - Automatically clear values after successful validation (default: false)
      */
-    constructor(modelConfig, cleanValues = true) {
+    constructor(modelConfig, cleanValues = false) {
         /** Validation errors keyed by field */
         this.errors = {};
         /** Form validation status */

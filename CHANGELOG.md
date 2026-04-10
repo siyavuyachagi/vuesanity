@@ -5,6 +5,44 @@ All notable changes to VueSanity are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.0.4 - YYYY-MM-DD
+
+### 🔧 Maintenance
+
+- `cleanValues` initial value on validator initialization is now `false`, Which means values won't be automatically cleared.
+- [/docs/project-structure.md](./docs/project-structure.md) : new document that has all the project file structure
+- Document updates
+
+### 🐛 Bug Fixes
+
+- "Cannot find module" error on page refresh, used explicit imports that support ESM
+
+### 🎉 Features
+
+- `sameAs()` function can now also take `FieldConfig`, so you dont have to use `.value`
+
+  ```ts
+  interface LoginDto {
+    password: string;
+    confirmPassword: string;
+  }
+
+  const form = createModel<LoginDto>({
+    password: { value: "SecurePass@123" },
+    confirmPassword: {
+      value: "SecurePass@123",
+      // validations: [sameAs(() => form.password.value)],
+      validations: [sameAs(() => form.password)],
+    },
+  });
+  ```
+
+### 🧪 Tests
+
+- Full test coverage
+
+---
+
 ## v2.0.3 - 2026-04-10
 
 ### 🔧 Maintenance
@@ -16,18 +54,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Build now compiles cleanly with zero TypeScript errors or deprecation warnings
 
 ### 🐛 Bug Fixes
+
 - `FormData` function import fix
+
 ---
 
 ## [2.0.2] - 2026-04-10
 
 ### 🔧 Maintenance
 
-- Fixed TypeScript path alias (`~/src/types`) replaced with relative imports (`../../types`)
+- 'Fixed TypeScript path alias (`~/src/types`) replaced with relative imports (`../../types`)
 - Updated `tsconfig.json`: `moduleResolution` changed from deprecated `Node` to `Bundler`
 - Removed deprecated `baseUrl` and `paths` aliases causing TS6 warnings
 - Added `rootDir: "./src"` to fix output layout error
-- Build now compiles cleanly with zero TypeScript errors or deprecation warnings
+- Build now compiles cleanly with zero TypeScript errors or deprecation warnings'
 
 ---
 

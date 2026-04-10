@@ -2,61 +2,7 @@
 
 ## 📁 Complete File Structure
 
-```
-src/
-├── core/
-│   ├── index.ts                    (Barrel: exports VueSanity, getFormData, createModel)
-│   ├── create-model.ts             (createModel<T> utility)
-│   └── vuesanity.ts                (Main validation class)
-├── helpers/
-│   ├── country-codes.ts             (List of countries, ISO codes, dialing codes)
-│   └── form-data.ts                 (Utility for converting objects to FormData)
-├── types/
-│   ├── index.ts                    (Barrel: all types)
-│   ├── field-config.ts             (FieldConfig<T> and Field interfaces)
-│   ├── model-config.ts
-│   └── validation-rule.ts
-├── validators/
-│   ├── boolean/
-│   │   ├── index.ts                (Barrel: all boolean validators)
-│   │   ├── must-be-false.ts
-│   │   └── must-be-true.ts
-│   ├── date/
-│   |   ├── index.ts                (Barrel: all date validators)
-│   |   ├── max-date.ts
-│   |   ├── min-date.ts
-│   │   └── range-date.ts
-│   ├── file/
-│   │   ├── file-extension.ts
-│   │   ├── file-size.ts
-│   │   ├── file-type.ts
-│   │   ├── index.ts                (Barrel: all file validators)
-│   │   ├── max-file-size.ts
-│   │   └── min-file-size.ts
-│   ├── number/
-│   │   ├── index.ts                (Barrel: all number validators)
-│   │   ├── max-number.ts
-│   │   ├── min-number.ts
-│   │   └── range-number.ts
-│   ├── string/
-│   │   ├── alpha.ts
-│   │   ├── alphanumeric.ts
-│   │   ├── chars.ts
-│   │   ├── different-from.ts
-│   │   ├── email.ts
-│   │   ├── index.ts                (Barrel: all string validators)
-│   │   ├── max-chars.ts
-│   │   ├── min-chars.ts
-│   │   ├── numeric.ts
-│   │   ├── password.ts
-│   │   ├── phone.ts
-│   │   ├── regex.ts
-│   │   ├── required.ts
-│   │   ├── same-as.ts
-│   │   └── url.ts
-│   └── index.ts                    (Master barrel: re-exports all validators)
-└── index.ts                        (Main entry point - exports everything)
-```
+- Complete Project File Structure: [/project-structure.md](./project-structure.md)
 
 ## 🎯 Import Patterns
 

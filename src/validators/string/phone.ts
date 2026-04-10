@@ -21,8 +21,8 @@ import { getCountryByISO, getAllCountryCodes } from '../../helpers/country-codes
  * ```
  */
 export const phone = (locale?: string, message?: string) => {
-    return (value: any): string => {
-        if (!value) return "";
+    return (value: any): string | void => {
+        if (!value) return;
 
         if (typeof value !== "string" && typeof value !== "number") {
             return message || "Invalid phone number!";
@@ -63,7 +63,7 @@ export const phone = (locale?: string, message?: string) => {
                 return message || `Phone number too long for ${countryData.country}. Maximum: ${countryData.maxLength} digits`;
             }
 
-            return "";
+            return;
         }
 
         // Generic E.164 validation (no country specified)
@@ -89,6 +89,6 @@ export const phone = (locale?: string, message?: string) => {
             return message || "Invalid country code";
         }
 
-        return "";
+        return;
     };
 };

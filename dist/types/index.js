@@ -1,3 +1,3 @@
 // ./types/index.ts
-export * from "./field-config";
-export * from "./validation-rule";
+export * from "./field-config.js";
+export * from "./validation-rule.js";

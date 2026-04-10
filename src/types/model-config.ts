@@ -1,4 +1,4 @@
-import { FieldConfig } from "./field-config";
+import { FieldConfig } from "./field-config.js";
 
 /**
  * ModelConfig is a dictionary of field configurations.

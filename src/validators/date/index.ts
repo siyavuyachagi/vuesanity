@@ -1,4 +1,4 @@
 // src/validators/date/index.ts
-export { minDate } from './min-date';
-export { maxDate } from './max-date';
-export { rangeDate } from './range-date';
+export { minDate } from './min-date.js';
+export { maxDate } from './max-date.js';
+export { rangeDate } from './range-date.js';

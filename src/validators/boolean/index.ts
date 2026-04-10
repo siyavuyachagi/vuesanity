@@ -1,3 +1,3 @@
 
-export { mustBeFalse } from './must-be-false'
-export { mustBeTrue } from './must-be-true'
+export { mustBeFalse } from './must-be-false.js'
+export { mustBeTrue } from './must-be-true.js'

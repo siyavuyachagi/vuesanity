@@ -1,4 +1,4 @@
-import { ValidationRule } from "../../types";
+import { ValidationRule } from "../../types/validation-rule.js";
 
 /**
  * Validates that a value is false, but only if the value is present.
